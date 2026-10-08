@@ -1,0 +1,40 @@
+{
+  "name": "amelia-s-study-buddy-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "smoke": "node scripts/smoke.mjs",
+    "secrets-scan": "node scripts/secrets-scan.mjs",
+    "test:study": "node scripts/test-chapter-import.mjs && node scripts/test-practice.mjs && node scripts/test-study-backup.mjs && node scripts/test-atlas-learning.mjs && node scripts/test-reset-progress.mjs",
+    "verify:content": "node scripts/verify-packs.mjs && node scripts/verify-atlas.mjs",
+    "build:atlas": "node scripts/build-human-atlas.mjs"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "fflate": "^0.8.3",
+    "lucide-react": "^0.577.0",
+    "pdfjs-dist": "^6.4.299",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.2.2",
+    "three": "^0.183.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "vite": "^8.0.1"
+  }
+}

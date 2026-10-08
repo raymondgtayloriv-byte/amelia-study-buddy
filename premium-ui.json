@@ -1,0 +1,34 @@
+{
+  "profile": "product-admin",
+  "canonicalMap": "UX-CONTRACT.md",
+  "sourceRoots": [
+    "src",
+    "vendor/human-atlas/app",
+    "vendor/human-atlas/components",
+    "vendor/human-atlas/web"
+  ],
+  "ownership": {
+    "Select/Listbox": "native"
+  },
+  "requiredCapabilities": [
+    "Select/Listbox",
+    "Form",
+    "Scrollbar",
+    "Toast",
+    "CRUD"
+  ],
+  "commands": {
+    "lint": "npm run lint",
+    "build": "npm run build",
+    "tests": "npm run smoke && npm run test:study"
+  },
+  "requiredCommands": [
+    "lint",
+    "build",
+    "tests"
+  ],
+  "evidence": {
+    "crudFullFlow": "docs/visual-study-beta-execution-note.md",
+    "failurePaths": "scripts/test-study-backup.mjs"
+  }
+}
