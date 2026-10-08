@@ -3,7 +3,7 @@ import { ArrowRight, Bookmark, Check, Expand, ExternalLink, Focus, Layers, Rotat
 import { ATLAS_SYSTEMS, atlasNameMatches, buildAtlasTargets, selectionMatchesConcept } from "../lib/atlasLearning"
 import { shuffleItems } from "../lib/practice"
 
-const ATLAS_URL = "/human-atlas/index.html"
+const ATLAS_URL = `${import.meta.env.BASE_URL}human-atlas/index.html`
 export function HumanBodyView({ notebook, onNotebookChange, onNavigate }) {
   const frame = useRef(null)
   const studio = useRef(null)
@@ -49,7 +49,7 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate }) {
 
   useEffect(() => {
     const abort = new AbortController()
-    fetch("/human-atlas/models/atlas.json", { signal: abort.signal }).then(response => { if (!response.ok) throw new Error("The anatomy catalogue could not be loaded."); return response.json() }).then(setAtlas).catch(caught => { if (caught.name !== "AbortError") setError(caught.message) })
+    fetch(`${import.meta.env.BASE_URL}human-atlas/models/atlas.json`, { signal: abort.signal }).then(response => { if (!response.ok) throw new Error("The anatomy catalogue could not be loaded."); return response.json() }).then(setAtlas).catch(caught => { if (caught.name !== "AbortError") setError(caught.message) })
     return () => abort.abort()
   }, [retry])
   useEffect(() => {
@@ -142,6 +142,6 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate }) {
         <div className="companion-bottom"><p>Bring it back to class.</p><button onClick={()=>onNavigate("chapters")}>Open your course notes <ArrowRight size={15}/></button></div>
       </aside>}
     </div>
-    <div className="atlas-footnote"><p>Drag to orbit · Scroll or pinch to zoom · Use the explode slider to see every piece.<br/>Reference anatomy: adult male. Atlas descriptions and challenges are supplemental.</p><p>Human Atlas by Ashe Magalhaes · MIT<br/>BodyParts3D © DBCLS · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a> · <a href="/human-atlas/ATTRIBUTION.md" target="_blank" rel="noreferrer">Full attribution</a></p></div>
+    <div className="atlas-footnote"><p>Drag to orbit · Scroll or pinch to zoom · Use the explode slider to see every piece.<br/>Reference anatomy: adult male. Atlas descriptions and challenges are supplemental.</p><p>Human Atlas by Ashe Magalhaes · MIT<br/>BodyParts3D © DBCLS · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer">CC BY 4.0</a> · <a href={`${import.meta.env.BASE_URL}human-atlas/ATTRIBUTION.md`} target="_blank" rel="noreferrer">Full attribution</a></p></div>
   </div>
 }

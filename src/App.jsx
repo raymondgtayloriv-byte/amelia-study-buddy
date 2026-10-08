@@ -19,6 +19,7 @@ import { StudyDesk } from "./components/StudyDesk"
 import { StudyGuides } from "./components/StudyGuides"
 import { PracticeArcade } from "./components/PracticeArcade"
 import { BackupPanel } from "./components/BackupPanel"
+import { BetaNotice } from "./components/BetaNotice"
 import { FlashcardsView } from "./components/FlashcardsView"
 import { HumanBodyView } from "./components/HumanBodyView"
 import { Sidebar } from "./components/Sidebar"
@@ -337,6 +338,10 @@ function App() {
     setUndoImport(null)
     setImportMessage("Change undone.")
   }
+  function openResetSection() {
+    setActiveSection("sync")
+    setTimeout(() => document.getElementById("reset-progress-heading")?.scrollIntoView({ block: "center" }), 250)
+  }
   return (
     <div className="app-shell">
       <a className="skip-link" href="#study-main">Skip to study content</a>
@@ -344,10 +349,11 @@ function App() {
       <div className="workspace">
         <header className="workspace-header">
           <div><p className="eyebrow">BIOL 2401 / Amelia’s Study Buddy</p><h1>{currentSection.label}</h1></div>
-          <div className="header-actions"><span className="local-status"><span /> {storageError ? "Changes need a backup" : "Saved on this device"}</span><button type="button" className="theme-toggle" aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={18}/> : <Sun size={18}/>}<span>{theme === "light" ? "Dark" : "Light"}</span></button><button type="button" className="action action-secondary mobile-menu" onClick={() => setMobileNavOpen(!mobileNavOpen)} aria-expanded={mobileNavOpen} aria-controls="mobile-navigation" aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}>{mobileNavOpen ? <X size={20}/> : <Menu size={20}/>}</button></div>
+          <div className="header-actions"><button type="button" className="reset-shortcut" onClick={openResetSection}>Reset study progress</button><span className="local-status"><span /> {storageError ? "Changes need a backup" : "Saved on this device"}</span><button type="button" className="theme-toggle" aria-label={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} title={theme === "light" ? "Switch to dark mode" : "Switch to light mode"} onClick={() => setTheme(theme === "light" ? "dark" : "light")}>{theme === "light" ? <Moon size={18}/> : <Sun size={18}/>}<span>{theme === "light" ? "Dark" : "Light"}</span></button><button type="button" className="action action-secondary mobile-menu" onClick={() => setMobileNavOpen(!mobileNavOpen)} aria-expanded={mobileNavOpen} aria-controls="mobile-navigation" aria-label={mobileNavOpen ? "Close navigation" : "Open navigation"}>{mobileNavOpen ? <X size={20}/> : <Menu size={20}/>}</button></div>
         </header>
         {mobileNavOpen && <nav id="mobile-navigation" className="mobile-navigation" aria-label="Study navigation">{navigationItems.map(item => <button type="button" key={item.id} aria-current={activeSection === item.id ? "page" : undefined} onClick={() => setActiveSection(item.id)}>{item.label}</button>)}</nav>}
         <main id="study-main" className="study-main" tabIndex={-1}>
+          <BetaNotice />
           {storageError && <div className="import-feedback" role="alert">{storageError}<button className="action action-secondary" onClick={() => setActiveSection("sync")}>Open backups</button></div>}
           {["bones", "quiz"].includes(activeSection) && <div className="course-ribbon"><span className="source-tag">Course-based study material</span><p>Preserved chapter content and practice packs. Your instructor determines exam scope.</p>{activeSection === "quiz" && <button className="action action-secondary" onClick={() => setActiveSection("practice")}>Back to practice arcade</button>}</div>}
           <Suspense fallback={<div className="panel p-6" role="status">Preparing your study tools…</div>}>

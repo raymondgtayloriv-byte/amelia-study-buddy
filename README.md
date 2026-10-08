@@ -53,3 +53,13 @@ Original course data lives in src/data/. Editable atlas source lives in vendor/h
 Human Atlas is by Ashe Magalhaes (@ashebytes), vendored from upstream commit 1c38bf35c254a891200d3cedecfd57abebe83d8d, with a Study Buddy bridge, theme support, and targeted rendering optimizations. Its viewer code is MIT; BodyParts3D data is CC BY 4.0. Keep public/human-atlas/ATTRIBUTION.md, shipped licenses, and visible attribution in redistributed builds. Those licenses apply to their respective third-party materials, not automatically to course content.
 
 Original instructor decks and recovered private Git history are excluded from the prepared sharing ZIP. Existing course summaries and question packs remain included. Chapters 5 and 10–15 need course materials. Thirty-two of the original 37 bone targets have exact selectable atlas mappings; the remaining overview concepts retain text practice.
+
+
+## Public website (GitHub Pages)
+
+Live at https://raymondgtayloriv-byte.github.io/amelia-study-buddy/ - no install, no account.
+
+- Every push to `codex/visual-study-beta` runs `.github/workflows/deploy-pages.yml`, which builds with `VITE_BASE=/amelia-study-buddy/` and redeploys to the same link.
+- Local use is unchanged: `npm ci && npm run dev` (base defaults to `/`).
+- Progress is stored in each person's own browser (localStorage) on each device. Updates to the site do not clear it. Chapters a user uploads stay on that device and are not shared with other users.
+- Beta limitations: Chapters 5 and 10-15 are not yet included. Use "Reset study progress" (header link or Add chapters page) to start fresh; it has confirmation and undo.

@@ -182,7 +182,7 @@ function SceneContent({
   regionColorMode,
   quizTargetBone,
 }) {
-  const { scene: gltfScene } = useGLTF("/models/skeleton.glb")
+  const { scene: gltfScene } = useGLTF(`${import.meta.env.BASE_URL}models/skeleton.glb`)
   // Clone the cached GLB scene: useGLTF shares one scene across consumers,
   // and the Body Explorer rewrites mesh transforms for its explode animation.
   const scene = useMemo(() => gltfScene.clone(true), [gltfScene])

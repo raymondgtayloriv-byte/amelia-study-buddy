@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import { courseAtlasSelectionMatches, resolveCourseAtlasTarget } from "../lib/courseAtlas"
 
-const ATLAS_URL = "/human-atlas/index.html"
+const ATLAS_URL = `${import.meta.env.BASE_URL}human-atlas/index.html`
 
 export function AtlasBonePractice({ question, answered, onBoneSelect }) {
   const frame = useRef(null)
@@ -29,7 +29,7 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
 
   useEffect(() => {
     const abort = new AbortController()
-    fetch("/human-atlas/models/atlas.json", { signal: abort.signal })
+    fetch(`${import.meta.env.BASE_URL}human-atlas/models/atlas.json`, { signal: abort.signal })
       .then((response) => {
         if (!response.ok) throw new Error("The Human Atlas catalogue could not be loaded.")
         return response.json()

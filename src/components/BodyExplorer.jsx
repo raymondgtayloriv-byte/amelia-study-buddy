@@ -567,7 +567,7 @@ function LoadingFallback() {
 /* ------------------------------------------------------------------ */
 
 function ExplorerInner({ onBoneSelect }) {
-  const { scene: gltfScene } = useGLTF("/models/skeleton.glb")
+  const { scene: gltfScene } = useGLTF(`${import.meta.env.BASE_URL}models/skeleton.glb`)
   // Clone the cached GLB scene per viewer instance. useGLTF shares one scene
   // across every consumer — without this, one viewer's animation permanently
   // rewrites the mesh transforms the other viewer renders.
@@ -1116,4 +1116,4 @@ export function BodyExplorer({ onBoneSelect }) {
   )
 }
 
-useGLTF.preload("/models/skeleton.glb")
+useGLTF.preload(`${import.meta.env.BASE_URL}models/skeleton.glb`)

@@ -137,7 +137,7 @@ function makeReferenceView(id, boneId, label, fileName, studySurface, helper) {
     studySurface,
     helper,
     kind: "reference",
-    imageSrc: `/anatomy/chapter7/${fileName}`,
+    imageSrc: `${import.meta.env.BASE_URL}anatomy/chapter7/${fileName}`,
     imageAlt: `${label} from the Chapter 7 skeletal system lecture deck.`,
     imageCredit: lectureCredit,
     points: [],
