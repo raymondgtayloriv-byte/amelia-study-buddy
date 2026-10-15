@@ -109,6 +109,24 @@ export const VOCABULARY_DEFINITIONS = {
   "appositional growth": "Growth in bone width/thickness as osteoblasts beneath the periosteum secrete matrix on the external bone surface.",
   remodeling: "Continuous coupled process of bone deposit (osteoblasts) and bone resorption (osteoclasts) regulated by PTH and mechanical stress.",
 
+  // Chapter 7
+  "axial skeleton": "The 80 bones forming the vertical axis of the body: skull, hyoid, auditory ossicles, vertebral column, sternum, and ribs.",
+  "appendicular skeleton": "The 126 bones of the upper and lower limbs plus the pectoral and pelvic girdles that attach them to the axial skeleton.",
+  foramen: "A round or oval opening through a bone that allows blood vessels and nerves to pass (e.g., foramen magnum, mental foramen).",
+  fossa: "A shallow, basin-like depression in a bone, often serving as an articular surface or muscle attachment site.",
+  process: "Any prominent bony projection or outgrowth where muscles, tendons, or ligaments attach, or where bones articulate.",
+  suture: "An immovable fibrous joint (synarthrosis) with interlocking serrated edges that unites flat bones of the skull.",
+  sinus: "A mucosa-lined, air-filled cavity within a cranial/facial bone (frontal, sphenoid, ethmoid, maxillary) that lightens the skull and warms air.",
+  "pectoral girdle": "Shoulder girdle composed of the paired clavicles and scapulae; attaches the upper limbs to the axial skeleton with high mobility.",
+  "pelvic girdle": "Hip girdle formed by the two coxal (hip) bones (ilium, ischium, pubis) joined anteriorly at the pubic symphysis and posteriorly to the sacrum.",
+  vertebra: "Individual irregular bone of the spinal column (7 cervical, 12 thoracic, 5 lumbar, plus sacrum and coccyx) protecting the spinal cord.",
+
+  "cranial vault": "Calvaria — the superior, lateral, and posterior walls of the skull (frontal, parietal, occipital, temporal bones) that enclose the brain.",
+  "paranasal sinus": "Mucosa-lined, air-filled cavities in the frontal, sphenoid, ethmoid, and maxillary bones that lighten the skull and warm inhaled air.",
+  "vertebral column": "Flexible axial support column of 26 irregular bones (7 cervical, 12 thoracic, 5 lumbar, sacrum, coccyx) protecting the spinal cord.",
+  "true ribs": "Vertebrosternal ribs (pairs 1–7) that attach directly to the sternum via their own individual costal cartilages.",
+  "pelvic brim": "Continuous oval ridge running from the sacral promontory to the pubic symphysis that separates the false (greater) pelvis from the true (lesser) pelvis.",
+  acetabulum: "Deep cup-shaped socket on the lateral surface of the hip bone where the ilium, ischium, and pubis fuse to receive the head of the femur.",
   // Chapter 8
   articulation: "A joint — any site where two or more bones or cartilages meet.",
   synarthrosis: "Functionally immovable joint (mainly axial skeleton, such as skull sutures).",

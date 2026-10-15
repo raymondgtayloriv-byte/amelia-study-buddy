@@ -12,12 +12,19 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
   const [error, setError] = useState("")
   const [retry, setRetry] = useState(0)
 
-  const target = useMemo(() => atlas
-    ? resolveCourseAtlasTarget({
-        boneId: question.grading.boneId,
-        label: question.grading.label,
-      }, atlas)
-    : null, [atlas, question.grading.boneId, question.grading.label])
+  const target = useMemo(
+    () =>
+      atlas
+        ? resolveCourseAtlasTarget(
+            {
+              boneId: question.grading.boneId,
+              label: question.grading.label,
+            },
+            atlas,
+          )
+        : null,
+    [atlas, question.grading.boneId, question.grading.label],
+  )
   const ready = bridgeReady && progress === 100
 
   const send = useCallback((action, data = {}) => {
@@ -54,7 +61,9 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
         if (data.error) setError(String(data.error))
         else if (data.progress === 100) setError("")
       }
-      if (data?.type === "human-atlas:error") setError(data.message || "The Human Atlas could not process that selection.")
+      if (data?.type === "human-atlas:error") {
+        setError(data.message || "The Human Atlas could not process that selection.")
+      }
       if (data?.type === "human-atlas:selection" && !answered) {
         const selection = data.selection ?? data
         if (!target || !Array.isArray(selection.elements)) return
@@ -71,7 +80,7 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
 
   useEffect(() => {
     if (!ready || !target) return
-    send("systems", { systems: ["skeletal"] })
+    send("hunt", { systems: ["skeletal"] })
   }, [ready, question.id, send, target])
 
   function reloadViewer() {
@@ -93,7 +102,7 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
         <button
           className="action action-secondary"
           type="button"
-          onClick={() => send("systems", { systems: ["skeletal"] })}
+          onClick={() => send("hunt", { systems: ["skeletal"] })}
           disabled={!ready || answered}
         >
           <RotateCcw size={15} aria-hidden="true" /> Reset view
@@ -101,13 +110,16 @@ export function AtlasBonePractice({ question, answered, onBoneSelect }) {
       </div>
       {!ready && !error && (
         <p className="mb-3 rounded-2xl bg-slate-50 p-3 text-sm text-slate-600" role="status">
-          Preparing the 3D skeleton… {progress > 0 ? `${progress}% of model data` : "The atlas loads about 60 MB of anatomy data."}
+          Preparing the 3D skeleton…{" "}
+          {progress > 0 ? `${progress}% of model data` : "The atlas loads about 60 MB of anatomy data."}
         </p>
       )}
       {error && (
         <div className="mb-3 rounded-2xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-800" role="alert">
           <p>{error}</p>
-          <button className="action action-secondary mt-2" type="button" onClick={reloadViewer}>Reload 3D viewer</button>
+          <button className="action action-secondary mt-2" type="button" onClick={reloadViewer}>
+            Reload 3D viewer
+          </button>
         </div>
       )}
       {!target && atlas && (
