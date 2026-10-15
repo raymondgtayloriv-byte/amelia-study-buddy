@@ -1,5 +1,6 @@
-import { useState } from "react"
-import { ArrowRight, CheckCircle2, RotateCcw, XCircle } from "lucide-react"
+import { useMemo, useState } from "react"
+import { ArrowRight, CheckCircle2, Layers, RotateCcw, XCircle } from "lucide-react"
+import { computeLetterGrade, sourceName } from "../lib/practice"
 import { EngineQuizRunner } from "./EngineQuizRunner"
 
 const MIXED_QUESTION_COUNT = 12
@@ -18,7 +19,7 @@ function shuffle(items) {
 
 function getQuizRunSize(quizId, questionCount) {
   const target =
-    quizId === "mixed" ? MIXED_QUESTION_COUNT : CHAPTER_QUESTION_COUNT
+    quizId === "mixed" || quizId.startsWith("multi-") ? MIXED_QUESTION_COUNT : CHAPTER_QUESTION_COUNT
 
   return Math.min(target, questionCount)
 }
@@ -47,43 +48,82 @@ export function QuizView({
   onSaveEngineResult,
 }) {
   const [quizTab, setQuizTab] = useState("classic")
+  const [sourceFilter, setSourceFilter] = useState("course")
   const [selectedQuizId, setSelectedQuizId] = useState("mixed")
+  const [customChapterIds, setCustomChapterIds] = useState([])
+  const [multiPickerOpen, setMultiPickerOpen] = useState(false)
+
+  const filteredBank = useMemo(
+    () =>
+      quizQuestionBank.filter((q) => {
+        const itemSource = q.sourceType === "supplemental" ? "supplemental" : "course"
+        return sourceFilter === "all" || itemSource === sourceFilter
+      }),
+    [quizQuestionBank, sourceFilter],
+  )
+
   const [session, setSession] = useState(() =>
-    buildQuizSession("mixed", quizQuestionBank),
+    buildQuizSession(
+      "mixed",
+      quizQuestionBank.filter((q) => q.sourceType !== "supplemental"),
+    ),
   )
 
   const availableQuizzes = [
     {
       id: "mixed",
-      label: "Mixed review",
-      helper: "Fresh random mix across the currently ready chapters",
-      poolCount: quizQuestionBank.length,
-      runCount: getQuizRunSize("mixed", quizQuestionBank.length),
+      label: "Mixed review (All in filter)",
+      helper: "Fresh random mix across all chapters in the selected source filter",
+      poolCount: filteredBank.length,
+      runCount: getQuizRunSize("mixed", filteredBank.length),
     },
-    ...chapters.map((chapter) => ({
-      id: chapter.id,
-      label: `Chapter ${chapter.number}`,
-      helper: chapter.title,
-      poolCount: quizQuestionBank.filter((question) => question.chapterId === chapter.id)
-        .length,
-      runCount: getQuizRunSize(
-        chapter.id,
-        quizQuestionBank.filter((question) => question.chapterId === chapter.id).length,
-      ),
-    })),
+    ...chapters
+      .filter((chapter) =>
+        filteredBank.some((question) => question.chapterId === chapter.id),
+      )
+      .map((chapter) => {
+        const count = filteredBank.filter(
+          (question) => question.chapterId === chapter.id,
+        ).length
+        return {
+          id: chapter.id,
+          label: `Chapter ${chapter.number}${chapter.isPreviewPack ? " (Preview)" : ""}`,
+          helper: chapter.title,
+          poolCount: count,
+          runCount: getQuizRunSize(chapter.id, count),
+        }
+      }),
   ]
 
   const activeQuestion = session.questions[session.currentIndex]
   const bestScore = quizHistory[selectedQuizId]?.bestPercent ?? 0
 
-  const startQuiz = (quizId) => {
+  const startQuiz = (quizId, nextSource = sourceFilter, overrideChapters = null) => {
+    const bank = quizQuestionBank.filter((q) => {
+      const itemSource = q.sourceType === "supplemental" ? "supplemental" : "course"
+      return nextSource === "all" || itemSource === nextSource
+    })
+    const chIds = overrideChapters ?? customChapterIds
     const questionPool =
       quizId === "mixed"
-        ? quizQuestionBank
-        : quizQuestionBank.filter((question) => question.chapterId === quizId)
+        ? bank
+        : quizId.startsWith("multi-")
+          ? bank.filter((q) => chIds.includes(q.chapterId))
+          : bank.filter((question) => question.chapterId === quizId)
 
     setSelectedQuizId(quizId)
     setSession(buildQuizSession(quizId, questionPool))
+  }
+
+  const toggleCustomChapter = (chapterId) => {
+    const next = customChapterIds.includes(chapterId)
+      ? customChapterIds.filter((id) => id !== chapterId)
+      : [...customChapterIds, chapterId]
+    setCustomChapterIds(next)
+    if (next.length > 0) {
+      const multiId = `multi-${next.length}ch`
+      startQuiz(multiId, sourceFilter, next)
+    }
   }
 
   const selectAnswer = (answer) => {
@@ -146,27 +186,99 @@ export function QuizView({
       <section className="panel px-5 py-6 sm:px-6">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
-            <p className="eyebrow">Quiz mode</p>
+            <p className="eyebrow">Quiz & Test Mode</p>
             <h2 className="font-display text-3xl font-semibold text-slate-900">
-              Practice with immediate feedback
+              Single-chapter, multi-chapter, or full course tests
             </h2>
-            <p className="mt-3 text-sm leading-7 text-slate-600 sm:text-base">
-              Choose a chapter quiz or run a mixed review. Each attempt now
-              pulls a fresh random set from the available pool so repeat runs
-              feel less repetitive.
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Select a single chapter, combine multiple chapters, or run a mixed review across verbatim course material or supplemental packs.
             </p>
           </div>
-          <div className="rounded-[24px] bg-[linear-gradient(135deg,_rgba(236,250,248,0.96),_rgba(232,244,255,0.88))] px-4 py-4">
+          <div className="rounded-[24px] bg-teal-50/90 px-4 py-3.5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
-              Best score
+              Best saved grade
             </p>
-            <p className="mt-2 text-sm font-semibold text-slate-900">
-              {bestScore}% on{" "}
-              {availableQuizzes.find((quiz) => quiz.id === selectedQuizId)?.label}
+            <p className="mt-1.5 text-sm font-semibold text-slate-900">
+              {bestScore}% ({computeLetterGrade(bestScore).letter}) on{" "}
+              {availableQuizzes.find((quiz) => quiz.id === selectedQuizId)?.label ?? "Custom Multi-Chapter"}
             </p>
           </div>
         </div>
-        <div className="mt-5 inline-flex items-center rounded-full bg-[rgba(31,109,112,0.08)] p-1">
+
+        {/* Material Source Filter + Multi-Chapter Picker */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+          <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Quiz material source">
+            {[
+              ["course", "Course Material Only (Book)"],
+              ["supplemental", "Supplemental Only"],
+              ["all", "Both (Clearly Labeled)"],
+            ].map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={sourceFilter === id}
+                onClick={() => {
+                  setSourceFilter(id)
+                  startQuiz("mixed", id)
+                }}
+                className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+                  sourceFilter === id
+                    ? "bg-[var(--ink-strong)] text-white"
+                    : "border border-slate-200 bg-white text-slate-700"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMultiPickerOpen((v) => !v)}
+            className="action action-secondary text-xs"
+          >
+            <Layers size={14} />{" "}
+            {customChapterIds.length > 0
+              ? `Custom Test (${customChapterIds.length} Chapters)`
+              : "Build Multi-Chapter Test"}
+          </button>
+        </div>
+
+        {multiPickerOpen && (
+          <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs font-semibold text-slate-700">
+              Select any 2, 4, or custom combination of chapters to generate a multi-chapter test:
+            </p>
+            <div className="mt-2.5 grid gap-2 sm:grid-cols-3 md:grid-cols-5">
+              {chapters.map((ch) => {
+                const picked = customChapterIds.includes(ch.id)
+                return (
+                  <button
+                    key={ch.id}
+                    type="button"
+                    aria-pressed={picked}
+                    onClick={() => toggleCustomChapter(ch.id)}
+                    className={`rounded-xl border p-2.5 text-left text-xs transition ${
+                      picked
+                        ? "border-teal-700 bg-teal-50/90 font-semibold text-slate-900"
+                        : "border-slate-200 bg-white text-slate-600"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-slate-900">Ch. {ch.number}</span>
+                      <span className="text-[10px]">
+                        {ch.sourceType === "supplemental" ? "Suppl." : "Course"}
+                      </span>
+                    </div>
+                    <span className="mt-1 block truncate">{ch.title}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-4 inline-flex items-center rounded-full bg-[rgba(31,109,112,0.08)] p-1">
           {[
             { id: "classic", label: "Classic banks" },
             { id: "engine", label: "Engine modes" },
@@ -192,172 +304,194 @@ export function QuizView({
       ) : null}
 
       {quizTab === "classic" ? (
-      <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
-        <div className="panel px-4 py-4 sm:px-5">
-          <h3 className="text-lg font-semibold text-slate-900">Quiz banks</h3>
-          <div className="mt-4 space-y-3">
-            {availableQuizzes.map((quiz) => {
-              const active = quiz.id === selectedQuizId
+        <section className="grid gap-4 xl:grid-cols-[320px_minmax(0,1fr)]">
+          <div className="panel px-4 py-4 sm:px-5">
+            <h3 className="text-lg font-semibold text-slate-900">Quiz banks</h3>
+            <div className="mt-4 space-y-2.5 max-h-[540px] overflow-y-auto pr-1">
+              {availableQuizzes.map((quiz) => {
+                const active = quiz.id === selectedQuizId
 
-              return (
-                <button
-                  key={quiz.id}
-                  type="button"
-                  onClick={() => startQuiz(quiz.id)}
-                  className={`w-full rounded-[24px] border p-4 text-left transition ${
-                    active
-                      ? "border-transparent bg-[linear-gradient(135deg,_rgba(31,109,112,0.96),_rgba(18,81,99,0.96))] text-white shadow-soft"
-                      : "border-white/70 bg-white/85 text-slate-800"
-                  }`}
-                >
-                  <div className="flex items-center justify-between gap-3">
-                    <span className="text-sm font-semibold">{quiz.label}</span>
-                    <span
-                      className={`rounded-full px-3 py-1 text-xs font-semibold ${
-                        active ? "bg-white/16 text-white" : "bg-white text-slate-600"
-                      }`}
-                    >
-                      {quiz.poolCount} in pool
-                    </span>
-                  </div>
-                  <p
-                    className={`mt-2 text-sm leading-6 ${
-                      active ? "text-white/78" : "text-slate-600"
+                return (
+                  <button
+                    key={quiz.id}
+                    type="button"
+                    onClick={() => startQuiz(quiz.id)}
+                    className={`w-full rounded-[20px] border p-3.5 text-left transition ${
+                      active
+                        ? "border-teal-700 bg-teal-50/90 text-slate-900"
+                        : "border-slate-200 bg-white text-slate-800"
                     }`}
                   >
-                    {quiz.helper} • {quiz.runCount}-question run
-                  </p>
-                </button>
-              )
-            })}
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm font-semibold">{quiz.label}</span>
+                      <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-semibold text-slate-600">
+                        {quiz.poolCount} in pool
+                      </span>
+                    </div>
+                    <p className="mt-1.5 text-xs leading-5 text-slate-600">
+                      {quiz.helper} • {quiz.runCount}-question run
+                    </p>
+                  </button>
+                )
+              })}
+            </div>
           </div>
-        </div>
 
-        <div className="panel px-5 py-6 sm:px-6">
-          {!session.completed && activeQuestion ? (
-            <>
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <p className="eyebrow">
-                    Question {session.currentIndex + 1} of {session.questions.length}
-                  </p>
-                  <h3 className="text-2xl font-semibold text-slate-900">
-                    {activeQuestion.prompt}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-500">
-                    This run pulled {session.questions.length} question
-                    {session.questions.length === 1 ? "" : "s"} from a{" "}
-                    {session.poolSize}-question pool.
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-[rgba(31,109,112,0.08)] px-3 py-2 text-sm font-semibold text-[var(--ink-strong)]">
-                  {activeQuestion.type === "true-false"
-                    ? "True / False"
-                    : "Multiple choice"}
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-3">
-                {activeQuestion.options.map((option) => {
-                  const isSelected = session.selectedAnswer === option
-                  const isCorrect = session.answered && option === activeQuestion.correctAnswer
-                  const isIncorrect =
-                    session.answered && isSelected && option !== activeQuestion.correctAnswer
-
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      disabled={session.answered}
-                      onClick={() => selectAnswer(option)}
-                      className={`w-full rounded-[24px] border px-4 py-4 text-left transition ${
-                        isCorrect
-                          ? "border-emerald-300 bg-emerald-50 text-emerald-900"
-                          : isIncorrect
-                            ? "border-rose-300 bg-rose-50 text-rose-900"
-                            : isSelected
-                              ? "border-[rgba(31,109,112,0.28)] bg-[rgba(236,250,248,0.96)]"
-                              : "border-white/70 bg-white/90 text-slate-800 hover:-translate-y-0.5"
-                      }`}
-                    >
-                      <span className="text-sm font-medium leading-6">{option}</span>
-                    </button>
-                  )
-                })}
-              </div>
-
-              {session.answered ? (
-                <div className="mt-6 rounded-[28px] bg-[rgba(248,251,252,0.96)] p-5">
-                  <div className="flex items-center gap-3">
-                    {session.selectedAnswer === activeQuestion.correctAnswer ? (
-                      <CheckCircle2 className="text-emerald-600" size={20} />
-                    ) : (
-                      <XCircle className="text-rose-500" size={20} />
-                    )}
-                    <p className="text-sm font-semibold text-slate-900">
-                      {session.selectedAnswer === activeQuestion.correctAnswer
-                        ? "Correct"
-                        : `Correct answer: ${activeQuestion.correctAnswer}`}
+          <div className="panel px-5 py-6 sm:px-6">
+            {!session.completed && activeQuestion ? (
+              <>
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div>
+                    <p className="eyebrow">
+                      Question {session.currentIndex + 1} of {session.questions.length}
+                    </p>
+                    <h3 className="text-2xl font-semibold text-slate-900">
+                      {activeQuestion.prompt}
+                    </h3>
+                    <p className="mt-2 text-xs text-slate-500">
+                      Pulled {session.questions.length} question
+                      {session.questions.length === 1 ? "" : "s"} from a{" "}
+                      {session.poolSize}-question pool.
                     </p>
                   </div>
-                  <p className="mt-3 text-sm leading-7 text-slate-600">
-                    {activeQuestion.explanation}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={goToNext}
-                    className="mt-5 inline-flex items-center gap-2 rounded-full bg-[linear-gradient(135deg,_rgba(31,109,112,0.95),_rgba(18,81,99,0.95))] px-4 py-3 text-sm font-semibold text-white shadow-soft"
-                  >
-                    {session.currentIndex === session.questions.length - 1
-                      ? "See results"
-                      : "Next question"}
-                    <ArrowRight size={16} />
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span
+                      className={`source-tag ${
+                        activeQuestion.sourceType === "supplemental" ? "supplemental" : ""
+                      }`}
+                    >
+                      {sourceName(activeQuestion)}
+                    </span>
+                    <div className="rounded-2xl bg-[rgba(31,109,112,0.08)] px-3 py-1.5 text-xs font-semibold text-[var(--ink-strong)]">
+                      {activeQuestion.type === "true-false"
+                        ? "True / False"
+                        : "Multiple choice"}
+                    </div>
+                  </div>
                 </div>
-              ) : null}
-            </>
-          ) : (
-            <div className="rounded-[30px] bg-[linear-gradient(135deg,_rgba(31,109,112,0.95),_rgba(18,81,99,0.96))] px-6 py-7 text-white shadow-soft">
-              <p className="eyebrow !text-white/68">Quiz complete</p>
-              <h3 className="mt-2 text-3xl font-semibold">
-                {Math.round((session.score / session.questions.length) * 100)}%
-              </h3>
-              <p className="mt-3 text-sm leading-7 text-white/80 sm:text-base">
-                You answered {session.score} out of {session.questions.length} correctly.
-                Review the explanations, then retry to strengthen recall.
-              </p>
 
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-[24px] bg-white/12 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/68">
-                    Last run
-                  </p>
-                  <p className="mt-2 text-xl font-semibold text-white">
-                    {Math.round((session.score / session.questions.length) * 100)}%
-                  </p>
+                <div className="mt-6 space-y-3">
+                  {activeQuestion.options.map((option) => {
+                    const isSelected = session.selectedAnswer === option
+                    const isCorrect =
+                      session.answered && option === activeQuestion.correctAnswer
+                    const isIncorrect =
+                      session.answered &&
+                      isSelected &&
+                      option !== activeQuestion.correctAnswer
+
+                    return (
+                      <button
+                        key={option}
+                        type="button"
+                        disabled={session.answered}
+                        onClick={() => selectAnswer(option)}
+                        className={`w-full rounded-[20px] border px-4 py-3.5 text-left transition ${
+                          isCorrect
+                            ? "border-emerald-300 bg-emerald-50 text-emerald-900 font-semibold"
+                            : isIncorrect
+                              ? "border-rose-300 bg-rose-50 text-rose-900"
+                              : isSelected
+                                ? "border-teal-600 bg-teal-50/80"
+                                : "border-slate-200 bg-white text-slate-800 hover:border-teal-500"
+                        }`}
+                      >
+                        <span className="text-sm font-medium leading-6">{option}</span>
+                      </button>
+                    )
+                  })}
                 </div>
-                <div className="rounded-[24px] bg-white/12 p-4">
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-white/68">
-                    Best saved
-                  </p>
-                  <p className="mt-2 text-xl font-semibold text-white">
-                    {quizHistory[selectedQuizId]?.bestPercent ?? 0}%
-                  </p>
+
+                {session.answered ? (
+                  <div className="mt-6 rounded-[24px] border border-slate-200/80 bg-slate-50/90 p-5">
+                    <div className="flex items-center gap-3">
+                      {session.selectedAnswer === activeQuestion.correctAnswer ? (
+                        <CheckCircle2 className="text-emerald-600" size={20} />
+                      ) : (
+                        <XCircle className="text-rose-500" size={20} />
+                      )}
+                      <p className="text-sm font-semibold text-slate-900">
+                        {session.selectedAnswer === activeQuestion.correctAnswer
+                          ? "Correct"
+                          : `Correct answer: ${activeQuestion.correctAnswer}`}
+                      </p>
+                    </div>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">
+                      {activeQuestion.explanation}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={goToNext}
+                      className="action mt-5"
+                    >
+                      {session.currentIndex === session.questions.length - 1
+                        ? "See results & grade"
+                        : "Next question"}
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <div className="rounded-[28px] border border-slate-200 bg-white p-6">
+                <p className="eyebrow">Quiz complete</p>
+                <div className="mt-2 flex items-center gap-4">
+                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-teal-50 text-2xl font-bold text-teal-900">
+                    {
+                      computeLetterGrade(
+                        Math.round(
+                          (session.score / Math.max(1, session.questions.length)) * 100,
+                        ),
+                      ).letter
+                    }
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-semibold text-slate-900">
+                      {Math.round(
+                        (session.score / Math.max(1, session.questions.length)) * 100,
+                      )}
+                      %
+                    </h3>
+                    <p className="mt-1 text-sm text-slate-600">
+                      You answered {session.score} out of {session.questions.length} correctly.
+                    </p>
+                  </div>
                 </div>
+
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      Last run
+                    </p>
+                    <p className="mt-1.5 text-xl font-semibold text-slate-900">
+                      {Math.round(
+                        (session.score / Math.max(1, session.questions.length)) * 100,
+                      )}
+                      %
+                    </p>
+                  </div>
+                  <div className="rounded-2xl bg-slate-50 p-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                      Best saved
+                    </p>
+                    <p className="mt-1.5 text-xl font-semibold text-slate-900">
+                      {quizHistory[selectedQuizId]?.bestPercent ?? 0}%
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={restartCurrentQuiz}
+                  className="action mt-5"
+                >
+                  <RotateCcw size={16} />
+                  Retry quiz
+                </button>
               </div>
-
-              <button
-                type="button"
-                onClick={restartCurrentQuiz}
-                className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-3 text-sm font-semibold text-white"
-              >
-                <RotateCcw size={16} />
-                Retry quiz
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
+            )}
+          </div>
+        </section>
       ) : null}
     </div>
   )

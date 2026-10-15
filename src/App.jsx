@@ -90,6 +90,7 @@ function App() {
   )
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   const [atlasInitialSystem, setAtlasInitialSystem] = useState(null)
+  const [initialPracticeActivity, setInitialPracticeActivity] = useState("questions")
   const importedChapters = studyState.importedChapters ?? []
 
   // Merge confirmed course chapters (1-4, 6-9), user imports, and standard A&P preview packs (5, 10-15)
@@ -403,8 +404,36 @@ function App() {
           {["bones", "quiz"].includes(activeSection) && <div className="course-ribbon"><span className="source-tag">Course-based study material</span><p>Preserved chapter content and practice packs. Your instructor determines exam scope.</p>{activeSection === "quiz" && <button className="action action-secondary" onClick={() => setActiveSection("practice")}>Back to practice arcade</button>}</div>}
           <Suspense fallback={<div className="panel p-6" role="status">Preparing your study tools…</div>}>
 
-            {activeSection === "dashboard" && <StudyDesk chapters={courseChapters} allChapters={chapters} metrics={metrics} studyState={studyState} onNavigate={setActiveSection} onSelectChapter={setSelectedChapter} />}
-            {activeSection === "practice" && <PracticeArcade key={selectedChapter.id} initialChapterId={selectedChapter.id} chapters={readyChapters} questions={quizQuestionBank} flashcards={flashcards} progress={studyState.practiceProgress} onSaveResult={savePractice} onOpenAnatomy={() => setActiveSection("human-body")} onOpenCourseDrills={() => setActiveSection("quiz")} />}
+            {activeSection === "dashboard" && (
+              <StudyDesk
+                chapters={courseChapters}
+                allChapters={chapters}
+                metrics={metrics}
+                studyState={studyState}
+                onNavigate={setActiveSection}
+                onSelectChapter={setSelectedChapter}
+                onLaunchPracticeActivity={(act) => {
+                  setInitialPracticeActivity(act)
+                  setActiveSection("practice")
+                }}
+              />
+            )}
+            {activeSection === "practice" && (
+              <PracticeArcade
+                key={`${selectedChapter.id}-${initialPracticeActivity}`}
+                initialChapterId={selectedChapter.id}
+                initialActivity={initialPracticeActivity}
+                chapters={readyChapters}
+                questions={quizQuestionBank}
+                flashcards={flashcards}
+                progress={studyState.practiceProgress}
+                quizHistory={studyState.quizHistory}
+                onSaveResult={savePractice}
+                onOpenAnatomy={() => setActiveSection("human-body")}
+                onExploreChapterIn3D={openChapterIn3D}
+                onOpenCourseDrills={() => setActiveSection("quiz")}
+              />
+            )}
             {studyState.activeSection === "chapters" ? (
               <ChaptersView
                 chapters={chapters}

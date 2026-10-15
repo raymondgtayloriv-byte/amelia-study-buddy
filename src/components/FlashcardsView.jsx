@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Check, ChevronLeft, ChevronRight, RotateCcw, Shuffle } from "lucide-react"
+import { Check, ChevronLeft, ChevronRight, Layers, RotateCcw, Shuffle } from "lucide-react"
 
 const sourceOf = (card) => (card.sourceType === "supplemental" ? "supplemental" : "course")
 const chapterLabel = (chapter, chapterId) =>
@@ -25,7 +25,9 @@ export function FlashcardsView({
   chapters = [],
 }) {
   const [selectedChapter, setSelectedChapter] = useState("all")
-  const [selectedSource, setSelectedSource] = useState("all")
+  const [customChapterIds, setCustomChapterIds] = useState([])
+  const [multiPickerOpen, setMultiPickerOpen] = useState(false)
+  const [selectedSource, setSelectedSource] = useState("course")
   const [activeCategory, setActiveCategory] = useState("all")
   const [studySet, setStudySet] = useState("learning")
   const [activeIndex, setActiveIndex] = useState(0)
@@ -43,11 +45,16 @@ export function FlashcardsView({
     }))
   }, [chapters, flashcards])
 
-  const chapterSourceCards = flashcards.filter(
-    (card) =>
-      (selectedChapter === "all" || card.chapterId === selectedChapter) &&
-      (selectedSource === "all" || sourceOf(card) === selectedSource),
-  )
+  const chapterSourceCards = flashcards.filter((card) => {
+    const inChapter =
+      selectedChapter === "all"
+        ? true
+        : selectedChapter === "multi"
+          ? customChapterIds.includes(card.chapterId)
+          : card.chapterId === selectedChapter
+    const inSource = selectedSource === "all" || sourceOf(card) === selectedSource
+    return inChapter && inSource
+  })
   const categories = [...new Set(chapterSourceCards.map((card) => card.category || "General"))]
   const scopedCards = chapterSourceCards.filter(
     (card) => activeCategory === "all" || (card.category || "General") === activeCategory,
@@ -69,9 +76,21 @@ export function FlashcardsView({
     : 0
   const currentChapter =
     currentCard && chapters.find((chapter) => chapter.id === currentCard.chapterId)
+
   const updateFilter = (setter) => (event) => {
     setter(event.target.value)
     if (setter !== setActiveCategory) setActiveCategory("all")
+    setActiveIndex(0)
+    setFlipped(false)
+    setCardOrder(null)
+  }
+
+  function toggleCustomChapter(chId) {
+    setCustomChapterIds((curr) => {
+      const next = curr.includes(chId) ? curr.filter((id) => id !== chId) : [...curr, chId]
+      setSelectedChapter(next.length > 0 ? "multi" : "all")
+      return next
+    })
     setActiveIndex(0)
     setFlipped(false)
     setCardOrder(null)
@@ -167,24 +186,95 @@ export function FlashcardsView({
           </div>
         </div>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        {/* Prominent Material Source Toggle */}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+          <div className="flex flex-wrap gap-1.5" role="group" aria-label="Flashcard material source">
+            {[
+              ["course", "Course Material Only (Book)"],
+              ["supplemental", "Supplemental Only"],
+              ["all", "Both (Clearly Labeled)"],
+            ].map(([id, label]) => (
+              <button
+                key={id}
+                type="button"
+                aria-pressed={selectedSource === id}
+                onClick={() => {
+                  setSelectedSource(id)
+                  setActiveCategory("all")
+                  setActiveIndex(0)
+                  setFlipped(false)
+                  setCardOrder(null)
+                }}
+                className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
+                  selectedSource === id
+                    ? "bg-[var(--ink-strong)] text-white"
+                    : "border border-slate-200 bg-white text-slate-700"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMultiPickerOpen((v) => !v)}
+            className="action action-secondary text-xs"
+          >
+            <Layers size={14} />{" "}
+            {selectedChapter === "multi"
+              ? `${customChapterIds.length} Chapters Selected`
+              : "Select Multiple Chapters"}
+          </button>
+        </div>
+
+        {multiPickerOpen && (
+          <div className="mt-3 rounded-2xl border border-slate-200 bg-white p-4">
+            <p className="text-xs font-semibold text-slate-700">
+              Toggle any combination of chapters to include in your flashcard deck:
+            </p>
+            <div className="mt-2.5 grid gap-2 sm:grid-cols-3 md:grid-cols-5">
+              {chapters.map((ch) => {
+                const picked = customChapterIds.includes(ch.id)
+                return (
+                  <button
+                    key={ch.id}
+                    type="button"
+                    aria-pressed={picked}
+                    onClick={() => toggleCustomChapter(ch.id)}
+                    className={`rounded-xl border p-2.5 text-left text-xs transition ${
+                      picked
+                        ? "border-teal-700 bg-teal-50/90 font-semibold text-slate-900"
+                        : "border-slate-200 bg-white text-slate-600"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-slate-900">Ch. {ch.number}</span>
+                      <span className="text-[10px]">
+                        {ch.sourceType === "supplemental" ? "Suppl." : "Course"}
+                      </span>
+                    </div>
+                    <span className="mt-1 block truncate">{ch.title}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+        )}
+
+        <div className="mt-4 grid gap-3 sm:grid-cols-3">
           <label className="field">
             <span>Chapter</span>
             <select value={selectedChapter} onChange={updateFilter(setSelectedChapter)}>
-              <option value="all">All 15 chapters</option>
+              <option value="all">All chapters in source filter</option>
+              {customChapterIds.length > 0 && (
+                <option value="multi">Custom ({customChapterIds.length} chapters)</option>
+              )}
               {chapterOptions.map((chapter) => (
                 <option key={chapter.id} value={chapter.id}>
                   {chapter.label}
                 </option>
               ))}
-            </select>
-          </label>
-          <label className="field">
-            <span>Material source</span>
-            <select value={selectedSource} onChange={updateFilter(setSelectedSource)}>
-              <option value="all">All sources ({flashcards.length})</option>
-              <option value="course">Course material</option>
-              <option value="supplemental">Supplemental / Preview</option>
             </select>
           </label>
           <label className="field">
@@ -217,10 +307,12 @@ export function FlashcardsView({
                 ? chapterLabel(currentChapter, currentCard.chapterId)
                 : selectedChapter === "all"
                   ? "All chapters"
-                  : chapterLabel(
-                      chapters.find((chapter) => chapter.id === selectedChapter),
-                      selectedChapter,
-                    )}
+                  : selectedChapter === "multi"
+                    ? `${customChapterIds.length} selected chapters`
+                    : chapterLabel(
+                        chapters.find((chapter) => chapter.id === selectedChapter),
+                        selectedChapter,
+                      )}
             </h3>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -249,7 +341,9 @@ export function FlashcardsView({
                     sourceOf(currentCard) === "supplemental" ? "supplemental" : ""
                   }`}
                 >
-                  {sourceOf(currentCard) === "supplemental" ? "Preview / Supplemental" : "Course material"}
+                  {sourceOf(currentCard) === "supplemental"
+                    ? "Supplemental / Preview"
+                    : "Course Material (Book)"}
                 </span>
                 {currentCard.category && (
                   <span className="text-xs font-medium text-slate-500">
@@ -288,7 +382,9 @@ export function FlashcardsView({
                 </span>
               )}
               <span className={`mt-4 text-xs ${flipped ? "text-white/75" : "text-slate-500"}`}>
-                {flipped ? "Click or press Space to flip back." : "Click or press Space to reveal answer."}
+                {flipped
+                  ? "Click or press Space to flip back."
+                  : "Click or press Space to reveal answer."}
               </span>
             </button>
 
@@ -343,22 +439,38 @@ export function FlashcardsView({
             <p className="mt-1.5 text-xs leading-5 text-slate-600">
               {scopedCards.length > 0 && studySet === "learning"
                 ? "Switch Deck to All cards to review them again."
-                : "Choose All sources or another chapter to load flashcards."}
+                : "Switch the Material Source toggle above to Both (Clearly Labeled) to include supplemental preview cards."}
             </p>
-            {scopedCards.length > 0 && studySet === "learning" && (
-              <button
-                type="button"
-                className="action mt-3"
-                onClick={() => {
-                  setStudySet("all")
-                  setActiveIndex(0)
-                  setFlipped(false)
-                  setCardOrder(null)
-                }}
-              >
-                Show all cards
-              </button>
-            )}
+            <div className="mt-3 flex flex-wrap gap-2">
+              {scopedCards.length > 0 && studySet === "learning" && (
+                <button
+                  type="button"
+                  className="action"
+                  onClick={() => {
+                    setStudySet("all")
+                    setActiveIndex(0)
+                    setFlipped(false)
+                    setCardOrder(null)
+                  }}
+                >
+                  Show all cards
+                </button>
+              )}
+              {selectedSource !== "all" && (
+                <button
+                  type="button"
+                  className="action action-secondary"
+                  onClick={() => {
+                    setSelectedSource("all")
+                    setActiveIndex(0)
+                    setFlipped(false)
+                    setCardOrder(null)
+                  }}
+                >
+                  Include all sources
+                </button>
+              )}
+            </div>
           </div>
         )}
       </section>

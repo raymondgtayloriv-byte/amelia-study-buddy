@@ -52,7 +52,7 @@ export function HumanBodyView({
   const [mode, setMode] = useState("explore")
   const [selection, setSelection] = useState(null)
   const [query, setQuery] = useState("")
-  const [systems, setSystems] = useState([])
+  const [systems, setSystems] = useState(() => (initialSystem ? [initialSystem] : []))
   const [wide, setWide] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [hudMinimized, setHudMinimized] = useState(false)
@@ -204,11 +204,31 @@ export function HumanBodyView({
 
   useEffect(() => {
     if (!ready || !initialSystem) return
-    setMode("explore")
-    setSystems([initialSystem])
     send("systems", { systems: [initialSystem] })
     onClearInitialSystem?.()
   }, [ready, initialSystem, onClearInitialSystem])
+
+  async function toggleFullscreen() {
+    if (isFullscreen) {
+      if (document.fullscreenElement) {
+        try {
+          await document.exitFullscreen()
+        } catch {
+          // Ignore exit errors
+        }
+      }
+      setIsFullscreen(false)
+      return
+    }
+    setIsFullscreen(true)
+    if (studio.current?.requestFullscreen) {
+      try {
+        await studio.current.requestFullscreen()
+      } catch {
+        // Fallback CSS fullscreen (.is-fullscreen) remains active even if native API is blocked
+      }
+    }
+  }
 
   useEffect(() => {
     const onFsChange = () => {
@@ -286,28 +306,6 @@ export function HumanBodyView({
   function flipHudSide() {
     setHudSide((prev) => (prev === "right" ? "left" : "right"))
     setHudOffset({ x: 0, y: 0 })
-  }
-
-  async function toggleFullscreen() {
-    if (isFullscreen) {
-      if (document.fullscreenElement) {
-        try {
-          await document.exitFullscreen()
-        } catch {
-          // Ignore exit errors
-        }
-      }
-      setIsFullscreen(false)
-      return
-    }
-    setIsFullscreen(true)
-    if (studio.current?.requestFullscreen) {
-      try {
-        await studio.current.requestFullscreen()
-      } catch {
-        // Fallback CSS fullscreen (.is-fullscreen) remains active even if native API is blocked
-      }
-    }
   }
 
   function computeHuntSystems(target, contextMode = huntContext) {
