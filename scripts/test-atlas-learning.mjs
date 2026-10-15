@@ -4,7 +4,12 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import {
   atlasNameMatches,
+  buildAtlasChoices,
   buildAtlasTargets,
+  buildCourseBoneTargets,
+  buildOrganNeuroTargets,
+  evaluateAtlasRecall,
+  getAtlasHint,
   selectionMatchesConcept,
 } from "../src/lib/atlasLearning.js"
 import { packBonesCh7 } from "../src/data/packs/pack-bones-ch7.js"
@@ -25,6 +30,11 @@ const targets = buildAtlasTargets(atlas)
 assert.equal(targets.length, 12, "all curated real-catalog challenges should resolve")
 assert.equal(new Set(targets.map((item) => item.id)).size, targets.length, "challenge concepts should be distinct")
 
+const courseBonePool = buildCourseBoneTargets(atlas)
+assert.equal(courseBonePool.length, 49, "all 49 BIOL 2401 skeletal targets should resolve in the 3D atlas")
+const organNeuroPool = buildOrganNeuroTargets(atlas)
+assert.equal(organNeuroPool.length, 28, "all 28 organ and neuro targets should resolve in the 3D atlas")
+
 const leftFemur = concept("left femur")
 const rightFemur = concept("right femur")
 assert.ok(leftFemur?.elements.length, "the catalog should include left femur mesh references")
@@ -43,6 +53,13 @@ assert.equal(atlasNameMatches("  LEFT   FEMUR ", "left femur"), true, "typed rec
 assert.equal(atlasNameMatches("right femur", "left femur"), false, "typed recall should retain laterality")
 assert.equal(atlasNameMatches("femur", "left femur"), false, "typed recall should require the named laterality")
 
+assert.equal(evaluateAtlasRecall("left scapula", "left scapula").correct, true, "exact match should be correct")
+assert.equal(evaluateAtlasRecall("scapula", "left scapula").kind, "laterality", "missing laterality should prompt for left/right")
+assert.equal(evaluateAtlasRecall("right scapula", "left scapula").kind, "contralateral", "opposite side should flag contralateral")
+assert.equal(evaluateAtlasRecall("left scapla", "left scapula").correct, true, "minor spelling typo should be accepted")
+assert.equal(buildAtlasChoices(leftFemur, targets, 4).length, 4, "4 choices should be built for quick-pick recall")
+assert.equal(getAtlasHint(concept("left scapula"), atlas).view, "back", "scapula hint should select posterior camera angle")
+
 const courseBones = packBonesCh7.bones
 const supportedBones = courseBones.filter((bone) => SUPPORTED_COURSE_BONE_IDS.includes(bone.boneId))
 const courseTargets = supportedBones.map((bone) => resolveCourseAtlasTarget(bone, atlas))
@@ -60,4 +77,4 @@ const clickQuestions = generateClickBone(packBonesCh7, { count: courseBones.leng
 assert.equal(clickQuestions.questions.length, supportedBones.length, "click-the-bone must omit course structures without precise atlas mappings")
 assert.ok(clickQuestions.questions.every((question) => SUPPORTED_COURSE_BONE_IDS.includes(question.grading.boneId)), "every generated click target must resolve in the atlas")
 
-console.log(`Atlas learning checks passed (${targets.length} general targets; ${supportedBones.length}/${courseBones.length} course bone targets mapped precisely).`)
+console.log(`Atlas learning checks passed (${targets.length} general targets; ${courseBonePool.length} 3D course bone targets; ${supportedBones.length}/${courseBones.length} course bone targets mapped precisely).`)
