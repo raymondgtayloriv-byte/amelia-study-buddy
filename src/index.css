@@ -7,13 +7,13 @@
 }
 
 :root {
-  --bg-start: #f4f6f5;
-  --bg-end: #f4f6f5;
-  --panel: #ffffff;
+  --bg-start: #e8efed;
+  --bg-end: #e2ebe8;
+  --panel: #f6f9f7;
   --ink-strong: #186c64;
   --studio-ink: #172e32;
   --studio-muted: #52656a;
-  --studio-border: #dce5e3;
+  --studio-border: #cddad7;
   --studio-coral: #e99a83;
   --studio-gold: #d9bb76;
   --studio-focus: #186c64;
@@ -189,7 +189,9 @@
 .progress-track span { height: 100%; display: block; background: var(--studio-coral); }
 .sidebar-progress-meta { display: flex; justify-content: space-between; font-size: 10px; color: #aac1bc; margin-top: 10px; gap: 6px; }
 .sidebar-footer { background: none; border: 0; border-top: 1px solid #ffffff18; color: #e3eae8; padding: 20px 10px 0; text-align: left; font-size: 12px; }
-.sidebar-footer svg { float: right; color: var(--studio-coral); }
+.sidebar-footer-heading { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; color: #eef5f3; }
+.sidebar-footer svg { color: var(--studio-coral); flex-shrink: 0; transition: transform .15s ease; }
+.sidebar-footer:hover svg { transform: translate(2px, -2px); }
 .sidebar-footer span { display: block; margin-top: 8px; font-size: 10px; color: #a7bfba; }
 .workspace { flex: 1; min-width: 0; max-width: 1700px; margin-inline: auto; }
 .workspace-header { min-height: 100px; padding: 23px 32px; display: flex; justify-content: space-between; align-items: center; gap: 16px; border-bottom: 1px solid var(--studio-border); background: #ffffff80; }
@@ -619,4 +621,110 @@
     right: 10px;
     border-radius: 14px;
   }
+}
+
+/* Phase 2 Soft Light Mode & High-Contrast Dark Mode Fixes */
+:root:not([data-theme=dark]) :is(.bg-white, .desk-stats, .path-step, .atlas-workbench, .action-secondary, .field input, .field select, .field textarea, .studio-mode) {
+  background-color: #f6f9f7;
+}
+:root:not([data-theme=dark]) .workspace-header {
+  background: rgba(242, 247, 245, 0.88);
+}
+:root:not([data-theme=dark]) :is([class*="bg-white/8"], [class*="bg-white/9"]) {
+  background-color: rgba(246, 249, 247, 0.92);
+}
+
+/* Archival Specimen Stage: keeps transparent black-ink textbook diagrams 100% legible in Dark & Light modes */
+.specimen-stage {
+  position: relative;
+  overflow: hidden;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #eef3f0 0%, #e4ece9 100%) !important;
+  border: 1px solid #c5d4d0 !important;
+  color: #172e32 !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+.specimen-stage.is-dark-stage {
+  background: linear-gradient(135deg, #16262c 0%, #1d3138 100%) !important;
+  border-color: #344b50 !important;
+  color: #e2ece8 !important;
+}
+.specimen-stage-toolbar {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 10;
+  display: flex;
+  gap: 6px;
+}
+.specimen-stage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 46, 50, 0.16);
+  background: rgba(246, 249, 247, 0.92);
+  color: #172e32 !important;
+  font-size: 11px;
+  font-weight: 700;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+}
+.specimen-stage-btn:hover {
+  background: #ffffff;
+}
+.specimen-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(23, 46, 50, 0.84);
+  color: #f1f8f5 !important;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Dark mode contrast fixes for buttons, chips, and subtle rgba backgrounds */
+[data-theme=dark] [class*="bg-[rgba(31,109,112,0.08)]"],
+[data-theme=dark] [class*="bg-[rgba(31,109,112,0.1"] {
+  background-color: #243e42 !important;
+  color: #d8ece7 !important;
+}
+[data-theme=dark] [class*="text-[var(--ink-strong)]"] {
+  color: #8ce0cb !important;
+}
+[data-theme=dark] .atlas-toolbar button,
+[data-theme=dark] .atlas-toolbar a {
+  color: #d6e8e3;
+}
+[data-theme=dark] .atlas-toolbar > span {
+  color: #cbe0da;
+}
+[data-theme=dark] .atlas-quick-modes {
+  background: rgba(255, 255, 255, 0.08);
+}
+[data-theme=dark] .atlas-toolbar button.atlas-mode-chip {
+  color: #d6e8e3;
+}
+[data-theme=dark] .atlas-toolbar button.atlas-mode-chip.is-active {
+  background: #28695c;
+  color: #ffffff;
+}
+[data-theme=dark] .desk-stats > div {
+  border-color: var(--studio-border);
+}
+[data-theme=dark] .desk-stats strong {
+  color: #f0f7f5;
+}
+[data-theme=dark] .desk-stats small,
+[data-theme=dark] .desk-stats span {
+  color: #b8ccc8;
 }

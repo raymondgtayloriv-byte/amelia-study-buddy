@@ -19,3 +19,23 @@
  .layers-panel.mobile-open{top:auto;left:12px;right:12px;bottom:calc(120px + env(safe-area-inset-bottom));width:auto;max-height:calc(100dvh - 240px)}
  .detail-sheet{right:12px!important;left:12px!important;top:auto!important;bottom:calc(118px + env(safe-area-inset-bottom))!important;width:auto!important;max-width:none!important}
 }
+
+/* Phase 2 Dark & Soft-Light Contrast Refinements */
+:root{background:#ecefee;--background:#ecefee;--card:#f6f9f7;--popover:#f6f9f7}
+.glass{background:#f6f9f7eb;border-color:#1825361c}
+.view-controls{border:1px solid #18253624;background:#f6f9f7f2}
+.view-controls button{color:#2c3e4c;font-weight:600}
+.view-controls .active{background:#186c64!important;color:#ffffff!important;box-shadow:0 2px 6px rgba(24,108,100,.28)}
+[data-theme=dark] .glass,[data-theme=dark] .layers-panel.mobile-open,[data-theme=dark] .detail-sheet,[data-theme=dark] .bottom-dock,[data-theme=dark] .view-controls{background:#1b2d34f5!important;border-color:#567a79aa!important;box-shadow:0 14px 36px rgba(0,0,0,.38)}
+[data-theme=dark] .view-controls button{color:#e2ece8!important;font-weight:600;opacity:1}
+[data-theme=dark] .view-controls button:hover:not(:disabled){background:#2c474d!important;color:#ffffff!important}
+[data-theme=dark] .view-controls button.active{background:#28695c!important;color:#ffffff!important;box-shadow:0 0 0 1px #72cbb7!important}
+[data-theme=dark] .view-controls button:disabled{opacity:.35!important;color:#8aa49f!important}
+[data-theme=dark] .view-controls i{background:#567a7966!important}
+[data-theme=dark] .top-actions button{background:#1f343cf2!important;border-color:#567a7999!important;color:#e6f2ee!important;font-weight:500}
+[data-theme=dark] .top-actions button:hover{background:#2b4750!important;color:#ffffff!important}
+[data-theme=dark] .bottom-dock .dock-layers,[data-theme=dark] .bottom-dock .dock-reset{background:#284148!important;border:1px solid #567a7966!important;color:#e6f2ee!important;font-weight:500}
+[data-theme=dark] .bottom-dock .dock-layers:hover,[data-theme=dark] .bottom-dock .dock-reset:hover{background:#34555d!important;color:#ffffff!important}
+[data-theme=dark] .explode-label{color:#e2ece8!important;font-weight:600}
+[data-theme=dark] .explode-label output{background:#284148!important;border-color:#567a7988!important;color:#ffffff!important;font-weight:700}
+[data-theme=dark] .scene-caption{color:#cfe0dc!important;font-weight:600}
