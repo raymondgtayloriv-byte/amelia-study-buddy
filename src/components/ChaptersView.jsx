@@ -1,6 +1,5 @@
 import { useState } from "react"
 import {
-  ArrowRight,
   BookCheck,
   Brain,
   CheckCircle2,
@@ -9,12 +8,15 @@ import {
   Eye,
   EyeOff,
   FolderSync,
+  Image as ImageIcon,
   Layers3,
+  Maximize2,
   PersonStanding,
   Search,
   Sparkles,
   XCircle,
 } from "lucide-react"
+import { getFiguresForChapter } from "../data/courseVisuals"
 import { CHAPTER_ATLAS_SYSTEM, VOCABULARY_DEFINITIONS } from "../data/supplementalChapters"
 
 const confidenceOptions = [
@@ -42,6 +44,9 @@ export function ChaptersView({
   const [revealedCards, setRevealedCards] = useState({})
   const [quizPicks, setQuizPicks] = useState({})
   const [revealedReviews, setRevealedReviews] = useState({})
+  const [zoomedFigure, setZoomedFigure] = useState(null)
+  const [revealedFigureTakeaways, setRevealedFigureTakeaways] = useState({})
+  const [darkStageMap, setDarkStageMap] = useState({})
 
   const filteredChapters = chapters.filter((chapter) => {
     const matchesScope =
@@ -66,6 +71,7 @@ export function ChaptersView({
       question.chapterId === selectedChapter.id ||
       selectedChapter.quizIds?.includes(question.id),
   )
+  const chapterFigures = getFiguresForChapter(selectedChapter.id)
 
   const courseCount = chapters.filter((c) => c.sourceType !== "supplemental").length
   const previewCount = chapters.filter((c) => c.sourceType === "supplemental").length
@@ -87,6 +93,68 @@ export function ChaptersView({
     )
     if (matchingCard) return `${matchingCard.front} → ${matchingCard.back}`
     return `Core term in Chapter ${selectedChapter.number} (${selectedChapter.title}). Practice this concept in Flashcards or Practice Arcade.`
+  }
+
+  function renderFigureCard(fig) {
+    const isDark = Boolean(darkStageMap[fig.id])
+    const takeawayOpen = Boolean(revealedFigureTakeaways[fig.id])
+    return (
+      <article
+        key={fig.id}
+        className="rounded-2xl border border-slate-200/80 bg-white p-4 flex flex-col justify-between gap-3"
+      >
+        <div>
+          <div className={`specimen-stage ${isDark ? "is-dark-stage" : ""}`}>
+            <span className="specimen-badge">{fig.sourceBadge}</span>
+            <div className="specimen-stage-toolbar">
+              <button
+                type="button"
+                className="specimen-stage-btn"
+                onClick={() => setDarkStageMap((prev) => ({ ...prev, [fig.id]: !prev[fig.id] }))}
+              >
+                {isDark ? "Light mat" : "Dark mat"}
+              </button>
+              <button
+                type="button"
+                className="specimen-stage-btn"
+                onClick={() => setZoomedFigure(fig)}
+              >
+                <Maximize2 size={11} /> Zoom
+              </button>
+            </div>
+            <img
+              src={fig.src}
+              alt={fig.title}
+              onClick={() => setZoomedFigure(fig)}
+              className="h-56 w-full cursor-zoom-in object-contain p-3 pt-10"
+              loading="lazy"
+            />
+          </div>
+          <h4 className="mt-3 text-base font-semibold text-slate-900">{fig.title}</h4>
+          <p className="mt-1 text-xs leading-5 text-slate-600">{fig.caption}</p>
+        </div>
+
+        {fig.keyTakeaway && (
+          <div>
+            <button
+              type="button"
+              onClick={() =>
+                setRevealedFigureTakeaways((prev) => ({ ...prev, [fig.id]: !prev[fig.id] }))
+              }
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--ink-strong)] hover:underline"
+            >
+              {takeawayOpen ? <EyeOff size={13} /> : <Eye size={13} />}
+              {takeawayOpen ? "Hide exam takeaway" : "Click for exam takeaway"}
+            </button>
+            {takeawayOpen && (
+              <p className="mt-2 rounded-xl bg-teal-50/80 px-3 py-2 text-xs font-medium leading-5 text-teal-950">
+                {fig.keyTakeaway}
+              </p>
+            )}
+          </div>
+        )}
+      </article>
+    )
   }
 
   return (
@@ -152,6 +220,7 @@ export function ChaptersView({
             const active = chapter.id === selectedChapter.id
             const chapterState = chapterProgress[chapter.id] ?? {}
             const isPreview = chapter.sourceType === "supplemental"
+            const figCount = getFiguresForChapter(chapter.id).length
 
             return (
               <button
@@ -173,6 +242,16 @@ export function ChaptersView({
                     Ch {String(chapter.number).padStart(2, "0")}
                   </span>
                   <div className="flex items-center gap-1.5">
+                    {figCount > 1 && (
+                      <span
+                        className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
+                          active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                        }`}
+                        title={`${figCount} textbook/lecture figures`}
+                      >
+                        <ImageIcon size={10} /> {figCount}
+                      </span>
+                    )}
                     {chapterState.completed && (
                       <CheckCircle2
                         size={14}
@@ -320,6 +399,7 @@ export function ChaptersView({
             >
               {[
                 ["essentials", "Essentials & Takeaways"],
+                ["figures", `Figures & Diagrams (${chapterFigures.length})`],
                 ["vocab", `Key Terms (${selectedChapter.vocabulary?.length ?? 0})`],
                 [
                   "check",
@@ -369,6 +449,32 @@ export function ChaptersView({
                   </p>
                 </article>
 
+                {/* Featured visual strip inside Essentials */}
+                {chapterFigures.length > 0 && (
+                  <div className="rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5">
+                    <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
+                      <div>
+                        <span className="eyebrow">Visual Reference</span>
+                        <h3 className="text-base font-semibold text-slate-900">
+                          {chapterFigures[0].sourceBadge}s ({chapterFigures.length})
+                        </h3>
+                      </div>
+                      {chapterFigures.length > 2 && (
+                        <button
+                          type="button"
+                          onClick={() => setActiveTab("figures")}
+                          className="text-xs font-semibold text-[var(--ink-strong)] hover:underline"
+                        >
+                          View all {chapterFigures.length} figures →
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {chapterFigures.slice(0, 2).map((fig) => renderFigureCard(fig))}
+                    </div>
+                  </div>
+                )}
+
                 {selectedChapter.mustKnow?.length > 0 && (
                   <details
                     className="group rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-5"
@@ -416,6 +522,24 @@ export function ChaptersView({
               </>
             )}
 
+            {activeTab === "figures" && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <p className="text-xs text-slate-600">
+                    Click any figure to enlarge it in full resolution, or reveal its high-yield exam takeaway.
+                  </p>
+                  {selectedChapter.id === "chapter-7" && onPracticeChapter && (
+                    <span className="text-xs font-semibold text-[var(--ink-strong)]">
+                      47 total bone views available in Bone Landmarks Lab
+                    </span>
+                  )}
+                </div>
+                <div className="grid gap-4 md:grid-cols-2">
+                  {chapterFigures.map((fig) => renderFigureCard(fig))}
+                </div>
+              </div>
+            )}
+
             {activeTab === "vocab" && (
               <div className="space-y-4">
                 <p className="text-xs text-slate-500">
@@ -430,10 +554,10 @@ export function ChaptersView({
                         type="button"
                         aria-pressed={isSelected}
                         onClick={() => setActiveTerm(isSelected ? null : term)}
-                        className={`rounded-xl border px-3.5 py-2 text-xs font-semibold transition ${
+                        className={`rounded-full border px-3.5 py-2 text-xs font-semibold transition ${
                           isSelected
                             ? "border-transparent bg-[var(--ink-strong)] text-white shadow-soft"
-                            : "border-slate-200 bg-white text-slate-800 hover:border-teal-600"
+                            : "border-slate-200 bg-white text-slate-700 hover:border-teal-600"
                         }`}
                       >
                         {term}
@@ -442,17 +566,19 @@ export function ChaptersView({
                   })}
                 </div>
 
-                {activeTerm ? (
+                {activeTerm && (
                   <article
-                    className="rounded-2xl border border-teal-200 bg-teal-50/60 p-4 sm:p-5"
+                    className="rounded-2xl border border-teal-200 bg-teal-50/70 p-4 sm:p-5"
                     role="status"
                   >
                     <div className="flex items-center justify-between gap-2">
-                      <span className="eyebrow">Term definition</span>
+                      <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                        Selected Term
+                      </span>
                       <button
                         type="button"
-                        className="text-xs font-semibold text-teal-900 underline"
                         onClick={() => setActiveTerm(null)}
+                        className="text-xs font-semibold text-teal-800 hover:underline"
                       >
                         Close
                       </button>
@@ -464,128 +590,116 @@ export function ChaptersView({
                       {getTermDefinition(activeTerm)}
                     </p>
                   </article>
-                ) : (
-                  <p className="rounded-2xl border border-dashed border-slate-200 p-4 text-xs text-slate-500">
-                    Select any vocabulary pill above to inspect its meaning.
-                  </p>
                 )}
               </div>
             )}
 
             {activeTab === "check" && (
               <div className="space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs text-slate-500">
-                    Answers stay hidden so you can test yourself first. Click an option to check.
-                  </p>
-                  {Object.keys(quizPicks).length > 0 && (
-                    <button
-                      type="button"
-                      className="text-xs font-semibold text-teal-800 underline"
-                      onClick={() => setQuizPicks({})}
-                    >
-                      Reset all answers
-                    </button>
-                  )}
-                </div>
-
-                <div className="space-y-3">
-                  {relatedQuizQuestions.map((question, index) => {
-                    const picked = quizPicks[question.id]
-                    const isAnswered = Boolean(picked)
-                    const isCorrect = picked === question.correctAnswer
-
-                    return (
-                      <article
-                        key={question.id}
-                        className="rounded-2xl border border-slate-200 bg-white p-4"
-                      >
-                        <div className="flex items-center justify-between gap-2">
-                          <span className="eyebrow">Question {index + 1}</span>
-                          {isAnswered && (
-                            <span
-                              className={`inline-flex items-center gap-1 text-xs font-semibold ${
-                                isCorrect ? "text-emerald-700" : "text-amber-800"
-                              }`}
-                            >
-                              {isCorrect ? <CheckCircle2 size={14} /> : <XCircle size={14} />}
-                              {isCorrect ? "Correct" : "Review"}
-                            </span>
-                          )}
-                        </div>
-                        <p className="mt-1.5 text-sm font-semibold text-slate-900">
-                          {question.prompt}
-                        </p>
-
-                        <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                          {(question.options ?? []).map((option) => {
-                            const selected = picked === option
-                            const showRight = isAnswered && option === question.correctAnswer
-                            const showWrong = isAnswered && selected && !showRight
-                            return (
-                              <button
-                                key={option}
-                                type="button"
-                                onClick={() =>
-                                  setQuizPicks((prev) => ({ ...prev, [question.id]: option }))
-                                }
-                                className={`rounded-xl border px-3 py-2 text-left text-xs font-medium transition ${
-                                  showRight
-                                    ? "border-emerald-300 bg-emerald-50 text-emerald-900 font-semibold"
-                                    : showWrong
-                                      ? "border-rose-300 bg-rose-50 text-rose-900"
-                                      : "border-slate-200 bg-slate-50/60 text-slate-800 hover:border-teal-600"
-                                }`}
-                              >
-                                {option}
-                              </button>
-                            )
-                          })}
-                        </div>
-
-                        {isAnswered && question.explanation && (
-                          <p className="mt-3 rounded-xl bg-slate-50 p-3 text-xs leading-5 text-slate-600">
-                            <strong className="text-slate-800">Why:</strong> {question.explanation}
-                          </p>
-                        )}
-                      </article>
-                    )
-                  })}
-                </div>
-
                 {selectedChapter.reviewQuestions?.length > 0 && (
-                  <div className="pt-2 space-y-2">
-                    <h4 className="eyebrow">Open-ended reflection prompts</h4>
+                  <div className="space-y-2.5">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Concept prompts — think first, then click to check
+                    </h3>
                     {selectedChapter.reviewQuestions.map((prompt, index) => {
-                      const open = Boolean(revealedReviews[prompt])
+                      const key = `${selectedChapter.id}-rev-${index}`
+                      const open = Boolean(revealedReviews[key])
+                      const hintItem =
+                        selectedChapter.mustKnow?.[index % (selectedChapter.mustKnow?.length || 1)] ??
+                        selectedChapter.summary
                       return (
                         <div
                           key={prompt}
-                          className="rounded-2xl border border-slate-200 bg-slate-50/70 p-3.5"
+                          className="rounded-2xl border border-slate-200/80 bg-white p-4"
                         >
                           <button
                             type="button"
                             onClick={() =>
-                              setRevealedReviews((prev) => ({ ...prev, [prompt]: !open }))
+                              setRevealedReviews((prev) => ({ ...prev, [key]: !prev[key] }))
                             }
-                            className="flex w-full items-center justify-between gap-2 text-left text-xs font-semibold text-slate-800"
+                            className="flex w-full items-start justify-between gap-3 text-left"
                           >
-                            <span>
+                            <span className="text-sm font-semibold text-slate-900">
                               {index + 1}. {prompt}
                             </span>
-                            <span className="shrink-0 text-teal-800">
-                              {open ? "Hide cue" : "Study cue"}
+                            <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+                              {open ? <EyeOff size={12} /> : <Eye size={12} />}
+                              {open ? "Hide cue" : "Show cue"}
                             </span>
                           </button>
                           {open && (
-                            <p className="mt-2 text-xs leading-5 text-slate-600">
-                               Key takeaway to include:{" "}
-                              {selectedChapter.mustKnow?.[
-                                index % Math.max(1, selectedChapter.mustKnow.length)
-                              ] ?? selectedChapter.summary}
+                            <p className="mt-3 border-t border-slate-100 pt-3 text-sm leading-6 text-teal-900">
+                              <strong>Key anchor:</strong> {hintItem}
                             </p>
                           )}
                         </div>
+                      )
+                    })}
+                  </div>
+                )}
+
+                {relatedQuizQuestions.length > 0 && (
+                  <div className="space-y-3 pt-2">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-500">
+                      Interactive quick-check questions ({relatedQuizQuestions.length})
+                    </h3>
+                    {relatedQuizQuestions.map((question, index) => {
+                      const picked = quizPicks[question.id]
+                      const isCorrect = picked === question.correctAnswer
+                      return (
+                        <article
+                          key={question.id}
+                          className="rounded-2xl border border-slate-200/80 bg-white p-4"
+                        >
+                          <p className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                            Question {index + 1}
+                          </p>
+                          <p className="mt-1.5 text-sm font-semibold text-slate-900">
+                            {question.prompt}
+                          </p>
+                          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                            {(question.options ?? []).map((option) => {
+                              const selected = picked === option
+                              const showRight = picked && option === question.correctAnswer
+                              const showWrong = selected && !showRight
+                              return (
+                                <button
+                                  key={option}
+                                  type="button"
+                                  onClick={() =>
+                                    setQuizPicks((prev) => ({ ...prev, [question.id]: option }))
+                                  }
+                                  className={`rounded-xl border px-3 py-2.5 text-left text-xs font-semibold transition ${
+                                    showRight
+                                      ? "border-emerald-300 bg-emerald-50 text-emerald-900"
+                                      : showWrong
+                                        ? "border-rose-300 bg-rose-50 text-rose-900"
+                                        : "border-slate-200 bg-slate-50/70 text-slate-800 hover:border-teal-600"
+                                  }`}
+                                >
+                                  {option}
+                                </button>
+                              )
+                            })}
+                          </div>
+                          {picked && (
+                            <div className="mt-3 flex items-start gap-2 rounded-xl bg-slate-50 p-3 text-xs leading-5 text-slate-700">
+                              {isCorrect ? (
+                                <CheckCircle2 size={15} className="text-emerald-600 shrink-0 mt-0.5" />
+                              ) : (
+                                <XCircle size={15} className="text-rose-500 shrink-0 mt-0.5" />
+                              )}
+                              <div>
+                                <span className="font-semibold">
+                                  {isCorrect
+                                    ? "Correct!"
+                                    : `Answer: ${question.correctAnswer}.`}
+                                </span>{" "}
+                                {question.explanation}
+                              </div>
+                            </div>
+                          )}
+                        </article>
                       )
                     })}
                   </div>
@@ -594,15 +708,12 @@ export function ChaptersView({
             )}
 
             {activeTab === "cards" && (
-              <div className="space-y-4">
-                <p className="text-xs text-slate-500">
-                  Click any card to flip between prompt and answer.
-                </p>
-                {!relatedCards.length && (
-                  <p className="text-sm text-slate-600">
-                    No flashcards attached to this chapter yet.
+              <div className="space-y-3">
+                <div className="flex items-center justify-between gap-2">
+                  <p className="text-xs text-slate-500">
+                    Click any card below to flip between prompt and explanation.
                   </p>
-                )}
+                </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {relatedCards.map((card) => {
                     const isFlipped = Boolean(revealedCards[card.id])
@@ -611,36 +722,28 @@ export function ChaptersView({
                         key={card.id}
                         type="button"
                         onClick={() =>
-                          setRevealedCards((prev) => ({ ...prev, [card.id]: !isFlipped }))
+                          setRevealedCards((prev) => ({ ...prev, [card.id]: !prev[card.id] }))
                         }
-                        className={`flex min-h-[148px] flex-col justify-between rounded-2xl border p-4 text-left transition ${
+                        className={`rounded-2xl border p-4 text-left transition ${
                           isFlipped
-                            ? "border-teal-800 bg-[linear-gradient(145deg,_#175b68,_#1f6d70)] text-white"
-                            : "border-slate-200 bg-white text-slate-900 hover:border-teal-600"
+                            ? "border-teal-700 bg-teal-50/60 text-slate-900"
+                            : "border-slate-200/80 bg-white text-slate-900 hover:border-teal-600"
                         }`}
                       >
-                        <div className="flex items-center justify-between gap-2 w-full">
-                          <span
-                            className={`text-[10px] font-bold uppercase tracking-wider ${
-                              isFlipped ? "text-white/75" : "text-slate-400"
-                            }`}
-                          >
-                            {card.category}
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500">
+                            {card.category || "Concept"}
                           </span>
-                          <span
-                            className={`inline-flex items-center gap-1 text-[10px] font-semibold ${
-                              isFlipped ? "text-teal-100" : "text-teal-800"
-                            }`}
-                          >
-                            {isFlipped ? <EyeOff size={12} /> : <Eye size={12} />}
-                            {isFlipped ? "Answer" : "Click to reveal"}
+                          <span className="text-[11px] font-semibold text-teal-800 inline-flex items-center gap-1">
+                            {isFlipped ? "Answer" : "Click to flip"}
+                            <ChevronRight size={12} />
                           </span>
                         </div>
-                        <p className="my-3 text-sm font-semibold leading-6">
+                        <p className="mt-2.5 text-sm font-semibold leading-6">
                           {isFlipped ? card.back : card.front}
                         </p>
                         {isFlipped && card.note && (
-                          <p className="border-t border-white/20 pt-2 text-xs text-white/80">
+                          <p className="mt-2 border-t border-teal-200/60 pt-2 text-xs leading-5 text-slate-600">
                             {card.note}
                           </p>
                         )}
@@ -652,21 +755,64 @@ export function ChaptersView({
             )}
           </div>
         ) : (
-          <div className="p-6">
-            <article className="rounded-2xl bg-slate-50 p-5">
+          <div className="p-5 sm:p-6">
+            <article className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
               <h3 className="text-lg font-semibold text-slate-900">
-                Upload notes or slides for Chapter {selectedChapter.number}
+                Upload notes for this chapter
               </h3>
               <p className="mt-2 text-sm leading-6 text-slate-600">
-                Add a PowerPoint, PDF, Markdown, or JSON chapter pack to start practicing.
+                Add your instructor slides or notes to populate this unit.
               </p>
-              <button className="action mt-4" onClick={onAddMaterials}>
+              <button type="button" className="action mt-4" onClick={onAddMaterials}>
                 Add chapter materials
               </button>
             </article>
           </div>
         )}
       </section>
+
+      {/* Lightbox Modal for Zoomed Textbook Figures */}
+      {zoomedFigure && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm"
+          onClick={() => setZoomedFigure(null)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={zoomedFigure.title}
+        >
+          <div
+            className="relative max-h-[92dvh] max-w-[92vw] overflow-auto rounded-3xl bg-[#eef3f0] p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-3 flex items-start justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                  {zoomedFigure.sourceBadge}
+                </span>
+                <h3 className="text-lg font-bold text-slate-900">{zoomedFigure.title}</h3>
+                <p className="text-xs text-slate-600">{zoomedFigure.caption}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setZoomedFigure(null)}
+                className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-bold text-white"
+              >
+                Close
+              </button>
+            </div>
+            <img
+              src={zoomedFigure.src}
+              alt={zoomedFigure.title}
+              className="max-h-[72dvh] w-auto mx-auto object-contain rounded-xl"
+            />
+            {zoomedFigure.keyTakeaway && (
+              <p className="mt-3 rounded-xl bg-teal-900/10 px-4 py-2.5 text-xs font-semibold text-slate-900">
+                Exam Takeaway: {zoomedFigure.keyTakeaway}
+              </p>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
