@@ -108,3 +108,24 @@ h1 .edition{font-family:inherit;font-weight:500;font-size:10px;letter-spacing:.0
 .bottom-dock .dock-reset:hover{background:#263b4815}
 [data-theme=dark] .bottom-dock .dock-reset{background:#ffffff08;color:#d4e2dc}
 [data-theme=dark] .bottom-dock .dock-reset:hover{background:#355453}
+
+/* Unobstructed 3D studio overrides: collapsible systems drawer on all viewports & compact challenge chrome */
+.layers-panel{display:none!important}
+.layers-panel.mobile-open{display:flex!important;z-index:35;left:20px;top:116px;bottom:124px;width:256px;max-height:min(540px,calc(100dvh - 240px));padding:14px 14px 0}
+.layers-panel .panel-heading .mobile-only{display:inline-flex!important;width:34px;height:34px;min-width:34px;min-height:34px}
+.layers-panel .panel-heading .desktop-only{display:none!important}
+.bottom-dock{bottom:36px;width:min(430px,calc(100% - 28px));padding:12px 16px;gap:14px}
+.bottom-dock .dock-layers{display:flex!important;flex:0 0 60px;width:60px;height:56px;min-width:60px;min-height:56px;padding:8px;margin:0;border:0;border-radius:10px;flex-direction:column;align-items:center;justify-content:center;gap:5px;background:#263b4808;text-align:center;font-size:10px;line-height:1.2}
+.bottom-dock .dock-layers:hover{background:#263b4815}
+[data-theme=dark] .bottom-dock .dock-layers{background:#ffffff08;color:#d4e2dc}
+[data-theme=dark] .bottom-dock .dock-layers:hover{background:#355453}
+.scene-caption{bottom:124px}
+.studio.is-challenge .bottom-dock{bottom:26px;padding:9px 14px;width:min(360px,calc(100% - 28px));opacity:.92}
+.studio.is-challenge .slider-endpoints{display:none}
+.studio.is-challenge .scene-caption{bottom:104px}
+.detail-sheet{right:82px!important;width:288px!important;max-width:288px!important;top:96px!important;bottom:130px!important}
+@media(max-width:767px){
+ .layers-panel.mobile-open{top:auto;left:12px;right:12px;bottom:calc(120px + env(safe-area-inset-bottom));width:auto;max-height:calc(100dvh - 240px)}
+ .detail-sheet{right:12px!important;left:12px!important;top:auto!important;bottom:calc(118px + env(safe-area-inset-bottom))!important;width:auto!important;max-width:none!important}
+}
+
