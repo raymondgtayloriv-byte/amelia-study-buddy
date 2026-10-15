@@ -1,17 +1,167 @@
 import { ArrowRight, BookOpen, Brain, Layers3, ScanLine } from "lucide-react"
-export function StudyDesk({ chapters, metrics, studyState, onNavigate, onSelectChapter }) {
-  const next = chapters.find(chapter => !studyState.chapterProgress[chapter.id]?.completed) ?? chapters[0]
+
+export function StudyDesk({ chapters, allChapters = [], metrics, studyState, onNavigate, onSelectChapter }) {
+  const next = chapters.find((chapter) => !studyState.chapterProgress[chapter.id]?.completed) ?? chapters[0]
   const attempts = Object.values(studyState.practiceProgress ?? {})
-  const misses = attempts.flatMap(attempt => attempt.misses ?? [])
+  const misses = attempts.flatMap((attempt) => attempt.misses ?? [])
+  const previewChapters = allChapters.filter((ch) => ch.isPreviewPack)
+
   const routes = [
-    { title: "See the whole picture", description: "Pull the body apart. Find a structure. Make the connection.", icon: ScanLine, route: "human-body", number: "01", accent: "coral" },
-    { title: "Make it stick", description: "Match ideas, answer questions, then recall them without cues.", icon: Brain, route: "practice", number: "02", accent: "teal" },
-    { title: "Explain it yourself", description: "Turn a chapter into a compact guide and test your understanding.", icon: BookOpen, route: "cram", number: "03", accent: "gold" },
+    {
+      title: "3D Human Atlas",
+      description: "Full-screen 2,234-piece body explorer with visual Find It & Name It drills.",
+      icon: ScanLine,
+      route: "human-body",
+      number: "01",
+      accent: "coral",
+    },
+    {
+      title: "Practice Arcade",
+      description: "Active recall tiers, matching boards, and instant question feedback.",
+      icon: Brain,
+      route: "practice",
+      number: "02",
+      accent: "teal",
+    },
+    {
+      title: "Course Library (Ch. 1–15)",
+      description: "8 course units + 7 preview packs with click-to-reveal terms and self-checks.",
+      icon: BookOpen,
+      route: "chapters",
+      number: "03",
+      accent: "gold",
+    },
   ]
-  return <div className="space-y-5">
-    <section className="desk-welcome panel"><div><p className="eyebrow">A little curiosity goes a long way</p><h2>Learn the body.<br/><em>Build the picture.</em></h2><p>A useful session starts with one thing you can see, one thing you can explain, and one thing you can remember.</p><button className="action" onClick={() => onNavigate("human-body")}>Enter anatomy studio <ArrowRight size={17}/></button></div><div className="desk-session"><span className="eyebrow">YOUR NEXT CHAPTER</span><span className="chapter-number">{String(next?.number ?? 1).padStart(2, "0")}</span><h3>{next?.title}</h3><button className="action action-secondary" onClick={() => { onSelectChapter(next.id); onNavigate("chapters") }}>Continue reading <ArrowRight size={16}/></button></div></section>
-    <div className="desk-stats"><div><strong>{metrics.completedReadyChapters}<small> / {metrics.totalReadyChapters}</small></strong><span>Chapters reviewed</span></div><div><strong>{metrics.knownFlashcards}</strong><span>Cards marked known</span></div><div><strong>{attempts.reduce((sum, attempt) => sum + (attempt.attempts ?? 0), 0)}</strong><span>Practice rounds completed</span></div><div><strong>{studyState.atlasNotebook?.bookmarks?.length ?? 0}</strong><span>Structures saved</span></div></div>
-    <section className="study-path">{routes.map(item => { const Icon = item.icon; return <button key={item.route} className={`path-step ${item.accent}`} onClick={() => onNavigate(item.route)}><div className="path-step-top"><span>{item.number} /</span><Icon size={25}/></div><h3>{item.title}</h3><p>{item.description}</p><ArrowRight size={20}/></button> })}</section>
-    <div className="grid gap-5 md:grid-cols-2"><section className="panel p-6"><p className="eyebrow">Back to the tricky bits</p><h3 className="mt-2 text-xl font-semibold">{misses.length ? `${new Set(misses.map(item => item.questionId)).size} questions to revisit` : "Your review list starts here"}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{misses.length ? misses[0].prompt : "Complete a practice round. Missed answers stay in the result review, ready for another try."}</p><button className="action action-secondary mt-4" onClick={() => onNavigate("practice")}>Open practice <Brain size={16}/></button></section><section className="panel p-6"><p className="eyebrow">Know your sources</p><h3 className="mt-2 text-xl font-semibold">Course first. Curiosity alongside.</h3><p className="mt-3 text-sm leading-6 text-slate-600">Your original course summaries, cards, and questions stay together. Human Atlas activities and reference descriptions are labeled supplemental. Your instructor determines exam scope.</p><button className="action action-secondary mt-4" onClick={() => onNavigate("flashcards")}>Review course cards <Layers3 size={16}/></button></section></div>
-  </div>
+
+  return (
+    <div className="space-y-5">
+      <section className="desk-welcome panel">
+        <div>
+          <p className="eyebrow">A little curiosity goes a long way</p>
+          <h2>
+            Learn the body.
+            <br />
+            <em>Build the picture.</em>
+          </h2>
+          <p>
+            Start in the 3D studio, test yourself in the arcade, or jump straight into any of the 15 chapters.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <button className="action" onClick={() => onNavigate("human-body")}>
+              Enter 3D studio <ArrowRight size={17} />
+            </button>
+            <button className="action action-secondary" onClick={() => onNavigate("bones")}>
+              Ch. 7 Bone Landmarks Lab
+            </button>
+          </div>
+        </div>
+        <div className="desk-session">
+          <span className="eyebrow">YOUR NEXT COURSE CHAPTER</span>
+          <span className="chapter-number">{String(next?.number ?? 1).padStart(2, "0")}</span>
+          <h3>{next?.title}</h3>
+          <button
+            className="action action-secondary"
+            onClick={() => {
+              onSelectChapter(next.id)
+              onNavigate("chapters")
+            }}
+          >
+            Open chapter <ArrowRight size={16} />
+          </button>
+        </div>
+      </section>
+
+      <div className="desk-stats">
+        <div>
+          <strong>
+            {metrics.completedReadyChapters}
+            <small> / {metrics.totalReadyChapters}</small>
+          </strong>
+          <span>Course chapters reviewed</span>
+        </div>
+        <div>
+          <strong>{metrics.knownFlashcards}</strong>
+          <span>Course cards marked known</span>
+        </div>
+        <div>
+          <strong>{attempts.reduce((sum, attempt) => sum + (attempt.attempts ?? 0), 0)}</strong>
+          <span>Practice rounds completed</span>
+        </div>
+        <div>
+          <strong>{studyState.atlasNotebook?.bookmarks?.length ?? 0}</strong>
+          <span>3D structures saved</span>
+        </div>
+      </div>
+
+      <section className="study-path">
+        {routes.map((item) => {
+          const Icon = item.icon
+          return (
+            <button
+              key={item.route}
+              className={`path-step ${item.accent}`}
+              onClick={() => onNavigate(item.route)}
+            >
+              <div className="path-step-top">
+                <span>{item.number} /</span>
+                <Icon size={25} />
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.description}</p>
+              <ArrowRight size={20} />
+            </button>
+          )
+        })}
+      </section>
+
+      <div className="grid gap-5 md:grid-cols-2">
+        <section className="panel p-6">
+          <p className="eyebrow">Back to the tricky bits</p>
+          <h3 className="mt-2 text-xl font-semibold">
+            {misses.length
+              ? `${new Set(misses.map((item) => item.questionId)).size} questions to revisit`
+              : "Your review list starts here"}
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            {misses.length
+              ? misses[0].prompt
+              : "Missed questions in Practice Arcade or Bone Landmarks automatically collect for targeted retry."}
+          </p>
+          <button
+            className="action action-secondary mt-4"
+            onClick={() => onNavigate("practice")}
+          >
+            Open practice <Brain size={16} />
+          </button>
+        </section>
+
+        <section className="panel p-6">
+          <p className="eyebrow">All 15 chapters active</p>
+          <h3 className="mt-2 text-xl font-semibold">
+            8 Course Units + {previewChapters.length} Standard A&P Previews
+          </h3>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            Chapters 5 and 10–15 include full Marieb A&P preview summaries, vocabulary, flashcards, and quizzes now — ready to swap with Amelia’s class slides anytime.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <button
+              className="action action-secondary"
+              onClick={() => {
+                onSelectChapter("chapter-5")
+                onNavigate("chapters")
+              }}
+            >
+              Preview Ch. 5 (Integumentary)
+            </button>
+            <button
+              className="action action-secondary"
+              onClick={() => onNavigate("flashcards")}
+            >
+              Browse all cards <Layers3 size={16} />
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  )
 }
