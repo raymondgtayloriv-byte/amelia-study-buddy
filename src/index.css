@@ -728,3 +728,21 @@
 [data-theme=dark] .desk-stats span {
   color: #b8ccc8;
 }
+
+.atlas-drag-grip {
+  display: inline-flex;
+  align-items: center;
+  color: var(--studio-muted);
+  cursor: grab;
+  padding: 2px 4px;
+}
+.atlas-drag-grip:active {
+  cursor: grabbing;
+}
+.atlas-floating-pill {
+  cursor: grab;
+  user-select: none;
+}
+.atlas-floating-pill:active {
+  cursor: grabbing;
+}

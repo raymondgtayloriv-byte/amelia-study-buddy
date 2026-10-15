@@ -1,5 +1,6 @@
 import { useEffect, useEffectEvent, useMemo, useRef, useState } from "react"
 import {
+  ArrowLeftRight,
   ArrowRight,
   Bookmark,
   Check,
@@ -10,6 +11,7 @@ import {
   ExternalLink,
   Flame,
   Focus,
+  GripHorizontal,
   Layers,
   Lightbulb,
   Maximize2,
@@ -33,7 +35,13 @@ import { shuffleItems } from "../lib/practice"
 
 const ATLAS_URL = `${import.meta.env.BASE_URL}human-atlas/index.html`
 
-export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialSystem = null, onClearInitialSystem }) {
+export function HumanBodyView({
+  notebook,
+  onNotebookChange,
+  onNavigate,
+  initialSystem = null,
+  onClearInitialSystem,
+}) {
   const frame = useRef(null)
   const studio = useRef(null)
   const [atlas, setAtlas] = useState(null)
@@ -48,6 +56,10 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
   const [wide, setWide] = useState(false)
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [hudMinimized, setHudMinimized] = useState(false)
+  const [hudSide, setHudSide] = useState("right")
+  const [hudOffset, setHudOffset] = useState({ x: 0, y: 0 })
+  const [draggingHud, setDraggingHud] = useState(false)
+  const dragRef = useRef(null)
   const [challenge, setChallenge] = useState(null)
   const [answer, setAnswer] = useState("")
   const [feedback, setFeedback] = useState("")
@@ -82,10 +94,16 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
   }, [atlas, challengePool, courseBoneTargets, organNeuroTargets, notebook.bookmarks, targets])
 
   const recallChoices = useMemo(
-    () => (challenge ? buildAtlasChoices(challenge, challengeTargets.length >= 4 ? challengeTargets : targets, 4) : []),
+    () =>
+      challenge
+        ? buildAtlasChoices(challenge, challengeTargets.length >= 4 ? challengeTargets : targets, 4)
+        : [],
     [challenge, challengeTargets, targets],
   )
-  const activeHint = useMemo(() => (challenge && atlas ? getAtlasHint(challenge, atlas) : null), [challenge, atlas])
+  const activeHint = useMemo(
+    () => (challenge && atlas ? getAtlasHint(challenge, atlas) : null),
+    [challenge, atlas],
+  )
 
   const results =
     query.trim() && atlas
@@ -150,10 +168,13 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setError("The atlas is taking longer than expected. Try reloading the viewer; your saved notes will stay here.")
+      setError(
+        "The atlas is taking longer than expected. Try reloading the viewer; your saved notes will stay here.",
+      )
     }, 45000)
     const receive = (event) => {
-      if (event.origin !== window.location.origin || event.source !== frame.current?.contentWindow) return
+      if (event.origin !== window.location.origin || event.source !== frame.current?.contentWindow)
+        return
       const data = event.data
       if (data?.type === "human-atlas:status") {
         setProgress(data.progress ?? 0)
@@ -166,7 +187,8 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
           clearTimeout(timeout)
         }
       }
-      if (data?.type === "human-atlas:error") setError(data.message || "That structure could not be selected.")
+      if (data?.type === "human-atlas:error")
+        setError(data.message || "That structure could not be selected.")
       if (data?.type === "human-atlas:selection") {
         const chosen = data.selection ?? data
         if (!chosen.name || !Array.isArray(chosen.elements)) return
@@ -222,6 +244,49 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
       window.removeEventListener("keydown", onKeyDown)
     }
   })
+
+  // Pointer dragging for Floating HUD and Floating Pill
+  function startHudDrag(event) {
+    if (event.target.closest("button, input, select, textarea, a")) return
+    event.preventDefault()
+    dragRef.current = {
+      startX: event.clientX,
+      startY: event.clientY,
+      originX: hudOffset.x,
+      originY: hudOffset.y,
+    }
+    setDraggingHud(true)
+  }
+
+  useEffect(() => {
+    if (!draggingHud) return
+    const onMove = (event) => {
+      if (!dragRef.current) return
+      const dx = event.clientX - dragRef.current.startX
+      const dy = event.clientY - dragRef.current.startY
+      setHudOffset({
+        x: Math.max(-720, Math.min(720, dragRef.current.originX + dx)),
+        y: Math.max(-40, Math.min(520, dragRef.current.originY + dy)),
+      })
+    }
+    const onUp = () => {
+      dragRef.current = null
+      setDraggingHud(false)
+    }
+    window.addEventListener("pointermove", onMove)
+    window.addEventListener("pointerup", onUp)
+    window.addEventListener("pointercancel", onUp)
+    return () => {
+      window.removeEventListener("pointermove", onMove)
+      window.removeEventListener("pointerup", onUp)
+      window.removeEventListener("pointercancel", onUp)
+    }
+  }, [draggingHud])
+
+  function flipHudSide() {
+    setHudSide((prev) => (prev === "right" ? "left" : "right"))
+    setHudOffset({ x: 0, y: 0 })
+  }
 
   async function toggleFullscreen() {
     if (isFullscreen) {
@@ -361,6 +426,13 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
   const isOverlayLayout = wide || isFullscreen
   const recentCorrect = (notebook.results ?? []).filter((result) => result.correct).length
   const recentTotal = notebook.results?.length ?? 0
+  const floatingStyle = isOverlayLayout || hudMinimized
+    ? {
+        transform: `translate3d(${hudOffset.x}px, ${hudOffset.y}px, 0)`,
+        left: hudSide === "left" ? "16px" : "auto",
+        right: hudSide === "right" ? "16px" : "auto",
+      }
+    : undefined
 
   return (
     <div className="space-y-4">
@@ -368,7 +440,10 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
         <div>
           <span className="source-tag supplemental">SUPPLEMENTAL / 3D HUMAN ATLAS</span>
           <h2>The body, one layer at a time.</h2>
-          <p>2,234 structures · Drag to orbit, use the explode slider, or launch fullscreen visual drills.</p>
+          <p>
+            2,234 structures · Drag to orbit, use the explode slider, or launch fullscreen visual
+            drills.
+          </p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <div className="studio-mode" aria-label="Anatomy activity">
@@ -377,7 +452,12 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
               ["hunt", "Find it"],
               ["recall", "Name it"],
             ].map(([id, label], index) => (
-              <button key={id} type="button" aria-pressed={mode === id} onClick={() => changeMode(id)}>
+              <button
+                key={id}
+                type="button"
+                aria-pressed={mode === id}
+                onClick={() => changeMode(id)}
+              >
                 <span>0{index + 1}</span>
                 {label}
               </button>
@@ -399,7 +479,11 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
         className={`atlas-workbench ${wide ? "is-wide" : ""} ${isFullscreen ? "is-fullscreen" : ""}`}
         ref={studio}
       >
-        <section className="atlas-frame-wrap" aria-label="Anatomy viewer">
+        <section
+          className="atlas-frame-wrap"
+          aria-label="Anatomy viewer"
+          style={draggingHud ? { pointerEvents: "none" } : undefined}
+        >
           <div className="atlas-toolbar">
             <div className="flex items-center gap-3">
               <span>
@@ -450,7 +534,11 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
               <button
                 type="button"
                 aria-label={hudMinimized ? "Expand study HUD" : "Minimize study HUD to pill"}
-                title={hudMinimized ? "Expand study panel" : "Minimize panel so nothing blocks the 3D view"}
+                title={
+                  hudMinimized
+                    ? "Expand study panel"
+                    : "Minimize panel so nothing blocks the 3D view"
+                }
                 onClick={() => setHudMinimized((prev) => !prev)}
                 className="atlas-hud-btn"
               >
@@ -496,51 +584,12 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
             allowFullScreen
           />
 
-          {/* Floating Compact Pill when HUD is minimized */}
-          {hudMinimized && (
-            <div className="atlas-floating-pill" role="region" aria-label="Minimized study controls">
-              {mode !== "explore" && challenge ? (
-                <>
-                  <span className="atlas-pill-badge">
-                    {mode === "hunt" ? `🎯 Find: ${challenge.name}` : challengeDone ? `✓ ${challenge.name}` : "❓ Name this structure"}
-                  </span>
-                  {feedback && <span className="atlas-pill-feedback">{feedback}</span>}
-                  {!challengeDone && mode === "hunt" && (
-                    <button type="button" className="atlas-pill-action" onClick={triggerHint}>
-                      <Lightbulb size={13} /> Hint
-                    </button>
-                  )}
-                  {!challengeDone && (
-                    <button type="button" className="atlas-pill-action" onClick={reveal}>
-                      Show me
-                    </button>
-                  )}
-                  {challengeDone && (
-                    <button type="button" className="atlas-pill-action primary" onClick={() => startChallenge()}>
-                      Next <ArrowRight size={13} />
-                    </button>
-                  )}
-                </>
-              ) : (
-                <span className="atlas-pill-badge">
-                  {selection ? `Selected: ${selection.name}` : "3D Explorer · Click any part to inspect"}
-                </span>
-              )}
-              <button
-                type="button"
-                className="atlas-pill-expand"
-                onClick={() => setHudMinimized(false)}
-                aria-label="Expand study companion"
-              >
-                Expand HUD <ChevronDown size={14} />
-              </button>
-            </div>
-          )}
-
           {!ready && !error && (
             <div className="atlas-loading" role="status">
               Preparing the anatomy catalogue…{" "}
-              {progress > 0 ? `${Math.round(progress)}% of model data` : "Large 3D models may take a moment."}
+              {progress > 0
+                ? `${Math.round(progress)}% of model data`
+                : "Large 3D models may take a moment."}
             </div>
           )}
           {error && (
@@ -561,30 +610,137 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
           )}
         </section>
 
+        {/* Draggable Floating Compact Pill when HUD is minimized */}
+        {hudMinimized && (
+          <div
+            className="atlas-floating-pill"
+            style={floatingStyle}
+            onPointerDown={startHudDrag}
+            role="region"
+            aria-label="Minimized study controls"
+          >
+            <span className="atlas-drag-grip" title="Drag to reposition anywhere">
+              <GripHorizontal size={14} />
+            </span>
+            {mode !== "explore" && challenge ? (
+              <>
+                <span className="atlas-pill-badge">
+                  {mode === "hunt"
+                    ? `🎯 Find: ${challenge.name}`
+                    : challengeDone
+                      ? `✓ ${challenge.name}`
+                      : "❓ Name this structure"}
+                </span>
+                {feedback && <span className="atlas-pill-feedback">{feedback}</span>}
+                {!challengeDone && mode === "hunt" && (
+                  <button type="button" className="atlas-pill-action" onClick={triggerHint}>
+                    <Lightbulb size={13} /> Hint
+                  </button>
+                )}
+                {!challengeDone && (
+                  <button type="button" className="atlas-pill-action" onClick={reveal}>
+                    Show me
+                  </button>
+                )}
+                {challengeDone && (
+                  <button
+                    type="button"
+                    className="atlas-pill-action primary"
+                    onClick={() => startChallenge()}
+                  >
+                    Next <ArrowRight size={13} />
+                  </button>
+                )}
+              </>
+            ) : (
+              <span className="atlas-pill-badge">
+                {selection
+                  ? `Selected: ${selection.name}`
+                  : "3D Explorer · Drag pill or click any structure"}
+              </span>
+            )}
+            <button
+              type="button"
+              className="atlas-pill-action"
+              onClick={flipHudSide}
+              title="Swap left/right corner"
+            >
+              <ArrowLeftRight size={12} />
+            </button>
+            <button
+              type="button"
+              className="atlas-pill-expand"
+              onClick={() => setHudMinimized(false)}
+              aria-label="Expand study companion"
+            >
+              Expand <ChevronDown size={14} />
+            </button>
+          </div>
+        )}
+
         {!hudMinimized && (
-          <aside className={`atlas-companion ${isOverlayLayout ? "is-floating-hud" : ""}`}>
-            <div className="flex items-center justify-between gap-2">
-              <p className="eyebrow">
+          <aside
+            className={`atlas-companion ${isOverlayLayout ? "is-floating-hud" : ""}`}
+            style={isOverlayLayout ? floatingStyle : undefined}
+          >
+            <div
+              className={`flex items-center justify-between gap-2 pb-2 ${
+                isOverlayLayout ? "cursor-grab active:cursor-grabbing border-b border-slate-200/60 mb-2" : ""
+              }`}
+              onPointerDown={isOverlayLayout ? startHudDrag : undefined}
+            >
+              <p className="eyebrow flex items-center gap-1.5">
+                {isOverlayLayout && (
+                  <GripHorizontal
+                    size={14}
+                    className="text-slate-400"
+                    title="Drag HUD anywhere on screen"
+                  />
+                )}
                 {mode === "explore"
                   ? "Field guide"
                   : mode === "hunt"
                     ? "Level 01 / Find it"
                     : "Level 02 / Name it"}
               </p>
-              <button
-                type="button"
-                className="atlas-hud-minimize-inline"
-                onClick={() => setHudMinimized(true)}
-                title="Collapse into floating bar so the 3D canvas is completely clear"
-              >
-                Minimize <ChevronUp size={13} />
-              </button>
+              <div className="flex items-center gap-1">
+                {isOverlayLayout && (
+                  <button
+                    type="button"
+                    className="atlas-hud-minimize-inline"
+                    onClick={flipHudSide}
+                    title="Move HUD to opposite side"
+                  >
+                    <ArrowLeftRight size={12} /> {hudSide === "right" ? "Left" : "Right"}
+                  </button>
+                )}
+                {isOverlayLayout && (hudOffset.x !== 0 || hudOffset.y !== 0) && (
+                  <button
+                    type="button"
+                    className="atlas-hud-minimize-inline"
+                    onClick={() => setHudOffset({ x: 0, y: 0 })}
+                    title="Snap HUD back to corner"
+                  >
+                    Reset pos
+                  </button>
+                )}
+                <button
+                  type="button"
+                  className="atlas-hud-minimize-inline"
+                  onClick={() => setHudMinimized(true)}
+                  title="Collapse into draggable floating pill"
+                >
+                  Minimize <ChevronUp size={13} />
+                </button>
+              </div>
             </div>
 
             {mode === "explore" ? (
               <>
                 <h3>Follow your curiosity.</h3>
-                <p className="companion-copy">Click any structure on the body, or jump straight to one below.</p>
+                <p className="companion-copy">
+                  Click any structure on the body, or jump straight to one below.
+                </p>
                 <label className="atlas-search">
                   <Search size={16} />
                   <input
@@ -595,7 +751,11 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                     onChange={(event) => setQuery(event.target.value)}
                   />
                   {query && (
-                    <button type="button" aria-label="Clear structure search" onClick={() => setQuery("")}>
+                    <button
+                      type="button"
+                      aria-label="Clear structure search"
+                      onClick={() => setQuery("")}
+                    >
                       <X size={15} />
                     </button>
                   )}
@@ -604,7 +764,12 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                   <div className="atlas-search-results">
                     {results.length ? (
                       results.map((c) => (
-                        <button key={c.id} type="button" disabled={!ready} onClick={() => choose(c)}>
+                        <button
+                          key={c.id}
+                          type="button"
+                          disabled={!ready}
+                          onClick={() => choose(c)}
+                        >
                           {c.name}
                           <ArrowRight size={13} />
                         </button>
@@ -617,7 +782,12 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                 {!query && (
                   <div className="quick-structures">
                     {targets.slice(0, 6).map((c) => (
-                      <button key={c.id} type="button" disabled={!ready} onClick={() => choose(c)}>
+                      <button
+                        key={c.id}
+                        type="button"
+                        disabled={!ready}
+                        onClick={() => choose(c)}
+                      >
                         {c.name}
                       </button>
                     ))}
@@ -627,7 +797,9 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                 <details className="system-disclosure">
                   <summary>
                     <Layers size={16} /> Filter organ systems{" "}
-                    {systems.length > 0 && <span className="ml-auto text-xs text-teal-700">{systems.length} active</span>}
+                    {systems.length > 0 && (
+                      <span className="ml-auto text-xs text-teal-700">{systems.length} active</span>
+                    )}
                   </summary>
                   <p>Toggle systems directly from here without covering the 3D body.</p>
                   <div className="system-picks">
@@ -681,20 +853,29 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                       </button>
                     </div>
                     <h4>{selection.name}</h4>
+                    {selection.description && (
+                      <p className="mb-3 text-xs leading-5 text-slate-600">
+                        {selection.description}
+                      </p>
+                    )}
                     <div className="flex flex-wrap gap-2">
                       <button
                         type="button"
                         className="action action-secondary"
-                        onClick={() => send("select", { name: selection.name, isolate: true, details: false })}
+                        onClick={() =>
+                          send("select", { name: selection.name, isolate: true, details: false })
+                        }
                       >
                         <Focus size={15} /> Isolate
                       </button>
                       <button
                         type="button"
                         className="action action-secondary"
-                        onClick={() => send("select", { name: selection.name, isolate: false, details: true })}
+                        onClick={() =>
+                          send("select", { name: selection.name, isolate: false, details: false })
+                        }
                       >
-                        <Compass size={15} /> Atlas card
+                        <Compass size={15} /> In body
                       </button>
                     </div>
                     <label className="field mt-3">
@@ -747,7 +928,9 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
               </>
             ) : (
               <>
-                <h3>{mode === "hunt" ? "Find it on the body." : "Name the highlighted piece."}</h3>
+                <h3>
+                  {mode === "hunt" ? "Find it on the body." : "Name the highlighted piece."}
+                </h3>
                 <p className="companion-copy">
                   {mode === "hunt"
                     ? "Rotate, zoom, and click the target structure directly on the 3D model. Menus stay out of your way."
@@ -768,16 +951,24 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                     }}
                   >
                     <option value="core">Core Essentials · {targets.length}</option>
-                    <option value="course-bones">BIOL 2401 Course Bones · {courseBoneTargets.length}</option>
-                    <option value="organs">Organs & Nervous System · {organNeuroTargets.length}</option>
-                    <option value="saved">Your Saved Structures · {notebook.bookmarks.length}</option>
+                    <option value="course-bones">
+                      BIOL 2401 Course Bones · {courseBoneTargets.length}
+                    </option>
+                    <option value="organs">
+                      Organs & Nervous System · {organNeuroTargets.length}
+                    </option>
+                    <option value="saved">
+                      Your Saved Structures · {notebook.bookmarks.length}
+                    </option>
                     <option value="expanded">Full Atlas Catalogue · Advanced</option>
                   </select>
                 </label>
 
                 {mode === "hunt" && (
                   <div className="mb-3">
-                    <span className="block text-[11px] font-semibold text-slate-500 mb-1.5">3D body context</span>
+                    <span className="block text-[11px] font-semibold text-slate-500 mb-1.5">
+                      3D body context
+                    </span>
                     <div className="atlas-segmented-pills" role="group" aria-label="3D body context">
                       {[
                         ["context", "With skeleton"],
@@ -804,7 +995,9 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
 
                 {mode === "recall" && (
                   <div className="mb-3">
-                    <span className="block text-[11px] font-semibold text-slate-500 mb-1.5">Answer format</span>
+                    <span className="block text-[11px] font-semibold text-slate-500 mb-1.5">
+                      Answer format
+                    </span>
                     <div className="atlas-segmented-pills" role="group" aria-label="Answer format">
                       {[
                         ["choices", "4-Choice Pick"],
@@ -840,7 +1033,7 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                       <span className="source-tag supplemental">
                         {challengePool === "course-bones" ? "Course Bone 3D" : "3D Challenge"}
                       </span>
-                      { isOverlayLayout && !challengeDone && (
+                      {isOverlayLayout && !challengeDone && (
                         <button
                           type="button"
                           className="text-[11px] font-semibold text-teal-800 underline"
@@ -886,7 +1079,11 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                             onChange={(event) => setAnswer(event.target.value)}
                           />
                         </label>
-                        <button type="submit" className="action mt-3 w-full" disabled={!answer.trim()}>
+                        <button
+                          type="submit"
+                          className="action mt-3 w-full"
+                          disabled={!answer.trim()}
+                        >
                           Check answer <Check size={15} />
                         </button>
                       </form>
@@ -913,7 +1110,8 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                             className="action action-secondary flex-1"
                             onClick={triggerHint}
                           >
-                            <Lightbulb size={14} /> {hintShown ? "Re-center angle" : "Hint & angle"}
+                            <Lightbulb size={14} />{" "}
+                            {hintShown ? "Re-center angle" : "Hint & angle"}
                           </button>
                           <button
                             type="button"
@@ -926,15 +1124,21 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
                       )}
                       {challengeDone && (
                         <>
-                          <button type="button" className="action w-full" onClick={() => startChallenge()}>
+                          <button
+                            type="button"
+                            className="action w-full"
+                            onClick={() => startChallenge()}
+                          >
                             Next challenge <ArrowRight size={16} />
                           </button>
                           <button
                             type="button"
                             className="action action-secondary w-full"
-                            onClick={() => send("select", { name: challenge.name, isolate: false, details: true })}
+                            onClick={() =>
+                              send("select", { name: challenge.name, isolate: false, details: false })
+                            }
                           >
-                            <Sparkles size={14} /> Show in full body with notes
+                            <Sparkles size={14} /> Show in full body context
                           </button>
                         </>
                       )}
@@ -968,7 +1172,10 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
 
       <div className="atlas-footnote">
         <p>
-          Drag to orbit · Scroll or pinch to zoom · Use the explode slider to separate all 2,234 pieces · Press <kbd className="px-1.5 py-0.5 rounded border border-slate-300 text-[10px]">F</kbd> for Fullscreen.
+          Drag to orbit · Scroll or pinch to zoom · Use the explode slider to separate all 2,234
+          pieces · Press{" "}
+          <kbd className="px-1.5 py-0.5 rounded border border-slate-300 text-[10px]">F</kbd> for
+          Fullscreen · Drag the HUD header to move it anywhere.
           <br />
           Reference anatomy: adult male. Atlas descriptions and challenges are supplemental.
         </p>
@@ -980,7 +1187,11 @@ export function HumanBodyView({ notebook, onNotebookChange, onNavigate, initialS
             CC BY 4.0
           </a>{" "}
           ·{" "}
-          <a href={`${import.meta.env.BASE_URL}human-atlas/ATTRIBUTION.md`} target="_blank" rel="noreferrer">
+          <a
+            href={`${import.meta.env.BASE_URL}human-atlas/ATTRIBUTION.md`}
+            target="_blank"
+            rel="noreferrer"
+          >
             Full attribution
           </a>
         </p>
