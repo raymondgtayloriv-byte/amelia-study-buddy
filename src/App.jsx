@@ -31,6 +31,12 @@ import {
   flashcards as baseFlashcards,
   quizQuestionBank as baseQuestions,
 } from "./data/studyData"
+import {
+  CHAPTER_ATLAS_SYSTEM,
+  supplementalChapters,
+  supplementalFlashcards,
+  supplementalQuestions,
+} from "./data/supplementalChapters"
 import { useLocalStorage } from "./hooks/useLocalStorage"
 
 const BonesLabView = lazy(() => import("./components/BonesLabView").then(m => ({ default: m.BonesLabView })))
@@ -70,6 +76,8 @@ const defaultStudyState = {
   },
 }
 
+const supplementalByNumber = new Map(supplementalChapters.map(ch => [ch.number, ch]))
+
 function App() {
   const [theme, setTheme] = useLocalStorage("study-buddy-theme", "light", value => value === "dark" ? "dark" : "light")
   useEffect(() => {
@@ -81,13 +89,44 @@ function App() {
     migrateStudyState,
   )
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  const [atlasInitialSystem, setAtlasInitialSystem] = useState(null)
   const importedChapters = studyState.importedChapters ?? []
+
+  // Merge confirmed course chapters (1-4, 6-9), user imports, and standard A&P preview packs (5, 10-15)
+  const resolvedBaseChapters = baseChapters
+    .filter(chapter => chapter.status === "ready" || !importedChapters.some(item => item.number === chapter.number))
+    .map(chapter => {
+      if (chapter.status === "ready") return { ...chapter, sourceType: "course" }
+      const preview = supplementalByNumber.get(chapter.number)
+      return preview ?? chapter
+    })
   const chapters = [
-    ...baseChapters.filter(chapter => chapter.status === "ready" || !importedChapters.some(item => item.number === chapter.number && item.sourceType === "course")),
+    ...resolvedBaseChapters,
     ...importedChapters,
   ].sort((a, b) => a.number - b.number)
-  const flashcards = [...baseFlashcards.map(card => ({ ...card, sourceType: "course" })), ...importedChapters.flatMap(chapter => chapter.flashcards.map(card => ({ ...card, sourceType: chapter.sourceType })))]
-  const quizQuestionBank = [...baseQuestions.map(question => ({ ...question, sourceType: "course" })), ...importedChapters.flatMap(chapter => chapter.questions.map(question => ({ ...question, sourceType: chapter.sourceType })))]
+
+  const activePreviewNumbers = new Set(
+    chapters.filter(ch => ch.isPreviewPack).map(ch => ch.number),
+  )
+  const activeSupplementalCards = supplementalFlashcards.filter(card => {
+    const chNum = Number(String(card.chapterId).replace("chapter-", ""))
+    return activePreviewNumbers.has(chNum)
+  })
+  const activeSupplementalQuestions = supplementalQuestions.filter(question => {
+    const chNum = Number(String(question.chapterId).replace("chapter-", ""))
+    return activePreviewNumbers.has(chNum)
+  })
+
+  const flashcards = [
+    ...baseFlashcards.map(card => ({ ...card, sourceType: "course" })),
+    ...activeSupplementalCards,
+    ...importedChapters.flatMap(chapter => chapter.flashcards.map(card => ({ ...card, sourceType: chapter.sourceType }))),
+  ]
+  const quizQuestionBank = [
+    ...baseQuestions.map(question => ({ ...question, sourceType: "course" })),
+    ...activeSupplementalQuestions,
+    ...importedChapters.flatMap(chapter => chapter.questions.map(question => ({ ...question, sourceType: chapter.sourceType }))),
+  ]
   const [undoImport, setUndoImport] = useState(null)
   const [importMessage, setImportMessage] = useState("")
   const activeSection = studyState.activeSection
@@ -136,6 +175,12 @@ function App() {
 
   const setSelectedChapter = (chapterId) => {
     setStudyState((current) => ({ ...current, selectedChapterId: chapterId }))
+  }
+
+  const openChapterIn3D = (chapterId) => {
+    const sys = CHAPTER_ATLAS_SYSTEM[chapterId] ?? "skeletal"
+    setAtlasInitialSystem(sys)
+    setActiveSection("human-body")
   }
 
   const updateChapterProgress = (chapterId, updates) => {
@@ -358,7 +403,7 @@ function App() {
           {["bones", "quiz"].includes(activeSection) && <div className="course-ribbon"><span className="source-tag">Course-based study material</span><p>Preserved chapter content and practice packs. Your instructor determines exam scope.</p>{activeSection === "quiz" && <button className="action action-secondary" onClick={() => setActiveSection("practice")}>Back to practice arcade</button>}</div>}
           <Suspense fallback={<div className="panel p-6" role="status">Preparing your study tools…</div>}>
 
-            {activeSection === "dashboard" && <StudyDesk chapters={courseChapters} metrics={metrics} studyState={studyState} onNavigate={setActiveSection} onSelectChapter={setSelectedChapter} />}
+            {activeSection === "dashboard" && <StudyDesk chapters={courseChapters} allChapters={chapters} metrics={metrics} studyState={studyState} onNavigate={setActiveSection} onSelectChapter={setSelectedChapter} />}
             {activeSection === "practice" && <PracticeArcade key={selectedChapter.id} initialChapterId={selectedChapter.id} chapters={readyChapters} questions={quizQuestionBank} flashcards={flashcards} progress={studyState.practiceProgress} onSaveResult={savePractice} onOpenAnatomy={() => setActiveSection("human-body")} onOpenCourseDrills={() => setActiveSection("quiz")} />}
             {studyState.activeSection === "chapters" ? (
               <ChaptersView
@@ -370,6 +415,11 @@ function App() {
                 chapterProgress={studyState.chapterProgress}
                 onUpdateChapterProgress={updateChapterProgress}
                 onAddMaterials={() => setActiveSection("sync")}
+                onExploreIn3D={openChapterIn3D}
+                onPracticeChapter={(chapterId) => {
+                  setSelectedChapter(chapterId)
+                  setActiveSection("practice")
+                }}
               />
             ) : null}
 
@@ -383,7 +433,7 @@ function App() {
               />
             ) : null}
 
-            {activeSection === "human-body" && <HumanBodyView notebook={studyState.atlasNotebook ?? defaultStudyState.atlasNotebook} onNotebookChange={saveAtlasNotebook} onNavigate={setActiveSection} />}
+            {activeSection === "human-body" && <HumanBodyView notebook={studyState.atlasNotebook ?? defaultStudyState.atlasNotebook} onNotebookChange={saveAtlasNotebook} onNavigate={setActiveSection} initialSystem={atlasInitialSystem} onClearInitialSystem={() => setAtlasInitialSystem(null)} />}
             {studyState.activeSection === "flashcards" ? (
               <FlashcardsView
                 chapters={chapters}
@@ -395,9 +445,9 @@ function App() {
 
             {studyState.activeSection === "quiz" ? (
               <QuizView
-                chapters={readyChapters.filter(chapter => chapter.sourceType !== "supplemental" && quizQuestionBank.some(question => question.chapterId === chapter.id))}
+                chapters={readyChapters.filter(chapter => quizQuestionBank.some(question => question.chapterId === chapter.id))}
                 quizHistory={studyState.quizHistory}
-                quizQuestionBank={quizQuestionBank.filter(question => question.sourceType !== "supplemental")}
+                quizQuestionBank={quizQuestionBank}
                 onSaveQuizResult={saveQuizResult}
                 onSaveEngineResult={saveEngineQuizResult}
               />
@@ -405,7 +455,7 @@ function App() {
 
             {activeSection === "cram" && <StudyGuides chapters={readyChapters} selectedChapter={selectedChapter} onSelectChapter={setSelectedChapter} onPractice={() => setActiveSection("practice")} cramDecks={cramDecks} />}
             {activeSection === "sync" && <>
-              <ChapterImportView initialNumber={selectedChapter.status === "ready" ? 5 : selectedChapter.number} initialTitle={selectedChapter.status === "ready" ? "" : selectedChapter.title} importedChapters={importedChapters} onImport={importChapter} onRemove={removeImport}/>
+              <ChapterImportView initialNumber={selectedChapter.isPreviewPack || selectedChapter.status !== "ready" ? selectedChapter.number : 5} initialTitle={selectedChapter.isPreviewPack || selectedChapter.status !== "ready" ? selectedChapter.title : ""} importedChapters={importedChapters} onImport={importChapter} onRemove={removeImport}/>
               {importMessage && <div className="import-feedback" role="status">{importMessage} {undoImport && <button className="action action-secondary" onClick={undoChapter}>Undo</button>}<button className="action action-secondary" onClick={() => setActiveSection("chapters")}>Open library</button></div>}
               <BackupPanel studyState={studyState} onRestore={setStudyState}/>
             </>}
