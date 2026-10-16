@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Organic Macromolecules, Enzymes &amp; ATP Energy Currency">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 02</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Organic Macromolecules, Enzymes &amp; ATP Energy Currency</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Monomer building blocks, protein folding hierarchy, enzyme catalysis, and ATP phosphorylation</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478" letter-spacing="0.08em">ATP – ADP ENERGY CYCLE</text>
+      <!-- ATP Box -->
+      <rect x="64" y="72" width="256" height="78" rx="16" fill="#e5c478" fill-opacity="0.2" stroke="#e5c478" stroke-width="2.2"/>
+      <text x="192" y="104" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#f6e3b4">ATP (Adenosine-P~P~P)</text>
+      <text x="192" y="128" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#d8e8e4">High-energy terminal phosphate bond</text>
+      <!-- Cycle Arrows -->
+      <path d="M300,165 C345,215 345,275 300,320" fill="none" stroke="#e99a83" stroke-width="3"/>
+      <text x="282" y="242" text-anchor="end" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#e99a83">Hydrolysis → Cellular Work</text>
+      <text x="282" y="262" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" fill="#f1faf8">(Transport, Contraction, Synthesis)</text>
+      <path d="M84,320 C38,275 38,215 84,165" fill="none" stroke="#5ec2ab" stroke-width="3"/>
+      <text x="102" y="210" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#6fd6be">← Cellular Respiration</text>
+      <text x="102" y="228" font-family="system-ui, sans-serif" font-size="11" fill="#d8e8e4">(Glucose + O₂ in Mitochondria)</text>
+      <!-- ADP Box -->
+      <rect x="64" y="335" width="256" height="72" rx="16" fill="#213a42" stroke="#5ec2ab" stroke-width="2"/>
+      <text x="192" y="366" text-anchor="middle" font-family="system-ui, sans-serif" font-size="15" font-weight="800" fill="#6fd6be">ADP + Pi (Inorganic Phosphate)</text>
+      <text x="192" y="388" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#b9d2ce">Recharged continuously by catabolism</text>
+      <!-- Enzyme Action -->
+      <rect x="40" y="438" width="304" height="114" rx="14" fill="#1b323a" stroke="#365a64"/>
+      <text x="192" y="466" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#f1faf8">ENZYME CATALYSIS</text>
+      <text x="192" y="492" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#6fd6be">Lowers Activation Energy (Ea) barrier</text>
+      <text x="192" y="514" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#e99a83">Extreme heat or pH denatures 3D active site</text>
+      <text x="192" y="536" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#9db5b2">Enzymes are not consumed in the reaction</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">CARBS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Carbohydrates (CH₂O)n</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Monomer: Monosaccharides (glucose).</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Polymer: Glycogen stored in liver/muscle.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Primary rapid fuel for ATP synthesis</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">LIPIDS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Triglycerides, Phospholipids, Steroids</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Glycerol + 3 fatty acids = energy reserve;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Phospholipids form cell bilayers.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Cholesterol is precursor to steroid hormones</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">PROTEINS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Amino Acids &amp; Peptide Bonds</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Primary (sequence) → Secondary (α/β) →</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Tertiary (3D fold) → Quaternary.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Structure determines biological function</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">CATALYSTS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Biological Enzymes (-ase)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Globular proteins that bind specific</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">substrates at their 3D active site.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Drastically speed up metabolic reactions</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">GENETICS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">DNA vs. RNA Nucleic Acids</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">DNA (A-T, C-G, deoxyribose, double helix);</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">RNA (A-U, C-G, ribose, single strand).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Nucleotide = base + pentose + phosphate</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">ENERGY</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Adenosine Triphosphate (ATP)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Terminal phosphate transfer phosphorylates</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">transport pumps &amp; contractile proteins.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Immediate universal cellular energy currency</text>
+      </g>
+</svg>

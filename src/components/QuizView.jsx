@@ -194,7 +194,7 @@ export function QuizView({
               Select a single chapter, combine multiple chapters, or run a mixed review across verbatim course material or supplemental packs.
             </p>
           </div>
-          <div className="rounded-[24px] bg-teal-50/90 px-4 py-3.5">
+          <div className="rounded-[24px] bg-teal-50 px-4 py-3.5">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
               Best saved grade
             </p>
@@ -206,7 +206,7 @@ export function QuizView({
         </div>
 
         {/* Material Source Filter + Multi-Chapter Picker */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5">
           <div className="flex flex-wrap items-center gap-1.5" role="group" aria-label="Quiz material source">
             {[
               ["course", "Course Material Only (Book)"],
@@ -260,7 +260,7 @@ export function QuizView({
                     onClick={() => toggleCustomChapter(ch.id)}
                     className={`rounded-xl border p-2.5 text-left text-xs transition ${
                       picked
-                        ? "border-teal-700 bg-teal-50/90 font-semibold text-slate-900"
+                        ? "border-teal-700 bg-teal-50 font-semibold text-slate-900"
                         : "border-slate-200 bg-white text-slate-600"
                     }`}
                   >
@@ -318,7 +318,7 @@ export function QuizView({
                     onClick={() => startQuiz(quiz.id)}
                     className={`w-full rounded-[20px] border p-3.5 text-left transition ${
                       active
-                        ? "border-teal-700 bg-teal-50/90 text-slate-900"
+                        ? "border-teal-700 bg-teal-50 text-slate-900"
                         : "border-slate-200 bg-white text-slate-800"
                     }`}
                   >
@@ -392,7 +392,7 @@ export function QuizView({
                             : isIncorrect
                               ? "border-rose-300 bg-rose-50 text-rose-900"
                               : isSelected
-                                ? "border-teal-600 bg-teal-50/80"
+                                ? "border-teal-600 bg-teal-50"
                                 : "border-slate-200 bg-white text-slate-800 hover:border-teal-500"
                         }`}
                       >
@@ -403,7 +403,7 @@ export function QuizView({
                 </div>
 
                 {session.answered ? (
-                  <div className="mt-6 rounded-[24px] border border-slate-200/80 bg-slate-50/90 p-5">
+                  <div className="mt-6 rounded-[24px] border border-slate-200/80 bg-slate-50 p-5">
                     <div className="flex items-center gap-3">
                       {session.selectedAnswer === activeQuestion.correctAnswer ? (
                         <CheckCircle2 className="text-emerald-600" size={20} />

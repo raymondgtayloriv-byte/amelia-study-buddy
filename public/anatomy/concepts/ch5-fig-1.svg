@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Integumentary System: Epidermal Strata &amp; Dermis">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 05</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Integumentary System: Epidermal Strata &amp; Dermis</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Superficial-to-deep epidermal layers (C-L-G-S-B), papillary vs. reticular dermis, and skin appendages</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e99a83" letter-spacing="0.08em">EPIDERMIS &amp; DERMIS STRATA</text>
+      <!-- 5 Strata Stack -->
+      <rect x="42" y="60" width="300" height="44" rx="8" fill="#e99a83" fill-opacity="0.32" stroke="#e99a83"/>
+      <text x="192" y="87" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#fff">1. Stratum Corneum (20–30 dead layers)</text>
+      <rect x="42" y="110" width="300" height="36" rx="8" fill="#7cc4e8" fill-opacity="0.28" stroke="#7cc4e8"/>
+      <text x="192" y="133" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#fff">2. Stratum Lucidum (Thick skin ONLY)</text>
+      <rect x="42" y="152" width="300" height="40" rx="8" fill="#e5c478" fill-opacity="0.26" stroke="#e5c478"/>
+      <text x="192" y="177" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#fff">3. Stratum Granulosum (Keratohyalin)</text>
+      <rect x="42" y="198" width="300" height="40" rx="8" fill="#5ec2ab" fill-opacity="0.24" stroke="#5ec2ab"/>
+      <text x="192" y="223" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#fff">4. Stratum Spinosum (Desmosomes)</text>
+      <rect x="42" y="244" width="300" height="46" rx="8" fill="#5ec2ab" fill-opacity="0.4" stroke="#5ec2ab" stroke-width="2"/>
+      <text x="192" y="272" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#fff">5. Stratum Basale (Mitotic + Melanocytes)</text>
+      <!-- Dermis -->
+      <rect x="42" y="302" width="300" height="156" rx="12" fill="#1d353d" stroke="#e99a83" stroke-width="2"/>
+      <text x="192" y="334" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#e99a83">VASCULAR DERMIS</text>
+      <text x="192" y="362" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#f1faf8">• Papillary (20%): Areolar CT + Dermal Papillae</text>
+      <text x="192" y="388" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#f1faf8">• Reticular (80%): Dense Irregular CT + Cleavage</text>
+      <text x="192" y="416" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#6fd6be">Houses blood vessels, nerve endings &amp; glands</text>
+      <!-- Hypodermis -->
+      <rect x="42" y="470" width="300" height="82" rx="12" fill="#e5c478" fill-opacity="0.18" stroke="#e5c478"/>
+      <text x="192" y="502" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478">Hypodermis (Subcutaneous Fascia)</text>
+      <text x="192" y="526" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#d8e8e4">Adipose insulation &amp; shock absorption</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">MNEMONIC</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Epidermal Strata (C-L-G-S-B)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Come Let’s Get Sun Burned:</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Corneum → Lucidum → Granulosum → Spinosum → Basale.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Lucidum is present ONLY in thick skin (palms/soles)</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">CELL TYPES</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Keratinocytes &amp; Melanocytes</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Keratinocytes produce tough fibrous keratin;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Melanocytes make UV-shielding melanin.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Dendritic (immune) &amp; Tactile/Merkel (touch) cells</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">DERMIS 20%</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Papillary Layer</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Superficial areolar CT with capillary loops,</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Meissner corpuscles &amp; friction-ridge fingerprints.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Nourishes the avascular epidermis above</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">DERMIS 80%</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Reticular Layer</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Deep dense irregular CT packed with thick</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">collagen bundles along tension (cleavage) lines.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Lamellar (Pacinian) corpuscles sense deep pressure</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">SWEAT</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Eccrine vs. Apocrine Glands</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Eccrine (merocrine) secretes hypotonic sweat</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">for cooling; Apocrine opens into hair follicles.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Eccrine covers entire body (palms, soles, forehead)</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">OIL &amp; HAIR</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Sebaceous Glands &amp; Arrector Pili</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Holocrine sebaceous glands secrete sebum;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">smooth muscle arrector pili raises hair.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Sebum softens skin and inhibits bacterial growth</text>
+      </g>
+</svg>

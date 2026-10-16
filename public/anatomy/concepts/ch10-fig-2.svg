@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Major Regional Skeletal Muscle Groups &amp; Actions">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 10</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Major Regional Skeletal Muscle Groups &amp; Actions</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Muscles of mastication, respiration, abdominal wall, shoulder/arm, and lower-limb locomotion</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478" letter-spacing="0.08em">REGIONAL MUSCLE COMPARTMENTS</text>
+      <rect x="38" y="64" width="308" height="110" rx="12" fill="#1b323a" stroke="#5ec2ab"/>
+      <text x="192" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be">HEAD, NECK &amp; THORAX</text>
+      <text x="192" y="118" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Masseter &amp; Temporalis → Elevate mandible</text>
+      <text x="192" y="140" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Diaphragm &amp; External Intercostals → Inspiration</text>
+      <rect x="38" y="188" width="308" height="114" rx="12" fill="#1b323a" stroke="#e5c478"/>
+      <text x="192" y="216" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478">SHOULDER &amp; UPPER LIMB</text>
+      <text x="192" y="242" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Rotator Cuff (SITS): Supraspinatus, Infraspinatus,</text>
+      <text x="192" y="262" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">  Teres minor, Subscapularis</text>
+      <text x="192" y="284" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#6fd6be">• Brachialis + Biceps flex; Triceps extends elbow</text>
+      <rect x="38" y="316" width="308" height="122" rx="12" fill="#1b323a" stroke="#e99a83"/>
+      <text x="192" y="344" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e99a83">THIGH &amp; LEG COMPARTMENTS</text>
+      <text x="192" y="370" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Quadriceps (4): Extend knee (Rectus femoris +</text>
+      <text x="192" y="390" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">  Vastus lateralis, medialis, intermedius)</text>
+      <text x="192" y="414" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#fbd0bd">• Hamstrings (3): Extend hip &amp; flex knee</text>
+      <rect x="38" y="452" width="308" height="104" rx="12" fill="#1b323a" stroke="#7cc4e8"/>
+      <text x="192" y="482" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#7cc4e8">ANKLE DORSIFLEXION vs. PLANTAR</text>
+      <text x="192" y="508" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Tibialis anterior → Dorsiflexion &amp; inversion</text>
+      <text x="192" y="530" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Gastrocnemius &amp; Soleus → Plantar flexion</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">MASTICATION</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Masseter &amp; Temporalis</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Prime movers of jaw closure (mandibular</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">elevation); innervated by CN V (Trigeminal).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Buccinator compresses cheeks; CN VII does facial expression</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">BREATHING</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Diaphragm &amp; Intercostals</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Diaphragm flattens on contraction (Phrenic C3–C5)</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">to increase thoracic volume for inspiration.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Internal intercostals assist forced expiration</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">CORE WALL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Four Abdominal Wall Pairs</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Rectus abdominis, External oblique,</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Internal oblique, and Transversus abdominis.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Flex vertebral column and compress abdominal viscera</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">SHOULDER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Deltoid &amp; Rotator Cuff (SITS)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Deltoid is prime mover of arm abduction;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">SITS tendons reinforce shallow glenoid cavity.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Pectoralis major &amp; Latissimus dorsi adduct humerus</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">ANTERIOR THIGH</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Iliopsoas &amp; Quadriceps Femoris</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Iliopsoas is prime mover of hip flexion;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">all 4 Quadriceps heads extend the knee.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Insert via patellar ligament onto tibial tuberosity</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">POSTERIOR</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Gluteus, Hamstrings &amp; Calf</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Gluteus maximus extends hip; Biceps femoris,</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Semitendinosus &amp; Semimembranosus flex knee.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Gastrocnemius + Soleus insert via calcaneal tendon</text>
+      </g>
+</svg>

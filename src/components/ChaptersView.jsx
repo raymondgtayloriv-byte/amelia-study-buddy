@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import {
   BookCheck,
   Brain,
@@ -9,14 +9,20 @@ import {
   EyeOff,
   FolderSync,
   Image as ImageIcon,
-  Layers3,
+  ImagePlus,
   Maximize2,
   PersonStanding,
   Search,
-  Sparkles,
+  Trash2,
   XCircle,
 } from "lucide-react"
-import { getFiguresForChapter } from "../data/courseVisuals"
+import {
+  compressImageFileToDataUrl,
+  getFiguresForChapter,
+  loadCustomFigures,
+  removeCustomFigure,
+  saveCustomFigure,
+} from "../data/courseVisuals"
 import { CHAPTER_ATLAS_SYSTEM, VOCABULARY_DEFINITIONS } from "../data/supplementalChapters"
 
 const confidenceOptions = [
@@ -46,7 +52,26 @@ export function ChaptersView({
   const [revealedReviews, setRevealedReviews] = useState({})
   const [zoomedFigure, setZoomedFigure] = useState(null)
   const [revealedFigureTakeaways, setRevealedFigureTakeaways] = useState({})
-  const [darkStageMap, setDarkStageMap] = useState({})
+
+  // Custom photo upload state
+  const [customFiguresMap, setCustomFiguresMap] = useState(() => loadCustomFigures())
+  const [photoUploading, setPhotoUploading] = useState(false)
+  const [photoError, setPhotoError] = useState("")
+  const [photoMessage, setPhotoMessage] = useState("")
+  const [photoCaption, setPhotoCaption] = useState("")
+  const photoInputRef = useRef(null)
+
+  useEffect(() => {
+    if (!zoomedFigure) return
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setZoomedFigure(null)
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [zoomedFigure])
 
   const filteredChapters = chapters.filter((chapter) => {
     const matchesScope =
@@ -71,7 +96,7 @@ export function ChaptersView({
       question.chapterId === selectedChapter.id ||
       selectedChapter.quizIds?.includes(question.id),
   )
-  const chapterFigures = getFiguresForChapter(selectedChapter.id)
+  const chapterFigures = getFiguresForChapter(selectedChapter.id, customFiguresMap)
 
   const courseCount = chapters.filter((c) => c.sourceType !== "supplemental").length
   const previewCount = chapters.filter((c) => c.sourceType === "supplemental").length
@@ -80,6 +105,56 @@ export function ChaptersView({
   function handleChapterChange(chapterId) {
     onSelectChapter(chapterId)
     setActiveTerm(null)
+    setPhotoError("")
+    setPhotoMessage("")
+  }
+
+  async function handlePhotoUpload(event) {
+    const file = event.target.files?.[0]
+    if (!file) return
+    setPhotoUploading(true)
+    setPhotoError("")
+    setPhotoMessage("")
+    try {
+      const dataUrl = await compressImageFileToDataUrl(file)
+      const cleanTitle =
+        photoCaption.trim() ||
+        file.name.replace(/\.[^.]+$/, "").replace(/[-_]+/g, " ") ||
+        `Chapter ${selectedChapter.number} Study Photo`
+      const newFigure = {
+        id: `custom-${selectedChapter.id}-${Date.now()}`,
+        title: cleanTitle,
+        caption: `Uploaded study figure for Chapter ${selectedChapter.number}: ${selectedChapter.title}.`,
+        src: dataUrl,
+        source: "course",
+        sourceBadge: "Uploaded Course Photo",
+        badge: "Uploaded Course Photo",
+        isCustom: true,
+        keyTakeaway: `Custom figure added from ${file.name}.`,
+      }
+      const nextMap = saveCustomFigure(selectedChapter.id, newFigure)
+      setCustomFiguresMap(nextMap)
+      setPhotoCaption("")
+      setPhotoMessage(`Added "${cleanTitle}" to Chapter ${selectedChapter.number} figures.`)
+      setActiveTab("figures")
+    } catch (caught) {
+      setPhotoError(
+        caught instanceof Error ? caught.message : "Could not add this photo.",
+      )
+    } finally {
+      setPhotoUploading(false)
+      if (photoInputRef.current) {
+        photoInputRef.current.value = ""
+      }
+    }
+  }
+
+  function handleRemoveCustomFigure(figId) {
+    const nextMap = removeCustomFigure(selectedChapter.id, figId)
+    setCustomFiguresMap(nextMap)
+    if (zoomedFigure?.id === figId) {
+      setZoomedFigure(null)
+    }
   }
 
   function getTermDefinition(term) {
@@ -96,37 +171,60 @@ export function ChaptersView({
   }
 
   function renderFigureCard(fig) {
-    const isDark = Boolean(darkStageMap[fig.id])
     const takeawayOpen = Boolean(revealedFigureTakeaways[fig.id])
+    const isSvgPlate = typeof fig.src === "string" && fig.src.endsWith(".svg")
+    const fallbackSrc = `${import.meta.env.BASE_URL || "/"}anatomy/concepts/ch1-fig-1.svg`
     return (
       <article
         key={fig.id}
         className="rounded-2xl border border-slate-200/80 bg-white p-4 flex flex-col justify-between gap-3"
       >
         <div>
-          <div className={`specimen-stage ${isDark ? "is-dark-stage" : ""}`}>
-            <span className="specimen-badge">{fig.sourceBadge}</span>
-            <div className="specimen-stage-toolbar">
+          <div className="figure-card-header">
+            <span className="figure-card-badge">{fig.sourceBadge || fig.badge}</span>
+            <div className="figure-card-actions">
+              {fig.isCustom && (
+                <button
+                  type="button"
+                  className="figure-expand-btn"
+                  onClick={() => handleRemoveCustomFigure(fig.id)}
+                  title="Remove uploaded photo"
+                >
+                  <Trash2 size={12} /> Remove
+                </button>
+              )}
               <button
                 type="button"
-                className="specimen-stage-btn"
-                onClick={() => setDarkStageMap((prev) => ({ ...prev, [fig.id]: !prev[fig.id] }))}
-              >
-                {isDark ? "Light mat" : "Dark mat"}
-              </button>
-              <button
-                type="button"
-                className="specimen-stage-btn"
+                className="figure-expand-btn"
                 onClick={() => setZoomedFigure(fig)}
               >
-                <Maximize2 size={11} /> Zoom
+                <Maximize2 size={12} /> Expand
               </button>
             </div>
+          </div>
+
+          <div
+            className={`specimen-stage ${isSvgPlate ? "is-svg-plate" : ""}`}
+            onClick={() => setZoomedFigure(fig)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Expand ${fig.title}`}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault()
+                setZoomedFigure(fig)
+              }
+            }}
+          >
             <img
               src={fig.src}
               alt={fig.title}
-              onClick={() => setZoomedFigure(fig)}
-              className="h-56 w-full cursor-zoom-in object-contain p-3 pt-10"
+              onError={(e) => {
+                if (e.currentTarget.src !== fallbackSrc) {
+                  e.currentTarget.src = fallbackSrc
+                }
+              }}
+              className={isSvgPlate ? "specimen-img-svg" : "specimen-img-plate"}
               loading="lazy"
             />
           </div>
@@ -147,7 +245,7 @@ export function ChaptersView({
               {takeawayOpen ? "Hide exam takeaway" : "Click for exam takeaway"}
             </button>
             {takeawayOpen && (
-              <p className="mt-2 rounded-xl bg-teal-50/80 px-3 py-2 text-xs font-medium leading-5 text-teal-950">
+              <p className="mt-2 rounded-xl bg-teal-50 px-3 py-2 text-xs font-medium leading-5 text-teal-950">
                 {fig.keyTakeaway}
               </p>
             )}
@@ -159,6 +257,15 @@ export function ChaptersView({
 
   return (
     <div className="grid gap-4 xl:grid-cols-[340px_minmax(0,1fr)]">
+      {/* Hidden non-blocking photo input shared across the chapter view */}
+      <input
+        ref={photoInputRef}
+        type="file"
+        accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"
+        className="hidden"
+        onChange={handlePhotoUpload}
+      />
+
       {/* Compact, scannable chapter navigator */}
       <section className="panel px-4 py-4 sm:px-5 sm:py-5 flex flex-col max-h-[840px]">
         <div className="flex items-center justify-between gap-2">
@@ -220,7 +327,7 @@ export function ChaptersView({
             const active = chapter.id === selectedChapter.id
             const chapterState = chapterProgress[chapter.id] ?? {}
             const isPreview = chapter.sourceType === "supplemental"
-            const figCount = getFiguresForChapter(chapter.id).length
+            const figCount = getFiguresForChapter(chapter.id, customFiguresMap).length
 
             return (
               <button
@@ -230,7 +337,7 @@ export function ChaptersView({
                 className={`w-full rounded-2xl border px-3.5 py-2.5 text-left transition ${
                   active
                     ? "border-transparent bg-[linear-gradient(135deg,_rgba(31,109,112,0.96),_rgba(18,81,99,0.96))] text-white shadow-soft"
-                    : "border-slate-200/80 bg-white/90 text-slate-800 hover:border-teal-600/40"
+                    : "border-slate-200/80 bg-white text-slate-800 hover:border-teal-600/40"
                 }`}
               >
                 <div className="flex items-center justify-between gap-2">
@@ -242,7 +349,7 @@ export function ChaptersView({
                     Ch {String(chapter.number).padStart(2, "0")}
                   </span>
                   <div className="flex items-center gap-1.5">
-                    {figCount > 1 && (
+                    {figCount > 0 && (
                       <span
                         className={`inline-flex items-center gap-0.5 rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
                           active ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
@@ -309,6 +416,16 @@ export function ChaptersView({
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
+              <button
+                type="button"
+                disabled={photoUploading}
+                onClick={() => photoInputRef.current?.click()}
+                className="action action-secondary"
+                title="Upload a textbook photo or slide screenshot to this chapter"
+              >
+                <ImagePlus size={15} />{" "}
+                {photoUploading ? "Adding photo…" : "Add photo"}
+              </button>
               {onExploreIn3D && atlasSystem && (
                 <button
                   type="button"
@@ -330,6 +447,23 @@ export function ChaptersView({
               )}
             </div>
           </div>
+
+          {photoMessage && (
+            <p
+              role="status"
+              className="mt-3 rounded-xl border border-emerald-200 bg-emerald-50 px-3.5 py-2 text-xs font-semibold text-emerald-900"
+            >
+              {photoMessage}
+            </p>
+          )}
+          {photoError && (
+            <p
+              role="alert"
+              className="mt-3 rounded-xl border border-rose-200 bg-rose-50 px-3.5 py-2 text-xs font-semibold text-rose-900"
+            >
+              {photoError}
+            </p>
+          )}
 
           {/* Progress & Confidence bar */}
           <div className="mt-4 flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
@@ -433,7 +567,7 @@ export function ChaptersView({
           <div className="p-5 sm:p-6 space-y-4">
             {activeTab === "essentials" && (
               <>
-                <article className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 sm:p-5">
+                <article className="rounded-2xl border border-slate-200/80 bg-slate-50 p-4 sm:p-5">
                   <div className="flex items-center justify-between gap-2">
                     <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
                       {selectedChapter.sourceLabel && !selectedChapter.isPreviewPack
@@ -456,18 +590,27 @@ export function ChaptersView({
                       <div>
                         <span className="eyebrow">Visual Reference</span>
                         <h3 className="text-base font-semibold text-slate-900">
-                          {chapterFigures[0].sourceBadge}s ({chapterFigures.length})
+                          {chapterFigures[0].sourceBadge || "Course Figure"} ({chapterFigures.length})
                         </h3>
                       </div>
-                      {chapterFigures.length > 2 && (
+                      <div className="flex items-center gap-3">
                         <button
                           type="button"
-                          onClick={() => setActiveTab("figures")}
+                          onClick={() => photoInputRef.current?.click()}
                           className="text-xs font-semibold text-[var(--ink-strong)] hover:underline"
                         >
-                          View all {chapterFigures.length} figures →
+                          + Add photo
                         </button>
-                      )}
+                        {chapterFigures.length > 2 && (
+                          <button
+                            type="button"
+                            onClick={() => setActiveTab("figures")}
+                            className="text-xs font-semibold text-[var(--ink-strong)] hover:underline"
+                          >
+                            View all {chapterFigures.length} figures →
+                          </button>
+                        )}
+                      </div>
                     </div>
                     <div className="grid gap-4 md:grid-cols-2">
                       {chapterFigures.slice(0, 2).map((fig) => renderFigureCard(fig))}
@@ -499,7 +642,7 @@ export function ChaptersView({
                 )}
 
                 {selectedChapter.commonConfusions?.length > 0 && (
-                  <details className="group rounded-2xl border border-amber-200/70 bg-amber-50/40 p-4 sm:p-5">
+                  <details className="group rounded-2xl border border-amber-200/70 bg-amber-50 p-4 sm:p-5">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-2 font-semibold text-slate-900">
                       <span>
                         Common exam traps — click to reveal ({selectedChapter.commonConfusions.length})
@@ -524,15 +667,36 @@ export function ChaptersView({
 
             {activeTab === "figures" && (
               <div className="space-y-4">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs text-slate-600">
-                    Click any figure to enlarge it in full resolution, or reveal its high-yield exam takeaway.
-                  </p>
-                  {selectedChapter.id === "chapter-7" && onPracticeChapter && (
-                    <span className="text-xs font-semibold text-[var(--ink-strong)]">
-                      47 total bone views available in Bone Landmarks Lab
-                    </span>
-                  )}
+                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5">
+                  <div>
+                    <p className="text-xs font-semibold text-slate-800">
+                      Click any figure to enlarge it in full resolution, or attach your own lecture photo / diagram.
+                    </p>
+                    {selectedChapter.id === "chapter-7" && onPracticeChapter && (
+                      <span className="text-xs font-semibold text-[var(--ink-strong)]">
+                        47 total bone views also available in Bone Landmarks Lab
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <input
+                      type="text"
+                      value={photoCaption}
+                      onChange={(e) => setPhotoCaption(e.target.value)}
+                      placeholder="Optional photo title…"
+                      aria-label="Optional photo title"
+                      className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800"
+                    />
+                    <button
+                      type="button"
+                      disabled={photoUploading}
+                      onClick={() => photoInputRef.current?.click()}
+                      className="action text-xs"
+                    >
+                      <ImagePlus size={14} />{" "}
+                      {photoUploading ? "Processing photo…" : "Upload Photo / Diagram"}
+                    </button>
+                  </div>
                 </div>
                 <div className="grid gap-4 md:grid-cols-2">
                   {chapterFigures.map((fig) => renderFigureCard(fig))}
@@ -568,7 +732,7 @@ export function ChaptersView({
 
                 {activeTerm && (
                   <article
-                    className="rounded-2xl border border-teal-200 bg-teal-50/70 p-4 sm:p-5"
+                    className="rounded-2xl border border-teal-200 bg-teal-50 p-4 sm:p-5"
                     role="status"
                   >
                     <div className="flex items-center justify-between gap-2">
@@ -674,7 +838,7 @@ export function ChaptersView({
                                       ? "border-emerald-300 bg-emerald-50 text-emerald-900"
                                       : showWrong
                                         ? "border-rose-300 bg-rose-50 text-rose-900"
-                                        : "border-slate-200 bg-slate-50/70 text-slate-800 hover:border-teal-600"
+                                        : "border-slate-200 bg-slate-50 text-slate-800 hover:border-teal-600"
                                   }`}
                                 >
                                   {option}
@@ -721,12 +885,13 @@ export function ChaptersView({
                       <button
                         key={card.id}
                         type="button"
+                        aria-pressed={isFlipped}
                         onClick={() =>
                           setRevealedCards((prev) => ({ ...prev, [card.id]: !prev[card.id] }))
                         }
                         className={`rounded-2xl border p-4 text-left transition ${
                           isFlipped
-                            ? "border-teal-700 bg-teal-50/60 text-slate-900"
+                            ? "border-teal-700 bg-teal-50 text-slate-900"
                             : "border-slate-200/80 bg-white text-slate-900 hover:border-teal-600"
                         }`}
                       >
@@ -781,13 +946,13 @@ export function ChaptersView({
           aria-label={zoomedFigure.title}
         >
           <div
-            className="relative max-h-[92dvh] max-w-[92vw] overflow-auto rounded-3xl bg-[#eef3f0] p-6 shadow-2xl"
+            className="figure-lightbox-card relative max-h-[92dvh] max-w-[92vw] overflow-auto rounded-3xl p-6 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="mb-3 flex items-start justify-between gap-4">
               <div>
                 <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
-                  {zoomedFigure.sourceBadge}
+                  {zoomedFigure.sourceBadge || zoomedFigure.badge}
                 </span>
                 <h3 className="text-lg font-bold text-slate-900">{zoomedFigure.title}</h3>
                 <p className="text-xs text-slate-600">{zoomedFigure.caption}</p>
@@ -797,16 +962,28 @@ export function ChaptersView({
                 onClick={() => setZoomedFigure(null)}
                 className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-bold text-white"
               >
-                Close
+                Close (Esc)
               </button>
             </div>
-            <img
-              src={zoomedFigure.src}
-              alt={zoomedFigure.title}
-              className="max-h-[72dvh] w-auto mx-auto object-contain rounded-xl"
-            />
+            <div
+              className={`specimen-stage is-lightbox-stage ${
+                typeof zoomedFigure.src === "string" && zoomedFigure.src.endsWith(".svg")
+                  ? "is-svg-plate"
+                  : ""
+              }`}
+            >
+              <img
+                src={zoomedFigure.src}
+                alt={zoomedFigure.title}
+                className={
+                  typeof zoomedFigure.src === "string" && zoomedFigure.src.endsWith(".svg")
+                    ? "specimen-img-svg"
+                    : "specimen-img-plate"
+                }
+              />
+            </div>
             {zoomedFigure.keyTakeaway && (
-              <p className="mt-3 rounded-xl bg-teal-900/10 px-4 py-2.5 text-xs font-semibold text-slate-900">
+              <p className="mt-3 rounded-xl bg-teal-50 px-4 py-2.5 text-xs font-semibold text-teal-950">
                 Exam Takeaway: {zoomedFigure.keyTakeaway}
               </p>
             )}

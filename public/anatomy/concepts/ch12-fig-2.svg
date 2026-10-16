@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Meninges, Cerebrospinal Fluid (CSF) &amp; Spinal Cord Anatomy">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 12</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Meninges, Cerebrospinal Fluid (CSF) &amp; Spinal Cord Anatomy</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Dura-Arachnoid-Pia mater protection, choroid plexus CSF circulation, and dorsal sensory vs. ventral motor roots</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478" letter-spacing="0.08em">SPINAL CORD CROSS-SECTION</text>
+      <!-- Outer White Matter Oval -->
+      <ellipse cx="192" cy="195" rx="132" ry="98" fill="#23424a" stroke="#7cc4e8" stroke-width="3"/>
+      <!-- Butterfly Gray Matter -->
+      <path d="M135,132 C160,155 170,175 192,175 C214,175 224,155 249,132 C238,175 238,215 254,255 C224,230 214,215 192,215 C170,215 160,230 130,255 C146,215 146,175 135,132 Z" fill="#e99a83" fill-opacity="0.45" stroke="#e99a83" stroke-width="2.2"/>
+      <circle cx="192" cy="195" r="7" fill="#111f24" stroke="#5ec2ab" stroke-width="2"/>
+      <!-- Root Callouts -->
+      <text x="192" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#6fd6be">Dorsal Horn &amp; Dorsal Root = SENSORY (Afferent)</text>
+      <text x="192" y="320" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#e99a83">Ventral Horn &amp; Ventral Root = MOTOR (Efferent)</text>
+      <!-- Meninges Stack -->
+      <rect x="38" y="352" width="308" height="202" rx="14" fill="#1b323a" stroke="#365a64"/>
+      <text x="192" y="382" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#f1faf8">MENINGEAL LAYERS (OUTER → INNER)</text>
+      <text x="58" y="414" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#e5c478">1. Dura Mater — Tough leathery outer coat</text>
+      <text x="58" y="446" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">2. Arachnoid Mater — Subarachnoid CSF space</text>
+      <text x="58" y="478" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6fd6be">3. Pia Mater — Delicate vascular inner layer</text>
+      <line x1="58" y1="498" x2="326" y2="498" stroke="#2c4a52"/>
+      <text x="192" y="524" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#e99a83">Lumbar Puncture safe below L1/L2 (Cauda Equina)</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">MENINGES</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Dura, Arachnoid &amp; Pia Mater</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Dura (tough outer), Arachnoid (web-like middle),</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">and Pia (clings tightly to brain/cord surface).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Subarachnoid space is filled with liquid CSF</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">CSF FLOW</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Choroid Plexuses &amp; Ventricles</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Choroid plexuses filter blood to make CSF;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">drains into dural sinuses via arachnoid villi.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Provides liquid buoyancy cushion for the brain</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">BARRIER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Blood-Brain Barrier (BBB)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Continuous endothelial tight junctions +</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">astrocyte feet block bloodborne toxins.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Allows glucose, O₂ &amp; lipid-soluble molecules</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">DORSAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Dorsal Root &amp; Ganglion (Sensory)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Unipolar sensory neuron cell bodies sit in DRG;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">axons enter dorsal horn (afferent input).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Dorsal = Sensory (SAME: Sensory Afferent)</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">VENTRAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Ventral Horn &amp; Root (Motor)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Somatic motor neuron somas in ventral horn</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">send axons out ventral root to skeletal muscle.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Lateral horn (T1–L2) houses sympathetic neurons</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">TRACTS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Ascending vs. Descending Tracts</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Ascending white columns carry sensory up;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Descending corticospinal tracts carry motor down.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Conus medullaris ends at L1/L2 in adults</text>
+      </g>
+</svg>

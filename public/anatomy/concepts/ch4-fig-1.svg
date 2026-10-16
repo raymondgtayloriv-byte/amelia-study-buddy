@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Epithelial Tissue Classification &amp; Cellular Junctions">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 04</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Epithelial Tissue Classification &amp; Cellular Junctions</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Apical vs. basal polarity, avascularity on a basement membrane, and layer × shape classification</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be" letter-spacing="0.08em">EPITHELIAL LAYER × SHAPE</text>
+      <!-- Simple Squamous -->
+      <rect x="38" y="64" width="308" height="92" rx="12" fill="#1b323a" stroke="#365a64"/>
+      <ellipse cx="95" cy="102" rx="34" ry="10" fill="#5ec2ab" fill-opacity="0.35" stroke="#5ec2ab" stroke-width="1.8"/>
+      <ellipse cx="165" cy="102" rx="34" ry="10" fill="#5ec2ab" fill-opacity="0.35" stroke="#5ec2ab" stroke-width="1.8"/>
+      <line x1="54" y1="118" x2="206" y2="118" stroke="#e99a83" stroke-width="3"/>
+      <text x="222" y="98" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#f1faf8">Simple Squamous</text>
+      <text x="222" y="118" font-family="system-ui, sans-serif" font-size="11" fill="#9db5b2">Rapid diffusion (Alveoli)</text>
+      <!-- Simple Cuboidal -->
+      <rect x="38" y="172" width="308" height="106" rx="12" fill="#1b323a" stroke="#365a64"/>
+      <rect x="64" y="196" width="42" height="42" rx="6" fill="#e5c478" fill-opacity="0.3" stroke="#e5c478" stroke-width="1.8"/>
+      <circle cx="85" cy="217" r="9" fill="#e5c478"/>
+      <rect x="110" y="196" width="42" height="42" rx="6" fill="#e5c478" fill-opacity="0.3" stroke="#e5c478" stroke-width="1.8"/>
+      <circle cx="131" cy="217" r="9" fill="#e5c478"/>
+      <line x1="54" y1="244" x2="170" y2="244" stroke="#e99a83" stroke-width="3"/>
+      <text x="186" y="216" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#f1faf8">Simple Cuboidal</text>
+      <text x="186" y="236" font-family="system-ui, sans-serif" font-size="11" fill="#9db5b2">Secretion (Kidney Tubules)</text>
+      <!-- Simple Columnar -->
+      <rect x="38" y="294" width="308" height="122" rx="12" fill="#1b323a" stroke="#365a64"/>
+      <rect x="64" y="314" width="34" height="68" rx="6" fill="#7cc4e8" fill-opacity="0.3" stroke="#7cc4e8" stroke-width="1.8"/>
+      <ellipse cx="81" cy="360" rx="7" ry="12" fill="#7cc4e8"/>
+      <rect x="102" y="314" width="34" height="68" rx="6" fill="#7cc4e8" fill-opacity="0.3" stroke="#7cc4e8" stroke-width="1.8"/>
+      <ellipse cx="119" cy="360" rx="7" ry="12" fill="#7cc4e8"/>
+      <line x1="54" y1="388" x2="160" y2="388" stroke="#e99a83" stroke-width="3"/>
+      <text x="176" y="346" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#f1faf8">Simple Columnar</text>
+      <text x="176" y="366" font-family="system-ui, sans-serif" font-size="11" fill="#9db5b2">Absorption (GI Tract)</text>
+      <!-- Polarity Note -->
+      <rect x="38" y="434" width="308" height="118" rx="12" fill="#1b323a" stroke="#5ec2ab"/>
+      <text x="192" y="462" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12.5" font-weight="800" fill="#6fd6be">EPITHELIAL HALLMARKS</text>
+      <text x="192" y="488" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Avascular (nourished by underlying CT)</text>
+      <text x="192" y="510" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">• Apical (free) vs. Basal (anchored) surface</text>
+      <text x="192" y="532" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#e99a83">• High mitotic regeneration rate</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">1 LAYER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Simple Epithelia</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Single cell layer specialized for filtration,</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">gas exchange, absorption, and secretion.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Alveoli, capillaries, kidney tubules, GI tract</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">2+ LAYERS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Stratified Squamous</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Multiple stacked layers built to resist</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">mechanical abrasion in high-friction zones.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Keratinized epidermis; nonkeratinized esophagus</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">AIRWAY</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Pseudostratified Columnar</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Single layer of cells of varying heights;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">cilia + goblet cells propel mucus escalator.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Lines trachea and upper respiratory tract</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">STRETCH</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Transitional Epithelium</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Dome-shaped umbrella cells flatten as</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">hollow urinary organs distend with urine.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Lines ureters, urinary bladder &amp; urethra</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">GLANDS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Endocrine vs. Exocrine Glands</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Endocrine (ductless) secretes hormones into blood;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Exocrine secretes onto surfaces via ducts.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Merocrine (exocytosis) vs. Holocrine (cell rupture)</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">JUNCTIONS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Tight, Desmosome &amp; Gap</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Tight junctions seal; Desmosomes anchor</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">against tension; Gap junctions pass ions.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Hemidesmosomes anchor basal cells to lamina</text>
+      </g>
+</svg>

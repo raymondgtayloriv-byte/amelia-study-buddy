@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Spinal Nerves (31 Pairs), Nerve Plexuses &amp; Somatic Reflex Arcs">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 13</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Spinal Nerves (31 Pairs), Nerve Plexuses &amp; Somatic Reflex Arcs</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Endoneurium-Perineurium-Epineurium wrappings, Cervical/Brachial/Lumbar/Sacral plexuses, and 5-step reflex arc</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e99a83" letter-spacing="0.08em">5-COMPONENT REFLEX ARC</text>
+      <!-- 5 Steps Vertical Flow -->
+      <rect x="48" y="64" width="288" height="62" rx="12" fill="#1b323a" stroke="#5ec2ab" stroke-width="2"/>
+      <text x="192" y="92" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be">1. Sensory Receptor (Muscle Spindle)</text>
+      <text x="192" y="112" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#d3ece7">Detects stretch or noxious stimulus</text>
+      <rect x="48" y="142" width="288" height="62" rx="12" fill="#1b323a" stroke="#7cc4e8" stroke-width="2"/>
+      <text x="192" y="170" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#7cc4e8">2. Sensory Neuron (Dorsal Root)</text>
+      <text x="192" y="190" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#d3ece7">Conducts afferent impulse into CNS</text>
+      <rect x="48" y="220" width="288" height="62" rx="12" fill="#1b323a" stroke="#e5c478" stroke-width="2"/>
+      <text x="192" y="248" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e5c478">3. CNS Integration Center</text>
+      <text x="192" y="268" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#d3ece7">Monosynaptic (stretch) or Polysynaptic</text>
+      <rect x="48" y="298" width="288" height="62" rx="12" fill="#1b323a" stroke="#e99a83" stroke-width="2"/>
+      <text x="192" y="326" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#e99a83">4. Motor Neuron (Ventral Root)</text>
+      <text x="192" y="346" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#d3ece7">Conducts efferent command to target</text>
+      <rect x="48" y="376" width="288" height="62" rx="12" fill="#1b323a" stroke="#5ec2ab" stroke-width="2"/>
+      <text x="192" y="404" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be">5. Effector Organ (Muscle / Gland)</text>
+      <text x="192" y="424" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#d3ece7">Contracts or secretes automatically</text>
+      <!-- Plexus Summary -->
+      <text x="192" y="482" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#f1faf8">31 Spinal Nerve Pairs: 8C · 12T · 5L · 5S · 1Co</text>
+      <text x="192" y="508" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" font-weight="700" fill="#e5c478">Ventral rami (except T2–T12) form 4 Plexuses</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">WRAPPINGS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Epineurium, Perineurium, Endoneurium</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Epineurium wraps whole nerve; Perineurium</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">wraps fascicles; Endoneurium wraps each axon.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Mirrors muscle epimysium / perimysium / endomysium</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">CERVICAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Cervical Plexus (C1–C4) &amp; Phrenic</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Phrenic nerve (C3–C5) innervates the diaphragm</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">for breathing (&apos;C3, 4, 5 keep the diaphragm alive&apos;).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Severing cord above C3 causes respiratory arrest</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">BRACHIAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Brachial Plexus (C5–T1)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Gives rise to Axillary, Musculocutaneous,</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Median, Ulnar, and Radial nerves of upper limb.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Radial = wrist drop; Median = carpal tunnel</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">LUMBOSACRAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Lumbar (L1–L4) &amp; Sacral (L4–S4)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Lumbar: Femoral &amp; Obturator nerves;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Sacral: Sciatic nerve (tibial + common fibular).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Sciatic nerve is the thickest/longest nerve in the body</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">STRETCH</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Stretch &amp; Tendon Reflexes</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Stretch (patellar) is monosynaptic &amp; ipsilateral</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">with reciprocal inhibition of antagonists.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Golgi tendon reflex prevents muscle/tendon tearing</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">WITHDRAWAL</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Flexor &amp; Crossed-Extensor Reflex</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Polysynaptic ipsilateral flexion pulls limb from pain;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">contralateral extension supports body weight.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Stepping on glass: flex injured leg, extend opposite leg</text>
+      </g>
+</svg>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Chemical Bonds, Water Polarity &amp; Physiological pH Scale">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 02</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Chemical Bonds, Water Polarity &amp; Physiological pH Scale</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Electron sharing/transfer, hydrogen bonding in water, and acid-base homeostasis (blood pH 7.35–7.45)</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be" letter-spacing="0.08em">BONDING &amp; BLOOD pH SCALE</text>
+      <!-- Water Molecule H2O -->
+      <circle cx="192" cy="128" r="38" fill="#e99a83" fill-opacity="0.28" stroke="#e99a83" stroke-width="2.5"/>
+      <text x="192" y="133" text-anchor="middle" font-family="system-ui, sans-serif" font-size="16" font-weight="800" fill="#f1faf8">O (δ⁻)</text>
+      <circle cx="132" cy="176" r="24" fill="#5ec2ab" fill-opacity="0.28" stroke="#5ec2ab" stroke-width="2.2"/>
+      <text x="132" y="181" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#f1faf8">H (δ⁺)</text>
+      <circle cx="252" cy="176" r="24" fill="#5ec2ab" fill-opacity="0.28" stroke="#5ec2ab" stroke-width="2.2"/>
+      <text x="252" y="181" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#f1faf8">H (δ⁺)</text>
+      <text x="192" y="222" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6fd6be">Polar Covalent + Intermolecular H-Bonds</text>
+      <!-- pH Scale Bar -->
+      <rect x="34" y="268" width="316" height="36" rx="10" fill="#1f3a42" stroke="#365a64"/>
+      <rect x="36" y="270" width="140" height="32" rx="8" fill="#e99a83" fill-opacity="0.45"/>
+      <rect x="176" y="270" width="32" height="32" fill="#5ec2ab" fill-opacity="0.65"/>
+      <rect x="208" y="270" width="140" height="32" rx="8" fill="#7cc4e8" fill-opacity="0.45"/>
+      <text x="96" y="291" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#fff">Acidic (0–6.9)</text>
+      <text x="192" y="291" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#111f24">7</text>
+      <text x="280" y="291" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#fff">Basic (7.1–14)</text>
+      <!-- Arterial Blood Callout -->
+      <rect x="52" y="335" width="280" height="104" rx="14" fill="#1b3438" stroke="#5ec2ab" stroke-width="2"/>
+      <text x="192" y="366" text-anchor="middle" font-family="system-ui, sans-serif" font-size="14" font-weight="800" fill="#6fd6be">Arterial Blood pH: 7.35 – 7.45</text>
+      <text x="192" y="392" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#e2f2ef">pH &lt; 7.35 = Physiological Acidosis</text>
+      <text x="192" y="414" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#e2f2ef">pH &gt; 7.45 = Physiological Alkalosis</text>
+      <text x="192" y="485" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Each 1 pH unit = 10× change in [H⁺]</text>
+      <text x="192" y="512" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#9db5b2">Bicarbonate buffer system resists pH shifts</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">ELECTRONS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Ionic Bonds (Cation + Anion)</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Complete transfer of valence electrons</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">creates oppositely charged ions (Na⁺Cl⁻).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Dissociates into electrolytes in water</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">SHARING</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Nonpolar vs. Polar Covalent</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Equal electron sharing = nonpolar (O₂);</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">unequal sharing = polar dipole (H₂O).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Strongest chemical bond in physiology</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">WATER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Hydrogen Bonding</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Weak attraction between δ⁺ hydrogen</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">and δ⁻ oxygen or nitrogen atoms.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Gives water high heat capacity &amp; cohesion</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">ACID / BASE</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Proton Donors &amp; Acceptors</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Acids release H⁺ ions in solution;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Bases accept H⁺ (or release OH⁻).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Lower pH = higher [H⁺] concentration</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">BUFFERS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Chemical Buffer Systems</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Weak acid + conjugate base pairs bind</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">or release H⁺ to prevent pH swings.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Carbonic acid / bicarbonate in blood</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">REACTIONS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Dehydration vs. Hydrolysis</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Dehydration removes H₂O to join monomers;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Hydrolysis adds H₂O to split polymers.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Anabolic build vs. Catabolic breakdown</text>
+      </g>
+</svg>

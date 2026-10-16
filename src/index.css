@@ -634,62 +634,117 @@
   background-color: rgba(246, 249, 247, 0.92);
 }
 
-/* Archival Specimen Stage: keeps transparent black-ink textbook diagrams 100% legible in Dark & Light modes */
+/* Unified Dark Mat Stage (used in both Light and Dark mode) with External Header Bar */
+.figure-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.figure-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(23, 46, 50, 0.09);
+  border: 1px solid rgba(23, 46, 50, 0.14);
+  color: var(--studio-ink);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+[data-theme=dark] .figure-card-badge {
+  background: #213e38;
+  border-color: #3d6f63;
+  color: #b8ebd6;
+}
+.figure-card-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.figure-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--studio-border);
+  background: var(--panel);
+  color: var(--studio-ink);
+  font-size: 11px;
+  font-weight: 700;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.figure-expand-btn:hover {
+  border-color: var(--ink-strong);
+  background: #e6f0ed;
+}
+[data-theme=dark] .figure-expand-btn {
+  background: #20353b;
+  border-color: #3d5d65;
+  color: #e9f5f2;
+}
+[data-theme=dark] .figure-expand-btn:hover {
+  background: #28695c;
+  border-color: #63ccb2;
+  color: #ffffff;
+}
+
 .specimen-stage {
   position: relative;
   overflow: hidden;
-  border-radius: 22px;
-  background: linear-gradient(135deg, #eef3f0 0%, #e4ece9 100%) !important;
-  border: 1px solid #c5d4d0 !important;
-  color: #172e32 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
-}
-.specimen-stage.is-dark-stage {
-  background: linear-gradient(135deg, #16262c 0%, #1d3138 100%) !important;
-  border-color: #344b50 !important;
-  color: #e2ece8 !important;
-}
-.specimen-stage-toolbar {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  padding: 12px;
+  border-radius: 18px;
+  background: linear-gradient(145deg, #122127 0%, #192d34 100%) !important;
+  border: 1px solid #2b4750 !important;
+  color: #e6f2ef !important;
   display: flex;
-  gap: 6px;
-}
-.specimen-stage-btn {
-  display: inline-flex;
   align-items: center;
-  gap: 5px;
-  padding: 5px 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(23, 46, 50, 0.16);
-  background: rgba(246, 249, 247, 0.92);
-  color: #172e32 !important;
-  font-size: 11px;
-  font-weight: 700;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08);
+  justify-content: center;
+  cursor: zoom-in;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), 0 6px 18px rgba(15, 23, 42, 0.12);
 }
-.specimen-stage-btn:hover {
-  background: #ffffff;
+.specimen-stage.is-svg-plate {
+  padding: 6px;
 }
-.specimen-badge {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 10;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(23, 46, 50, 0.84);
-  color: #f1f8f5 !important;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.specimen-stage.is-bone-stage {
+  aspect-ratio: 16 / 11;
+  min-height: 360px;
+}
+.specimen-stage.is-blitz-stage {
+  aspect-ratio: 16 / 10;
+  padding: 8px;
+  border-radius: 14px;
+}
+.specimen-stage.is-lightbox-stage {
+  aspect-ratio: auto;
+  max-height: 74dvh;
+  padding: 16px;
+  cursor: default;
+}
+.specimen-img-svg {
+  width: 100%;
+  height: 100%;
+  max-height: 70dvh;
+  object-fit: contain;
+  border-radius: 12px;
+  display: block;
+}
+.specimen-img-plate {
+  width: 100%;
+  height: 100%;
+  max-height: 70dvh;
+  object-fit: contain;
+  background: #f6f9f8;
+  border-radius: 12px;
+  padding: 8px;
+  display: block;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.32);
 }
 
 /* Dark mode contrast fixes for buttons, chips, and subtle rgba backgrounds */
@@ -745,4 +800,138 @@
 }
 .atlas-floating-pill:active {
   cursor: grabbing;
+}
+
+/* Phase 3 Dark Mode Selected Text Box & Container High-Contrast Overrides */
+.atlas-segmented-pills {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  padding: 4px;
+  border-radius: 12px;
+  border: 1px solid var(--studio-border);
+  background: #edf3f0;
+}
+.atlas-segmented-pills button {
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  background: transparent;
+  color: var(--studio-muted);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.atlas-segmented-pills button[aria-pressed="true"] {
+  background: var(--ink-strong);
+  color: #ffffff;
+}
+[data-theme=dark] .atlas-segmented-pills {
+  background: #142328;
+  border-color: var(--studio-border);
+}
+[data-theme=dark] .atlas-segmented-pills button {
+  color: #b8ccc8;
+}
+[data-theme=dark] .atlas-segmented-pills button[aria-pressed="true"] {
+  background: #28695c;
+  color: #f4fbf9;
+}
+
+.figure-lightbox-card {
+  background: #f4f8f6;
+  border: 1px solid var(--studio-border);
+  color: var(--studio-ink);
+}
+[data-theme=dark] .figure-lightbox-card {
+  background: #17272d;
+  border-color: #3b585e;
+  color: #e8f3f0;
+}
+
+/* Eliminate washed-out off-gray translucent Tailwind boxes in Dark Mode */
+[data-theme=dark] :is(
+  .bg-slate-50,
+  [class*="bg-slate-50/"],
+  .bg-slate-100,
+  [class*="bg-slate-100/"],
+  .bg-slate-200,
+  [class*="bg-slate-200/"],
+  [class*="bg-[#edf4f1]"],
+  [class*="bg-[#eef3f0]"]
+) {
+  background-color: #1f3339 !important;
+  color: #e6f2ef;
+}
+
+[data-theme=dark] :is(
+  .bg-teal-50,
+  [class*="bg-teal-50/"],
+  .bg-teal-100,
+  [class*="bg-teal-100/"],
+  .bg-emerald-50,
+  [class*="bg-emerald-50/"],
+  .bg-emerald-100,
+  [class*="bg-emerald-100/"]
+) {
+  background-color: #1c423b !important;
+  color: #ecfaf5;
+}
+
+[data-theme=dark] :is(
+  .bg-amber-50,
+  [class*="bg-amber-50/"],
+  .bg-amber-100,
+  [class*="bg-amber-100/"],
+  .bg-rose-50,
+  [class*="bg-rose-50/"],
+  .bg-rose-100,
+  [class*="bg-rose-100/"]
+) {
+  background-color: #43302a !important;
+  color: #fde4d7;
+}
+
+[data-theme=dark] :is(
+  .border-teal-700,
+  .border-teal-600,
+  [class*="border-teal-600/"],
+  .border-teal-500,
+  .border-teal-300,
+  .border-teal-200,
+  .border-teal-100,
+  .border-emerald-300,
+  .border-emerald-200
+) {
+  border-color: #55b89f !important;
+}
+
+[data-theme=dark] :is(
+  .border-amber-400,
+  .border-amber-300,
+  .border-amber-200,
+  [class*="border-amber-200/"],
+  .border-rose-300,
+  .border-rose-200
+) {
+  border-color: #b87b61 !important;
+}
+
+/* High-contrast selected / active cards & text boxes in Dark Mode */
+[data-theme=dark] button[aria-pressed="true"]:not(.action):not(.studio-mode button):not(.atlas-segmented-pills button) {
+  border-color: #63ccb2 !important;
+  box-shadow: 0 0 0 1px rgba(99, 204, 178, 0.35);
+}
+[data-theme=dark] button[aria-pressed="true"] :is(.text-slate-900, .text-slate-800, .text-slate-700, .text-slate-600, .text-slate-500) {
+  color: #f2fbf8 !important;
+}
+[data-theme=dark] :is(input, select, textarea):focus {
+  background-color: #1d3238 !important;
+  border-color: #63ccb2 !important;
+  color: #f4fbf9 !important;
+}
+[data-theme=dark] kbd {
+  background-color: #142328 !important;
+  border-color: #3b585e !important;
+  color: #c2d8d3 !important;
 }

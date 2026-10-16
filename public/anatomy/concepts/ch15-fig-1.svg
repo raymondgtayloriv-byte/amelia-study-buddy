@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Special Senses: Sagittal Eye Tunics, Refraction &amp; Retina">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 15</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Special Senses: Sagittal Eye Tunics, Refraction &amp; Retina</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Fibrous, vascular, and neural tunics, lens accommodation, rods vs. cones, and the visual pathway to occipital cortex</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be" letter-spacing="0.08em">SAGITTAL EYE &amp; RETINA</text>
+      <!-- Eye Globe -->
+      <circle cx="204" cy="195" r="106" fill="#1b343c" stroke="#f1faf8" stroke-width="3.5"/>
+      <!-- Cornea Bulge -->
+      <path d="M108,145 C68,170 68,220 108,245" fill="#7cc4e8" fill-opacity="0.28" stroke="#7cc4e8" stroke-width="3"/>
+      <!-- Choroid & Retina -->
+      <circle cx="204" cy="195" r="96" fill="none" stroke="#e99a83" stroke-width="2.5" stroke-dasharray="6,3"/>
+      <circle cx="204" cy="195" r="86" fill="none" stroke="#e5c478" stroke-width="2.5"/>
+      <!-- Lens -->
+      <ellipse cx="132" cy="195" rx="14" ry="38" fill="#5ec2ab" fill-opacity="0.4" stroke="#5ec2ab" stroke-width="2.2"/>
+      <!-- Fovea & Optic Nerve -->
+      <circle cx="290" cy="195" r="8" fill="#e5c478"/>
+      <text x="274" y="178" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#e5c478">Fovea (Cones)</text>
+      <rect x="292" y="218" width="52" height="24" fill="#23424a" stroke="#e5c478" stroke-width="2"/>
+      <text x="275" y="236" text-anchor="end" font-family="system-ui, sans-serif" font-size="11" font-weight="800" fill="#e99a83">Optic Disc (CN II)</text>
+      <!-- Light Pathway Box -->
+      <rect x="38" y="332" width="308" height="222" rx="14" fill="#1b323a" stroke="#365a64"/>
+      <text x="192" y="362" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#f1faf8">REFRACTION &amp; RETINAL PATHWAY</text>
+      <text x="192" y="392" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#7cc4e8">Cornea (main fixed refraction) → Aqueous Humor</text>
+      <text x="192" y="416" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#6fd6be">→ Lens (adjustable focus) → Vitreous Humor</text>
+      <text x="192" y="440" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#e5c478">→ Photoreceptors (Rods/Cones) → Bipolar Cells</text>
+      <text x="192" y="464" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#e99a83">→ Ganglion Cells → Optic Nerve (CN II) →</text>
+      <text x="192" y="488" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#f1faf8">Optic Chiasm → Thalamus (LGN) → Occipital Cortex</text>
+      <text x="192" y="528" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#6fd6be">Myopia = eyeball too long (concave lens fixes)</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">3 TUNICS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Fibrous, Vascular &amp; Neural Layers</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Fibrous: Sclera + Cornea; Vascular (Uvea):</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Choroid + Ciliary body + Iris; Inner: Retina.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Cornea has the highest refractive power of the eye</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">HUMORS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Aqueous vs. Vitreous Humor</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Aqueous humor (anterior segment) drains via</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">scleral venous sinus; blocked drainage = Glaucoma.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Vitreous humor holds the retina against the choroid</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">FOCUS</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Lens Accommodation</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Near vision: Ciliary muscle contracts → lens</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">bulges (more convex) + pupils constrict + eyes converge.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Hyperopia (farsighted) corrected with convex lens</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">RODS vs CONES</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Scotopic vs. Photopic Vision</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Rods: dim light, peripheral, monochromatic (rhodopsin);</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Cones: bright light, high-acuity color (blue/green/red).</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">Light hyperpolarizes photoreceptors via cGMP closure</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">ACUITY</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Fovea Centralis vs. Optic Disc</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Fovea centralis (in macula) has ONLY cones for</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">sharpest vision; Optic disc has zero photoreceptors.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Optic disc = physiological blind spot where CN II exits</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">PATHWAY</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Optic Chiasm &amp; Visual Cortex</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Medial (nasal) retinal fibers cross at the optic</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">chiasm → Lateral Geniculate Nucleus → Occipital lobe.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Gives each hemisphere the contralateral visual field</text>
+      </g>
+</svg>

@@ -1,4 +1,7 @@
 import assert from "node:assert/strict"
+import fs from "node:fs"
+import path from "node:path"
+import { CHAPTER_FIGURES } from "../src/data/courseVisuals.js"
 import { chapters as baseChapters } from "../src/data/studyData.js"
 import {
   CHAPTER_ATLAS_SYSTEM,
@@ -33,20 +36,34 @@ for (const ch of supplementalChapters) {
   }
 }
 
-// Verify all 15 chapters have a valid 3D Atlas system mapping and defined vocabulary terms
+// Verify all 15 chapters have a valid 3D Atlas system mapping, defined vocabulary terms, and valid image files
 const allMerged = baseChapters.map((ch) =>
   ch.status === "ready" ? ch : supplementalChapters.find((s) => s.number === ch.number),
 )
 assert.equal(allMerged.length, 15, "all 15 chapters must resolve")
 assert.ok(allMerged.every((ch) => ch && ch.status === "ready"), "all 15 chapters must be studyable")
+
+let totalFigures = 0
 for (const ch of allMerged) {
   assert.ok(CHAPTER_ATLAS_SYSTEM[ch.id], `${ch.id} must map to a 3D Atlas organ system`)
   for (const term of ch.vocabulary ?? []) {
     const def = VOCABULARY_DEFINITIONS[term.toLowerCase()] ?? VOCABULARY_DEFINITIONS[term]
     assert.ok(def && def.length > 15, `missing definition for term "${term}" in ${ch.id}`)
   }
+  const figs = CHAPTER_FIGURES[ch.id] ?? []
+  assert.ok(figs.length >= 1, `${ch.id} must have at least 1 figure in CHAPTER_FIGURES`)
+  for (const fig of figs) {
+    assert.ok(fig.id && fig.title && fig.src, `figure in ${ch.id} missing required metadata`)
+    assert.ok(fig.sourceBadge && fig.badge, `figure ${fig.id} missing badge metadata`)
+    const relPath = fig.src.replace(/^\//, "")
+    const fullPath = path.join(process.cwd(), "public", relPath)
+    assert.ok(fs.existsSync(fullPath), `figure asset missing on disk: ${fullPath}`)
+    const stat = fs.statSync(fullPath)
+    assert.ok(stat.size > 100, `figure asset is empty or corrupt: ${fullPath}`)
+    totalFigures += 1
+  }
 }
 
 console.log(
-  `Supplemental chapters verified: ${supplementalChapters.length} preview chapters, ${supplementalFlashcards.length} flashcards, ${supplementalQuestions.length} quiz questions, ${Object.keys(VOCABULARY_DEFINITIONS).length} defined terms across all 15 chapters.`,
+  `Supplemental & visual assets verified: ${supplementalChapters.length} preview chapters, ${supplementalFlashcards.length} flashcards, ${supplementalQuestions.length} quiz questions, ${Object.keys(VOCABULARY_DEFINITIONS).length} defined terms, and ${totalFigures} verified figure assets across all 15 chapters.`,
 )

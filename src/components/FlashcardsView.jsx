@@ -187,7 +187,7 @@ export function FlashcardsView({
         </div>
 
         {/* Prominent Material Source Toggle */}
-        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5">
           <div className="flex flex-wrap gap-1.5" role="group" aria-label="Flashcard material source">
             {[
               ["course", "Course Material Only (Book)"],
@@ -244,7 +244,7 @@ export function FlashcardsView({
                     onClick={() => toggleCustomChapter(ch.id)}
                     className={`rounded-xl border p-2.5 text-left text-xs transition ${
                       picked
-                        ? "border-teal-700 bg-teal-50/90 font-semibold text-slate-900"
+                        ? "border-teal-700 bg-teal-50 font-semibold text-slate-900"
                         : "border-slate-200 bg-white text-slate-600"
                     }`}
                   >

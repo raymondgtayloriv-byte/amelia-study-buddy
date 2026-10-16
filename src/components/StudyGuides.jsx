@@ -116,7 +116,7 @@ export function StudyGuides({ chapters, selectedChapter, onSelectChapter, onPrac
                     </button>
                     <span className="hidden print:inline">{question}</span>
                     {isOpen && (
-                      <p className="mt-1.5 rounded-xl bg-teal-50/70 p-2.5 text-xs leading-5 text-slate-700 print-hidden">
+                      <p className="mt-1.5 rounded-xl bg-teal-50 p-2.5 text-xs leading-5 text-slate-700 print-hidden">
                         <strong>Check:</strong>{" "}
                         {chapter.mustKnow?.[
                           index % Math.max(1, chapter.mustKnow?.length ?? 1)
@@ -156,7 +156,7 @@ export function StudyGuides({ chapters, selectedChapter, onSelectChapter, onPrac
               })}
             </div>
             {activeTerm && (
-              <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50/60 p-3 text-xs leading-5 text-slate-700 print-hidden">
+              <div className="mt-3 rounded-xl border border-teal-200 bg-teal-50 p-3 text-xs leading-5 text-slate-700 print-hidden">
                 <strong className="capitalize text-slate-900">{activeTerm}:</strong>{" "}
                 {getDefinition(activeTerm)}
               </div>

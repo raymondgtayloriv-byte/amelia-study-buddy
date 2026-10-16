@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img" aria-label="Plasma Membrane Bilayer &amp; Selective Transport Mechanisms">
+  <defs>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#111f24"/>
+      <stop offset="100%" stop-color="#172a31"/>
+    </linearGradient>
+    <linearGradient id="stageGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#182c33"/>
+      <stop offset="100%" stop-color="#122127"/>
+    </linearGradient>
+    <pattern id="gridPat" width="28" height="28" patternUnits="userSpaceOnUse">
+      <path d="M 28 0 L 0 0 0 28" fill="none" stroke="#223b43" stroke-width="0.7" stroke-opacity="0.55"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="750" rx="24" fill="url(#bgGrad)"/>
+  <rect x="16" y="16" width="1168" height="718" rx="18" fill="none" stroke="#29464f" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <rect x="36" y="34" width="136" height="26" rx="13" fill="#5ec2ab" fill-opacity="0.16" stroke="#5ec2ab" stroke-opacity="0.4"/>
+  <text x="104" y="51" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="800" letter-spacing="0.1em" fill="#6fd6be">CHAPTER 03</text>
+  <text x="188" y="53" font-family="system-ui, -apple-system, sans-serif" font-size="23" font-weight="800" fill="#f3fbf9">Plasma Membrane Bilayer &amp; Selective Transport Mechanisms</text>
+  <text x="38" y="84" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#9db5b2">Amphipathic phospholipid bilayer, passive diffusion/osmosis vs. ATP-driven Na⁺/K⁺ pump and vesicular transport</text>
+  <line x1="36" y1="100" x2="1164" y2="100" stroke="#26424a" stroke-width="1.2"/>
+
+  <!-- Left Anatomical Illustration Panel -->
+  <g transform="translate(36, 118)">
+    <rect width="384" height="584" rx="18" fill="url(#stageGrad)" stroke="#2d4c55" stroke-width="1.5"/>
+    <rect width="384" height="584" rx="18" fill="url(#gridPat)"/>
+    
+      <text x="192" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="800" fill="#6fd6be" letter-spacing="0.08em">PHOSPHOLIPID BILAYER &amp; PUMPS</text>
+      <text x="192" y="68" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Extracellular Fluid (High Na⁺, Cl⁻)</text>
+      <!-- Bilayer Heads & Tails -->
+      <rect x="34" y="96" width="316" height="132" rx="14" fill="#1f3b44" stroke="#5ec2ab" stroke-width="2"/>
+      <!-- Top Row Heads -->
+      <g fill="#e5c478">
+        <circle cx="64" cy="112" r="11"/><circle cx="94" cy="112" r="11"/><circle cx="124" cy="112" r="11"/>
+        <circle cx="260" cy="112" r="11"/><circle cx="290" cy="112" r="11"/><circle cx="320" cy="112" r="11"/>
+      </g>
+      <!-- Bottom Row Heads -->
+      <g fill="#e5c478">
+        <circle cx="64" cy="212" r="11"/><circle cx="94" cy="212" r="11"/><circle cx="124" cy="212" r="11"/>
+        <circle cx="260" cy="212" r="11"/><circle cx="290" cy="212" r="11"/><circle cx="320" cy="212" r="11"/>
+      </g>
+      <!-- Transmembrane Pump Protein -->
+      <rect x="154" y="84" width="76" height="156" rx="22" fill="#e99a83" stroke="#fff" stroke-width="1.8"/>
+      <text x="192" y="154" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="800" fill="#111f24">Na⁺/K⁺</text>
+      <text x="192" y="172" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" font-weight="800" fill="#111f24">ATPase</text>
+      <text x="192" y="268" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6fd6be">Intracellular Cytosol (High K⁺, Proteins⁻)</text>
+      <!-- Stoichiometry Callout -->
+      <rect x="38" y="302" width="308" height="252" rx="14" fill="#1b323a" stroke="#365a64"/>
+      <text x="192" y="334" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13.5" font-weight="800" fill="#f1faf8">MEMBRANE TRAFFIC RULES</text>
+      <text x="192" y="366" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#6fd6be">1. Lipid-Soluble &amp; Nonpolar (O₂, CO₂)</text>
+      <text x="192" y="386" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#c3d9d5">Cross hydrophobic core by simple diffusion</text>
+      <text x="192" y="422" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#e5c478">2. Ions &amp; Glucose (Polar / Charged)</text>
+      <text x="192" y="442" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#c3d9d5">Require protein channels or carriers</text>
+      <text x="192" y="478" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#e99a83">3. Na⁺/K⁺ Pump (Primary Active)</text>
+      <text x="192" y="498" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11.5" fill="#c3d9d5">Pumps 3 Na⁺ OUT and 2 K⁺ IN per 1 ATP</text>
+      <text x="192" y="532" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#9db5b2">Maintains -70 mV resting membrane potential</text>
+    
+  </g>
+
+  <!-- Right 6 High-Yield Study Cards (2x3 Grid) -->
+  
+      <g transform="translate(440, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">BILAYER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Amphipathic Phospholipids</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Hydrophilic phosphate heads face water;</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">hydrophobic fatty acid tails face inward.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Cholesterol stabilizes membrane fluidity</text>
+      </g>
+
+      <g transform="translate(805, 118)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">PASSIVE</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Simple &amp; Facilitated Diffusion</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Movement down concentration gradient</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">(high → low) using zero cellular ATP.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Channels &amp; carriers assist polar solutes</text>
+      </g>
+
+      <g transform="translate(440, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#7cc4e8"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#7cc4e8" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#7cc4e8">WATER</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Osmosis &amp; Aquaporins</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Diffusion of water across a selectively</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">permeable membrane toward higher osmolarity.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#7cc4e8">Water follows salt (solute concentration)</text>
+      </g>
+
+      <g transform="translate(805, 310)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e99a83"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e99a83" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e99a83">TONICITY</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Isotonic, Hypertonic, Hypotonic</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Hypertonic shrinks cells (crenation);</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Hypotonic swells &amp; lyses cells.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e99a83">0.9% NaCl normal saline is isotonic</text>
+      </g>
+
+      <g transform="translate(440, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#5ec2ab"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#5ec2ab" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#5ec2ab">ACTIVE</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Na⁺/K⁺ ATPase Pump</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">Uses ATP to pump 3 Na⁺ out of the cell</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">and 2 K⁺ into the cell against gradients.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#5ec2ab">Essential for excitable nerve &amp; muscle cells</text>
+      </g>
+
+      <g transform="translate(805, 502)">
+        <rect width="345" height="172" rx="16" fill="#1b3037" stroke="#2e4d56" stroke-width="1.5"/>
+        <rect x="0" y="0" width="8" height="172" rx="4" fill="#e5c478"/>
+        <rect x="22" y="16" width="96" height="22" rx="11" fill="#e5c478" fill-opacity="0.16"/>
+        <text x="70" y="31" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="10.5" font-weight="800" letter-spacing="0.08em" fill="#e5c478">VESICLES</text>
+        <text x="22" y="62" font-family="system-ui, -apple-system, sans-serif" font-size="16.5" font-weight="800" fill="#f1faf8">Endocytosis &amp; Exocytosis</text>
+        <text x="22" y="90" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">ATP-driven vesicular bulk transport for</text>
+        <text x="22" y="114" font-family="system-ui, -apple-system, sans-serif" font-size="13" fill="#c3d9d5">macromolecules, hormones &amp; neurotransmitters.</text>
+        <line x1="22" y1="132" x2="323" y2="132" stroke="#2a4750" stroke-width="1"/>
+        <text x="22" y="153" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="700" fill="#e5c478">Phagocytosis, pinocytosis &amp; receptor-mediated</text>
+      </g>
+</svg>

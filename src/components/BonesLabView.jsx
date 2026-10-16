@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   ArrowRight,
   Check,
@@ -43,76 +43,47 @@ function ViewStudySurface({
   markerLabel,
   markerHint,
 }) {
-  const [darkStage, setDarkStage] = useState(false)
   const [zoomed, setZoomed] = useState(false)
   const point = getViewPoint(view, structureId)
   const showReferenceCallout = !point && markerVisible
 
+  useEffect(() => {
+    if (!zoomed) return
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault()
+        setZoomed(false)
+      }
+    }
+    window.addEventListener("keydown", onKeyDown)
+    return () => window.removeEventListener("keydown", onKeyDown)
+  }, [zoomed])
+
   return (
     <div className="rounded-[30px] border border-white/70 bg-white/88 p-4 shadow-soft">
-      <div className={`specimen-stage ${darkStage ? "is-dark-stage" : ""}`}>
-        <span className="specimen-badge">
+      <div className="figure-card-header">
+        <span className="figure-card-badge">
           {view.kind === "mapped" ? "Mapped Course Figure" : "Course Lecture Slide"}
         </span>
-        <div className="specimen-stage-toolbar">
+        <div className="figure-card-actions">
           <button
             type="button"
-            className="specimen-stage-btn"
-            onClick={() => setDarkStage((d) => !d)}
-            title="Switch diagram backdrop for contrast"
-          >
-            {darkStage ? "Light mat" : "Dark mat"}
-          </button>
-          <button
-            type="button"
-            className="specimen-stage-btn"
+            className="figure-expand-btn"
             onClick={() => setZoomed(true)}
-            title="Enlarge textbook diagram"
+            title="Expand textbook diagram"
           >
-            Zoom
+            Expand
           </button>
         </div>
+      </div>
+
+      <div className="specimen-stage is-bone-stage">
         <img
           src={view.imageSrc}
           alt={view.imageAlt}
           onClick={() => setZoomed(true)}
-          className="h-[420px] w-full cursor-zoom-in object-contain p-3 pt-10"
+          className="specimen-img-plate cursor-zoom-in"
         />
-        {zoomed && (
-          <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm"
-            onClick={() => setZoomed(false)}
-            role="dialog"
-            aria-modal="true"
-            aria-label={view.label}
-          >
-            <div
-              className="relative max-h-[92dvh] max-w-[92vw] overflow-auto rounded-3xl bg-[#eef3f0] p-6 shadow-2xl"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="mb-3 flex items-center justify-between gap-4">
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
-                    {view.label}
-                  </span>
-                  <p className="text-xs text-slate-600">{view.studySurface}</p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setZoomed(false)}
-                  className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-bold text-white"
-                >
-                  Close (Esc)
-                </button>
-              </div>
-              <img
-                src={view.imageSrc}
-                alt={view.imageAlt}
-                className="max-h-[78dvh] w-auto mx-auto object-contain"
-              />
-            </div>
-          </div>
-        )}
 
         {point && markerVisible ? (
           <div
@@ -138,6 +109,44 @@ function ViewStudySurface({
           </div>
         ) : null}
       </div>
+
+      {zoomed && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 p-4 backdrop-blur-sm"
+          onClick={() => setZoomed(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={view.label}
+        >
+          <div
+            className="figure-lightbox-card relative max-h-[92dvh] max-w-[92vw] overflow-auto rounded-3xl p-6 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mb-3 flex items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-teal-900">
+                  {view.label}
+                </span>
+                <p className="text-xs text-slate-600">{view.studySurface}</p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setZoomed(false)}
+                className="rounded-full bg-slate-900 px-3.5 py-1.5 text-xs font-bold text-white"
+              >
+                Close (Esc)
+              </button>
+            </div>
+            <div className="specimen-stage is-lightbox-stage">
+              <img
+                src={view.imageSrc}
+                alt={view.imageAlt}
+                className="specimen-img-plate"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="mt-4 flex flex-col gap-2 lg:flex-row lg:items-start lg:justify-between">
         <div>

@@ -626,7 +626,7 @@ export function PracticeArcade({
               <button
                 type="button"
                 onClick={() => setActivity("gradebook")}
-                className="inline-flex items-center gap-2 rounded-full border border-teal-600/30 bg-teal-50/90 px-3.5 py-1.5 text-xs font-semibold text-teal-950 transition hover:border-teal-600"
+                className="inline-flex items-center gap-2 rounded-full border border-teal-600/30 bg-teal-50 px-3.5 py-1.5 text-xs font-semibold text-teal-950 transition hover:border-teal-600"
                 title="View your overall grade and weak spots"
               >
                 <Award size={14} className="text-teal-700" />
@@ -654,7 +654,7 @@ export function PracticeArcade({
         </div>
 
         {/* Material Source Prominent Toggle (Course Verbatim vs Supplemental vs Both) */}
-        <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+        <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-3.5">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
               <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
@@ -794,7 +794,7 @@ export function PracticeArcade({
                     onClick={() => toggleChapterInSelection(ch.id)}
                     className={`flex flex-col justify-between rounded-xl border p-2.5 text-left text-xs transition ${
                       isSelected
-                        ? "border-teal-700 bg-teal-50/90 text-slate-900 ring-2 ring-teal-600/20"
+                        ? "border-teal-700 bg-teal-50 text-slate-900 ring-2 ring-teal-600/20"
                         : "border-slate-200 bg-white text-slate-600 hover:border-teal-600/40"
                     }`}
                   >
@@ -803,8 +803,8 @@ export function PracticeArcade({
                       <span
                         className={`rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${
                           isCourse
-                            ? "bg-teal-100/80 text-teal-900"
-                            : "bg-amber-100/80 text-amber-900"
+                            ? "bg-teal-100 text-teal-900"
+                            : "bg-amber-100 text-amber-900"
                         }`}
                       >
                         {isCourse ? "Course" : "Suppl."}
@@ -914,7 +914,7 @@ export function PracticeArcade({
               <button
                 type="button"
                 onClick={() => startBlitz()}
-                className="rounded-2xl border border-teal-600/30 bg-teal-50/60 p-4 text-left transition hover:border-teal-600"
+                className="rounded-2xl border border-teal-600/30 bg-teal-50 p-4 text-left transition hover:border-teal-600"
               >
                 <span className="text-[11px] font-bold uppercase tracking-wider text-teal-900">
                   Selected Scope
@@ -1024,13 +1024,31 @@ export function PracticeArcade({
 
               {/* Optional Figure / 3D System Spotlight */}
               {(activeBlitz.figure || activeBlitz.atlasSystem) && (
-                <div className="mt-4 grid gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/60 p-4 md:grid-cols-[240px_1fr]">
+                <div className="mt-4 grid gap-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-4 md:grid-cols-[260px_1fr]">
                   {activeBlitz.figure && (
-                    <div className="specimen-stage flex items-center justify-center rounded-xl p-2">
+                    <div
+                      className={`specimen-stage is-blitz-stage ${
+                        typeof activeBlitz.figure.src === "string" &&
+                        activeBlitz.figure.src.endsWith(".svg")
+                          ? "is-svg-plate"
+                          : ""
+                      }`}
+                    >
                       <img
                         src={activeBlitz.figure.src}
                         alt={activeBlitz.figure.title}
-                        className="max-h-40 w-auto object-contain"
+                        onError={(e) => {
+                          const fallback = `${import.meta.env.BASE_URL || "/"}anatomy/concepts/ch1-fig-1.svg`
+                          if (e.currentTarget.src !== fallback) {
+                            e.currentTarget.src = fallback
+                          }
+                        }}
+                        className={
+                          typeof activeBlitz.figure.src === "string" &&
+                          activeBlitz.figure.src.endsWith(".svg")
+                            ? "specimen-img-svg"
+                            : "specimen-img-plate"
+                        }
                         loading="lazy"
                       />
                     </div>
@@ -1038,7 +1056,7 @@ export function PracticeArcade({
                   <div className="flex flex-col justify-center">
                     <span className="text-[11px] font-bold uppercase tracking-wider text-teal-800">
                       {activeBlitz.figure
-                        ? activeBlitz.figure.badge
+                        ? activeBlitz.figure.sourceBadge || activeBlitz.figure.badge
                         : `3D System Target · ${activeBlitz.atlasLabel}`}
                     </span>
                     <h4 className="mt-1 text-sm font-semibold text-slate-900">
@@ -1091,7 +1109,7 @@ export function PracticeArcade({
                           onClick={() => handleBlitzMiniPick(token)}
                           className={`min-h-16 rounded-2xl border p-3 text-left text-xs transition ${
                             done
-                              ? "border-emerald-300 bg-emerald-50/80 text-emerald-900 opacity-75"
+                              ? "border-emerald-300 bg-emerald-50 text-emerald-900 opacity-75"
                               : wrong
                                 ? "border-rose-300 bg-rose-50 text-rose-900"
                                 : picked
@@ -1145,7 +1163,7 @@ export function PracticeArcade({
               )}
 
               {blitzSession.pendingFeedback && (
-                <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50/80 p-4">
+                <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-4">
                   <p
                     className={`text-sm font-semibold ${
                       blitzSession.answers.at(-1)?.correct
@@ -1240,7 +1258,7 @@ export function PracticeArcade({
                     aria-pressed={tier === item.id}
                     className={`rounded-2xl border p-4 text-left transition ${
                       tier === item.id
-                        ? "border-teal-700 bg-teal-50/80"
+                        ? "border-teal-700 bg-teal-50"
                         : "border-slate-200 bg-white hover:border-teal-600/40"
                     }`}
                   >
@@ -1413,7 +1431,7 @@ export function PracticeArcade({
               )}
 
               {session.pendingFeedback && (
-                <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50/80 p-4">
+                <div className="mt-4 rounded-2xl border border-slate-200/80 bg-slate-50 p-4">
                   <p
                     className={`text-sm font-semibold ${
                       session.answers.at(-1).correct ? "text-emerald-800" : "text-amber-900"
@@ -1610,7 +1628,7 @@ export function PracticeArcade({
                         aria-pressed={picked}
                         className={`min-h-20 rounded-2xl border p-3.5 text-left transition ${
                           done
-                            ? "border-emerald-200 bg-emerald-50/70 text-emerald-800 opacity-75"
+                            ? "border-emerald-200 bg-emerald-50 text-emerald-800 opacity-75"
                             : isMismatch
                               ? "border-amber-400 bg-amber-50 text-amber-900"
                               : picked
@@ -1715,7 +1733,7 @@ export function PracticeArcade({
                 {gradeSummary.weakSpots.slice(0, 8).map((item) => (
                   <article
                     key={item.questionId}
-                    className="rounded-xl border border-amber-200/80 bg-amber-50/40 p-3"
+                    className="rounded-xl border border-amber-200/80 bg-amber-50 p-3"
                   >
                     <div className="flex items-center justify-between gap-2 text-[11px] font-semibold text-amber-900">
                       <span>{String(item.chapterId).replace("chapter-", "Chapter ")}</span>
@@ -1752,8 +1770,8 @@ export function PracticeArcade({
                       <span
                         className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${
                           ch.sourceType === "supplemental"
-                            ? "bg-amber-100/80 text-amber-900"
-                            : "bg-teal-100/80 text-teal-900"
+                            ? "bg-amber-100 text-amber-900"
+                            : "bg-teal-100 text-teal-900"
                         }`}
                       >
                         {ch.sourceType === "supplemental" ? "Suppl." : "Course"}
